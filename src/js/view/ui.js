@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 
 import TrelloCard from './components/TrelloCard';
 import TrelloButton from './components/TrelloButton';
+import AddTrelloCardButton from './components/AddTrelloCardButton';
 
 import * as store from 'model/store.js';
 import * as sei from './utils/sei.js';
@@ -63,6 +64,20 @@ const removeObsoletTrelloCards = (cards) => {
   });
 };
 
+const renderAddTrelloCardButtons = (isAddingCardFor) => {
+
+  placeholders.forEach((placeholder) => {
+    const addButtonPlaceholder = placeholder.tableRow.querySelector('.trello-add-card-button-placeholder');
+    ReactDOM.render(
+      <AddTrelloCardButton
+        isAdding={isAddingCardFor && placeholder.processNumber === isAddingCardFor}
+        processNumber={placeholder.processNumber}
+        onClick={(processNumber) => trelloController.addCardFor(processNumber, placeholder) }
+        show={!placeholder.hasTrelloCard}></AddTrelloCardButton>, addButtonPlaceholder);
+  });
+
+};
+
 export const renderAll = () => {
 
   const data = store.getData();
@@ -83,4 +98,7 @@ export const renderAll = () => {
 
   /* remove Trello Cards that aren't in the list */
   removeObsoletTrelloCards(data.cards);
+
+  /* add (update) add cards buttons */
+  renderAddTrelloCardButtons(data.isAddingCardFor);
 };
