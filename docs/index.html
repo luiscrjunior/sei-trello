@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>SEI+Trello</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <style type="text/css">
+    h4 { margin: 40px 0 10px 0; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <h1>SEI+Trello</h1>
+
+    <h4>O que é?</h4>
+
+    <p>O <span class="badge badge-light">SEI+Trello</span> é uma extensão do <a href="https://www.google.com.br/chrome/">Chrome</a> que permite uma integração entre o Sistema Eletrônico de Informações (SEI) e o <a href="https://www.trello.com/">Trello</a>.</p>
+
+    <h4>Funcionalidades</h4>
+
+    <p>Atualmente, a extensão conta com as seguinte funcionalidades:</p>
+
+    <ul>
+      <li>Na página <code>controle de processos</code>, o cartão Trello vinculado a um processo aparece no lugar do número do Processo.</li>
+      <li>O cartão Trello que aparece no SEI mostra o nome do cartão, a descrição, as etiquetas, onde se encontra (quadro e lista) e a data de entrega relacionada ao cartão. Se a data está próxima, ou atrasada, um destaque aparece junto à data.</li>
+      <li>É possível criar um cartão novo no Trello, vinculado a um Processo. Este cartão já vem preenchido com a especificação do processo (nome do cartão) e as observações da unidade (descrição), se houver alguma.</li>
+    </ul>
+
+
+    <img src="overview.png" width="100%" />
+    <p><small>Demonstração das funcionalidades nesta imagem.</small></p>
+
+    <h4>Como vincular um cartão Trello a um Processo SEI?</h4>
+
+    <p>Para fazer este vínculo, basta escrever na descrição do cartão a palavra <code>SEI</code>, seguido de um espaço, e depois o número do Processo, desta forma: <pre>SEI 08000.012345/2018-99</pre></p>
+
+    <p>Fazendo isto, em qualquer linha da descrição, o cartão já aparecerá no SEI.</p>
+
+    <img src="cardDescription.png" />
+    <p><small>Exemplo de como vincular um cartão Trello ao SEI</small></p>
+
+    <h4>Configuração</h4>
+
+    <p>Antes de começar a usar a extensão, para que ela funcione, é preciso que você possua uma conta no Trello (óbvio), obtenha a chave (<code>key</code>) de sua conta e gere um <code>token</code> de acesso para uso da extensão.</p>
+
+    <p>A <code>key</code> pode ser obtida em <a href="http://trello.com/app-key">http://trello.com/app-key</a> (você deve estar logado no Trello quando acessar). A chave é aquele conjunto de caracteres descrito no campo cinza.</p>
+
+    <p>Já o <code>token</code> pode ser obtido acessando a seguinte url: <pre>https://trello.com/1/authorize?expiration=never&scope=read,write,account&response_type=token&name=SEITrello&key=&lt;APP KEY&gt;</pre>Lembre de substituir <strong>&lt;APP KEY&gt;</strong> pela chave acima.</p>
+
+    <p>Estas informações deve ser informadas na página de <strong>opções</strong> da extensão.</p>
+
+    <p>Você deve também configurar o quadro e a lista padrão para poder criar um novo cartão pelo SEI.</p>    
+
+    <img src="optionsPage.png" width="100%" />
+    <p><small>Página de opções.</small></p>
+
+  </div>
+</body>
+</html>
