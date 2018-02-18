@@ -4,6 +4,8 @@ import * as store from 'model/store.js';
 import * as handler from 'model/handler.js';
 import * as alert from 'view/alert.js';
 
+const DEFAULT_SYNC_ERROR_MSG = 'Erro ao sincronizar com o Trello. Verifique se as credenciais informadas nas opções estão corretas. Caso positivo, tente novamente mais tarde, pois os servidores podem estar fora do ar. Se o problema persistir, entre em contato com o administrador da extensão.';
+
 store.onDataChanged(() => {
   ui.renderAll();
 });
@@ -72,7 +74,12 @@ export const updateCardData = (cardID) => {
     .filter((card) => card.cardID === cardID)
     .forEach((card) => { card.isLoading = true; });
   store.setCards(cardsToUpdate);
-  updateCardsWithID(cardID);
+  updateCardsWithID(cardID)
+    .catch((error) => {
+      store.setIsLoading(false);
+      console.log(error);
+      alert.error(DEFAULT_SYNC_ERROR_MSG);
+    });
 };
 
 export const updateAllData = () => {
@@ -86,7 +93,7 @@ export const updateAllData = () => {
     .catch((error) => {
       store.setIsLoading(false);
       console.log(error);
-      alert.error('Erro ao sincronizar com o Trello. Verifique se as credenciais informadas nas opções estão corretas. Caso positivo, tente novamente mais tarde, pois os servidores podem estar fora do ar. Se o problema persistir, entre em contato com o administrador da extensão.');
+      alert.error(DEFAULT_SYNC_ERROR_MSG);
       store.resetData();
     });
 };
