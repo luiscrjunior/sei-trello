@@ -57,3 +57,18 @@ export const searchCards = (cardID) => {
   return axios.get(url, { params: params });
 
 };
+
+export const createCard = (opts) => {
+
+  const url = 'https://api.trello.com/1/cards';
+
+  let params = Object.assign({}, genAuthData(), {
+    name: opts.name,
+    desc: opts.desc,
+    pos: 'bottom',
+    idList: opts.listID,
+  });
+
+  return axios.post(url, params);
+
+};

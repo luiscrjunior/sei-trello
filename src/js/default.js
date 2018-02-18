@@ -18,12 +18,14 @@ chrome.storage.sync.get({
 const bootstrap = () => {
 
   sei.addTrelloButtonPlaceHolder();
-
-  trelloController.updateAllData();
+  sei.addAddTrelloCardPlaceHolders();
 
   ui.mapAllPlaceholders();
 
   /* render initial state */
   ui.renderAll();
+
+  /* trigger initial update */
+  trelloController.updateAllData();
 
 };
