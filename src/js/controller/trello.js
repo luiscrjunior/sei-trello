@@ -113,7 +113,8 @@ export const updateAllData = () => {
 
 export const addCardFor = (processNumber, placeholder) => {
   const isAdding = store.getData().isAddingCardFor;
-  if (isAdding) return;
+  const isLoading = store.getData().isLoading;
+  if (isAdding || isLoading) return;
   store.setIsAddingFor(processNumber);
   let options = handler.extractRelevantInfoFromRow(processNumber, placeholder.tableRow);
   chrome.storage.sync.get({
