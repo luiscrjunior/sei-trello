@@ -1,0 +1,26 @@
+.button {
+  position: relative;
+  display: inline-block;
+}
+
+.buttonBG {
+  display: inline-block;
+  height: 40px;
+  width: 40px;  
+  background-color: #0494c7;
+  border: .1em solid white;
+}
+
+.buttonBG:hover {
+  border: .1em solid black;  
+}
+
+
+.loadingImg {
+  display: inline-block;
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  height: 24px;
+  width: 24px;  
+}

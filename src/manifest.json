@@ -1,0 +1,32 @@
+{
+  "manifest_version": 2,
+  "name": "SEI+Trello",
+  "description": "Integração SEI e Trello",
+  "version": "1.0",
+
+  "page_action": {
+    "default_icon": "icons/icon.png"
+  },
+
+  "icons": {
+    "128": "icons/icon.png"
+  },  
+
+  "background": {
+    "scripts": [
+      "js/background.js",
+      "vendor/js/hot-reload.js"
+    ],
+    "persistent": false
+  },
+  "options_page": "html/options.html",
+  "permissions": [
+    "<all_urls>",
+    "tabs",
+    "storage",
+    "webNavigation"
+  ],
+  "web_accessible_resources": [
+    "vendor/webfonts/*"
+  ]
+}

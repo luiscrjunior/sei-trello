@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>SEI+Trello: opções</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<body>
+
+<div class="container">
+  
+  <h1>SEI+Trello</h1>
+
+  <h3>Opções</h3>
+
+  <p>Para ativar a integração desta extensão, você deve necessariamente possuir uma conta no Trello e obter uma chave (key) e um token.</p>
+
+  <hr>
+
+  <form>
+
+    <div class="form-group">
+      <label for="txt-app-key">Trello APP-KEY:</label>
+      <input type="text" class="form-control" id="txt-app-key" placeholder="APP-KEY...">
+      <small class="form-text text-muted">A app-key pode ser obtida <a href="http://trello.com/app-key">neste endereço</a>. Você deve estar logado no Trello quando acessar. A chave é aquele conjunto de caracteres descrito no campo cinza. Apenas copie e cole aqui.</small>
+    </div>
+
+    <div class="form-group">
+      <label for="txt-app-token">Trello APP-TOKEN:</label>
+      <input type="text" class="form-control" id="txt-app-token" placeholder="APP-TOKEN...">
+      <small class="form-text text-muted">Já o token pode ser obtido acessando a seguinte url: <pre>https://trello.com/1/authorize?expiration=never&scope=read,write,account&response_type=token&name=SEITrello&key=&lt;APP KEY&gt;</pre>Lembre de substituir <strong>&lt;APP KEY&gt;</strong> pela chave acima.</small>
+    </div>
+
+    <button id="btn-save" type="submit" class="btn btn-primary">Salvar</button>
+  </form>
+
+
+</div>
+<script src="../js/options.js"></script>
+</body>
+</html>
