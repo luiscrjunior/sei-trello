@@ -68,6 +68,19 @@ const updateCardsWithID = (cardID) => {
   });
 };
 
+const createCard = (options) => {
+  return new Promise((resolve, reject) => {
+    api.createCard(options)
+      .then((response) => {
+        store.addCards(handler.getCards([response.data]));
+        resolve();
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
 export const updateCardData = (cardID) => {
   const cardsToUpdate = Object.assign({}, store.getData()).cards;
   cardsToUpdate
@@ -96,4 +109,37 @@ export const updateAllData = () => {
       alert.error(DEFAULT_SYNC_ERROR_MSG);
       store.resetData();
     });
+};
+
+export const addCardFor = (processNumber, placeholder) => {
+  const isAdding = store.getData().isAddingCardFor;
+  if (isAdding) return;
+  store.setIsAddingFor(processNumber);
+  let options = handler.extractRelevantInfoFromRow(processNumber, placeholder.tableRow);
+  chrome.storage.sync.get({
+    defaultBoard: '',
+    defaultList: '',
+  }, (items) => {
+
+    const listToAdd = store.getList(items.defaultBoard, items.defaultList);
+    if (!listToAdd) {
+      alert.error('Não foi possível encontrar o quadro e a lista padrão para criar o novo cartão. Por favor, verifique se você preencheu corretamente estes dados nas opções.');
+      store.setIsAddingFor(null);
+      return;
+    }
+
+    options.listID = listToAdd.id;
+
+    createCard(options)
+      .then(() => {
+        store.setIsAddingFor(null);
+      })
+      .catch((error) => {
+        store.setIsAddingFor(null);
+        console.log(error);
+        alert.error(DEFAULT_SYNC_ERROR_MSG);
+      });
+
+  });
+
 };
