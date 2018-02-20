@@ -1,6 +1,7 @@
 {
   "manifest_version": 2,
   "name": "SEI+Trello",
+  "short_name": "SEI+Trello",
   "description": "Permite a integração entre o Sistema Eletrônico de Informações (SEI) e o Trello.",
   "version": "1.0.1",
 
