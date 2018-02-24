@@ -1,5 +1,5 @@
-# sei-trello
+# SEI+Trello
 
 Extensão do Chrome que possibilita a integração entre o Sistema Eletrônico de Informações (SEI) e o Trello.
 
-Instruções: https://luiscrjunior.github.io/sei-trello/
+Documentação: https://luiscrjunior.github.io/sei-trello/
