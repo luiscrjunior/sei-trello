@@ -1,8 +1,11 @@
 {
   "manifest_version": 2,
   "name": "SEI+Trello",
-  "description": "Integração SEI e Trello",
-  "version": "1.0",
+  "short_name": "SEI+Trello",
+  "description": "Permite a integração entre o Sistema Eletrônico de Informações (SEI) e o Trello.",
+  "version": "1.0.1",
+  "author": "Luís Carlos Reischak Júnior",
+  "homepage_url": "https://luiscrjunior.github.io/sei-trello/",
 
   "page_action": {
     "default_icon": "icons/icon.png"
@@ -19,7 +22,30 @@
     ],
     "persistent": false
   },
+
   "options_page": "html/options.html",
+
+  "content_scripts": [
+    {
+      "matches": ["*://*.br/sei/*"],
+      "run_at": "document_start",
+      "js": [
+        "js/common.js"
+      ]
+    },    
+    {
+      "matches": ["*://*.br/sei/controlador.php?acao=procedimento_controlar*"],
+      "run_at": "document_end",
+      "css": [
+        "css/default.css",
+        "vendor/css/fontawesome-all.css"
+      ],
+      "js": [
+        "js/process_list.js"
+      ]
+    }
+  ],
+
   "permissions": [
     "<all_urls>",
     "tabs",

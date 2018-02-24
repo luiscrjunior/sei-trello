@@ -14,9 +14,14 @@ module.exports = {
     'vendor/js/babel-polyfill.js': 'babel-polyfill',
 
     /* entry points da app */
-    'js/default.js': './src/js/default.js',
+    'js/process_list.js': './src/js/process_list.js',
+
+    /* outros scripts */
+    'js/common.js': './src/js/common.js',
     'js/background.js': './src/js/background.js',
     'js/options.js': './src/js/options.js',
+
+    /* página de estilos */
     'css/default.css': './src/css/default.scss',
 
   },
