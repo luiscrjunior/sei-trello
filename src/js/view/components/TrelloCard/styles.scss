@@ -103,7 +103,7 @@
 .default { background-color: #b6bbbf; }
 
 .green { background-color: #61bd4f };
-.yellow { background-color: #f2d600 };
+.yellow { background-color: #e6c60d; };
 .orange { background-color: #ffab4a };
 .red { background-color: #eb5a46 };
 .purple { background-color: #c377e0 };
@@ -153,10 +153,11 @@
   padding: 2px 6px;
   font-size: 11px;
   border-radius: 3px;
+  font-weight: 600;
 }
 
 .due-normal { background-color: #61bd4f; }
-.due-warning { background-color: #f2d600; }
+.due-warning { background-color: #e6c60d; }
 .due-error { background-color: #eb5a46; }
 
 .processTooltip {
