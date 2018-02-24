@@ -81,7 +81,7 @@ export const extractRelevantInfoFromRow = (processNumber, row) => {
     const noteAnchorTooltipInfo = noteAnchor.getAttribute('onmouseover');
     if (noteAnchorTooltipInfo) {
       const noteAnchorInfoArray = noteAnchorTooltipInfo.split('\'');
-      if (noteAnchorInfoArray.length === 5) info.desc = info.desc + '\n' + noteAnchorInfoArray[1];
+      if (noteAnchorInfoArray.length === 5) info.desc = info.desc + '\n' + noteAnchorInfoArray[1].replace(/\\r\\n/g, '\n');
     }
   }
 
