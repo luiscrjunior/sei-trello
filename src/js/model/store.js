@@ -1,7 +1,6 @@
 let initialData = {
   isLoading: false,
   isAddingCardFor: null,
-  boards: [],
   cards: [],
 };
 
@@ -19,20 +18,6 @@ const triggerEvent = (type) => {
   });
 };
 
-const clearBoardsList = () => {
-  data.boards.forEach((board) => {
-    board.lists = [];
-  });
-};
-
-export const getBoardFromID = (boardID) => {
-  return data.boards.find((board) => board.id === boardID);
-};
-
-export const getListFromID = (boardID, listID) => {
-  return getBoardFromID(boardID).lists.find((list) => list.id === listID);
-};
-
 export const getData = () => {
   return data;
 };
@@ -41,34 +26,8 @@ export const resetData = () => {
   data = Object.assign({}, initialData);
 };
 
-export const setBoards = (boards) => {
-  data.boards = boards;
-  clearBoardsList();
-  triggerEvent('onDataChanged');
-};
-
-export const setLists = (lists) => {
-  clearBoardsList();
-  lists.forEach((list) => {
-    let board = getBoardFromID(list.boardID);
-    if (board) {
-      delete list['boardID'];
-      board.lists.push(list);
-    }
-  });
-  triggerEvent('onDataChanged');
-};
-
-const updateCardsBoardsAndLists = () => {
-  data.cards.forEach((card) => {
-    if (!card.location.board.name) card.location.board = getBoardFromID(card.location.board.id);
-    if (!card.location.list.name) card.location.list = getListFromID(card.location.board.id, card.location.list.id);
-  });
-};
-
 export const setCards = (cards) => {
   data.cards = cards;
-  updateCardsBoardsAndLists();
   triggerEvent('onDataChanged');
 };
 
@@ -80,13 +39,11 @@ export const updateCardsWithID = (cardID, updatedCards) => {
   /* add new cards (can be nothing, if the card was removed) */
   data.cards = data.cards.concat(updatedCards);
 
-  updateCardsBoardsAndLists();
   triggerEvent('onDataChanged');
 };
 
 export const addCards = (newCards) => {
   data.cards = data.cards.concat(newCards);
-  updateCardsBoardsAndLists();
   triggerEvent('onDataChanged');
 };
 
@@ -112,12 +69,4 @@ export const setIsAddingFor = (processNumber) => {
     data.isAddingCardFor = processNumber;
   }
   triggerEvent('onDataChanged');
-};
-
-export const getList = (boardName, listName) => {
-  const foundBoard = data.boards.find((board) => board.name === boardName);
-  if (!foundBoard) return null;
-  const foundList = foundBoard.lists.find((list) => list.name === listName);
-  if (!foundList) return null;
-  return foundList;
 };

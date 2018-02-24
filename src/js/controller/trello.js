@@ -10,39 +10,7 @@ store.onDataChanged(() => {
   ui.renderAll();
 });
 
-const updateBoards = () => {
-  return new Promise((resolve, reject) => {
-    api.getAllBoards()
-      .then((response) => {
-        store.setBoards(handler.getBoards(response.data));
-        resolve();
-      })
-      .catch((error) => {
-        reject(error);
-      });
-  });
-};
-
-const updateLists = () => {
-  return new Promise((resolve, reject) => {
-    const boards = store.getData().boards;
-    const promises = boards.map((board) => {
-      return api.getListsFromBoard(board.id);
-    });
-    Promise.all(promises)
-      .then((response) => {
-        const allBoardsWithList = response.map((responseObject) => responseObject.data);
-        store.setLists(handler.getLists(allBoardsWithList));
-        resolve();
-      })
-      .catch((error) => {
-        reject(error);
-      });
-  });
-
-};
-
-const updateCards = () => {
+const doUpdateCards = () => {
   return new Promise((resolve, reject) => {
     api.searchCards()
       .then((response) => {
@@ -55,7 +23,7 @@ const updateCards = () => {
   });
 };
 
-const updateCardsWithID = (cardID) => {
+const doUpdateCardsWithID = (cardID) => {
   return new Promise((resolve, reject) => {
     api.searchCards(cardID)
       .then((response) => {
@@ -68,11 +36,18 @@ const updateCardsWithID = (cardID) => {
   });
 };
 
-const createCard = (options) => {
+const doCreateCard = (options) => {
   return new Promise((resolve, reject) => {
     api.createCard(options)
       .then((response) => {
-        store.addCards(handler.getCards([response.data]));
+        store.addCards(handler
+          .getCards([response.data])
+          .map((card) => {
+            card.location.list = options.defaultList;
+            card.location.board = options.defaultBoard;
+            return card;
+          })
+        );
         resolve();
       })
       .catch((error) => {
@@ -87,7 +62,7 @@ export const updateCardData = (cardID) => {
     .filter((card) => card.cardID === cardID)
     .forEach((card) => { card.isLoading = true; });
   store.setCards(cardsToUpdate);
-  updateCardsWithID(cardID)
+  doUpdateCardsWithID(cardID)
     .catch((error) => {
       store.setIsLoading(false);
       console.log(error);
@@ -97,9 +72,7 @@ export const updateCardData = (cardID) => {
 
 export const updateAllData = () => {
   store.setIsLoading(true);
-  updateBoards()
-    .then(() => updateLists())
-    .then(() => updateCards())
+  doUpdateCards()
     .then(() => {
       store.setIsLoading(false);
     })
@@ -111,36 +84,69 @@ export const updateAllData = () => {
     });
 };
 
+const getDefaultBoardAndList = () => {
+  return new Promise((resolve, reject) => {
+    chrome.storage.sync.get({
+      defaultBoard: '',
+      defaultList: '',
+    }, (items) => {
+      if (!items.defaultBoard || !items.defaultList) reject(new Error());
+      api.searchBoardsByName(items.defaultBoard)
+        .then((response) => {
+          if ('data' in response && 'boards' in response.data && response.data.boards.length > 0) {
+            const defaultBoard = response.data.boards[0];
+            api.getListsFromBoard(defaultBoard.id)
+              .then((response) => {
+                const defaultList = response.data.lists.find((list) => list.name === items.defaultList);
+                if (defaultList) {
+
+                  resolve({
+                    defaultBoard: defaultBoard,
+                    defaultList: defaultList,
+                  });
+
+                } else {
+                  reject(new Error('lista padrão não encontrada'));
+                }
+              })
+              .catch((error) => {
+                reject(error);
+              });
+          } else {
+            reject(new Error('quadro padrão não encontrado'));
+          }
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  });
+};
+
 export const addCardFor = (processNumber, placeholder) => {
   const isAdding = store.getData().isAddingCardFor;
   const isLoading = store.getData().isLoading;
   if (isAdding || isLoading) return;
   store.setIsAddingFor(processNumber);
   let options = handler.extractRelevantInfoFromRow(processNumber, placeholder.tableRow);
-  chrome.storage.sync.get({
-    defaultBoard: '',
-    defaultList: '',
-  }, (items) => {
 
-    const listToAdd = store.getList(items.defaultBoard, items.defaultList);
-    if (!listToAdd) {
-      alert.error('Não foi possível encontrar o quadro e a lista padrão para criar o novo cartão. Por favor, verifique se você preencheu corretamente estes dados nas opções.');
+  getDefaultBoardAndList()
+    .then((response) => {
+      options.defaultBoard = response.defaultBoard;
+      options.defaultList = response.defaultList;
+      doCreateCard(options)
+        .then(() => {
+          store.setIsAddingFor(null);
+        })
+        .catch((error) => {
+          store.setIsAddingFor(null);
+          console.log(error);
+          alert.error(DEFAULT_SYNC_ERROR_MSG);
+        });
+    })
+    .catch((error) => {
       store.setIsAddingFor(null);
-      return;
-    }
-
-    options.listID = listToAdd.id;
-
-    createCard(options)
-      .then(() => {
-        store.setIsAddingFor(null);
-      })
-      .catch((error) => {
-        store.setIsAddingFor(null);
-        console.log(error);
-        alert.error(DEFAULT_SYNC_ERROR_MSG);
-      });
-
-  });
-
+      console.log(error);
+      alert.error('Ocorreu um erro ao adicionar o cartão. Verifique se você preencheu corretamente os dados do quadro e da lista padrão nas opções.');
+    });
 };

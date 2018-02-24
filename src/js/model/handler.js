@@ -48,12 +48,14 @@ export const getCards = (cardList) => {
           };
         }),
         location: {
-          board: {
-            id: cardFromTrello.idBoard,
-          },
-          list: {
-            id: cardFromTrello.idList,
-          },
+          board: (cardFromTrello.board ? {
+            id: cardFromTrello.board.id,
+            name: cardFromTrello.board.name,
+          } : null),
+          list: (cardFromTrello.list ? {
+            id: cardFromTrello.list.id,
+            name: cardFromTrello.list.name,
+          } : null),
         },
         url: cardFromTrello.shortUrl,
       });
