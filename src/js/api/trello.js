@@ -14,15 +14,19 @@ export const setKeys = (appKey, appToken) => {
   APP_KEY = appKey;
   APP_TOKEN = appToken;
 };
-export const getAllBoards = () => {
 
-  const url = 'https://api.trello.com/1/member/me/boards';
+export const searchBoardsByName = (boardName) => {
 
-  return axios.get(url, {
-    params: Object.assign({}, genAuthData(), {
-      board_fields: 'name,id',
-    }),
+  const url = 'https://api.trello.com/1/search';
+
+  let params = Object.assign({}, genAuthData(), {
+    query: `name:"${boardName}" is:open`,
+    modelTypes: 'boards',
+    board_fields: 'name',
+    boards_limit: '1000',
   });
+
+  return axios.get(url, { params: params });
 
 };
 
@@ -48,6 +52,8 @@ export const searchCards = (cardID) => {
     modelTypes: 'cards',
     card_fields: 'name,desc,labels,id,idBoard,idList,due,dueComplete,shortUrl',
     cards_limit: '1000',
+    card_board: 'true',
+    card_list: 'true',
   });
 
   if (typeof cardID !== 'undefined') {
@@ -66,7 +72,7 @@ export const createCard = (opts) => {
     name: opts.name,
     desc: opts.desc,
     pos: 'bottom',
-    idList: opts.listID,
+    idList: opts.defaultList.id,
   });
 
   return axios.post(url, params);
