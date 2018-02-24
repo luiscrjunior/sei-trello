@@ -1,8 +1,9 @@
 import moment from 'moment';
 
 export default (due, dueComplete) => {
-  const dueDate = moment(due);
-  const today = moment().set({hour: 12, minute: 0, second: 0, millisecond: 0});
+  let dueDate = moment(due);
+  dueDate.set({hour: 0, minute: 0, second: 0, millisecond: 0});
+  const today = moment().set({hour: 0, minute: 0, second: 0, millisecond: 0});
   const diffDays = dueDate.diff(today, 'days');
 
   let className = 'normal';
