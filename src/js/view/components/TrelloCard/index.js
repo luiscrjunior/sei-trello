@@ -4,6 +4,7 @@ import styles from './styles.scss';
 import classNames from 'classnames';
 import loadingImg from './loading.svg';
 import dueFormatter from './due.js';
+import EditableParagraph from 'view/components/EditableParagraph';
 
 class TrelloCard extends React.Component {
 
@@ -11,6 +12,7 @@ class TrelloCard extends React.Component {
     super(props);
     this.state = {
       showOptions: false,
+      isEditingDescription: false,
       processTooltip: {
         show: false,
         x: 0,
@@ -48,17 +50,38 @@ class TrelloCard extends React.Component {
     e.preventDefault();
   }
 
+  extractProcessInfo () {
+    const defaultInfo = { type: '', specification: '' };
+    const info = this.props.originalAnchor.getAttribute('onmouseover');
+    if (!info) return defaultInfo;
+    const infosSplited = info.split('\'');
+    if (infosSplited.length !== 5) return defaultInfo;
+    return {
+      type: infosSplited[3],
+      specification: infosSplited[1] || '(sem especificação)',
+    };
+  }
+
+  onChangeName (newName) {
+    if (this.props.onChangeName) this.props.onChangeName(this.props.cardID, newName);
+  }
+
+  onChangeDescription (newDescription) {
+    if (this.props.onChangeDescription) this.props.onChangeDescription(this.props.cardID, newDescription);
+  };
+
   renderLabels () {
+    if (this.props.labels.length === 0) return null;
     let uiLabels = [];
     this.props.labels.forEach((label, idx) => {
       uiLabels.push(
         <span
           key={idx}
-          className={classNames(styles.label, (styles[label.color] || styles.default))}
+          className={classNames(styles.label, (styles['label-' + label.color] || styles.default))}
         >{label.label}</span>
       );
     });
-    return uiLabels;
+    return <div className={styles.labels}>{uiLabels}</div>;
   }
 
   renderDue () {
@@ -71,18 +94,6 @@ class TrelloCard extends React.Component {
       </li>
     );
   };
-
-  extractProcessInfo () {
-    const defaultInfo = { type: '', specification: '' };
-    const info = this.props.originalAnchor.getAttribute('onmouseover');
-    if (!info) return defaultInfo;
-    const infosSplited = info.split('\'');
-    if (infosSplited.length !== 5) return defaultInfo;
-    return {
-      type: infosSplited[3],
-      specification: infosSplited[1] || '(sem especificação)',
-    };
-  }
 
   renderProcessTooltip () {
 
@@ -106,23 +117,41 @@ class TrelloCard extends React.Component {
     if (!this.props.isLoading) return null;
     return (
       <div className={styles.loadingOverlay}>
-        <img src={loadingImg} className={styles.loadingImg} />
+        <img src={loadingImg} className={loadingImg} />
       </div>
     );
   }
 
   render () {
+
+    const isDescriptionEmpty = !(typeof this.props.description === 'string' && this.props.description.length > 0);
+
     return (
       <div className={styles.card} >
+
         {this.renderLoadingOverlay()}
+
         <div className={styles.options}>
           <a target='#' onClick={this.refreshCard.bind(this)}><i className='fas fa-sync-alt'></i></a>
           <a target='_blank' href={this.props.url}><i className='fas fa-external-link-alt'></i></a>
         </div>
-        <h2 className={styles.name}>{this.props.name}</h2>
-        <div className={styles.labels}>{this.renderLabels()}</div>
+
+        <EditableParagraph
+          paragraphClass={styles.name}
+          value={this.props.name}
+          onChange={(value) => { this.onChangeName(value); }} ></EditableParagraph>
+
+        {this.renderLabels()}
+
         <div className={styles.location}>em <u>{this.props.location.board.name}</u> / <u>{this.props.location.list.name}</u>.</div>
-        <div className={classNames(styles.descr, { hide: (this.props.description.length === 0) })}>{this.props.description}</div>
+
+        <EditableParagraph
+          wrapperClass={classNames(styles['descr-wrapper'], { [styles['hide']]: isDescriptionEmpty && !this.state.isEditingDescription })}
+          paragraphClass={styles.descr}
+          value={this.props.description}
+          onChangeState={(status) => { this.setState({isEditingDescription: (status === 'edit')}); } }
+          onChange={(value) => { this.onChangeDescription(value); }} ></EditableParagraph>
+
         <div className={styles.footer}>
           <ul>
             <li>

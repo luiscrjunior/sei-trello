@@ -78,3 +78,13 @@ export const createCard = (opts) => {
   return axios.post(url, params);
 
 };
+
+export const updateCard = (cardID, opts) => {
+
+  const url = 'https://api.trello.com/1/cards/' + cardID;
+
+  let params = Object.assign({}, genAuthData(), opts);
+
+  return axios.put(url, params);
+
+};
