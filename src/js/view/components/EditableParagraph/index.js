@@ -1,5 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
+import autosize from 'autosize';
 import styles from './styles.scss';
 
 class EditableParagraph extends React.Component {
@@ -38,8 +39,10 @@ class EditableParagraph extends React.Component {
     e.preventDefault();
   }
 
-  componentDidUpdate () {
-    if (this.textarea) this.textarea.focus();
+  componentDidUpdate (prevProps, prevState) {
+    if (this.textarea && !prevState.isEditing && this.state.isEditing) { /* first render of the textarea */
+      autosize(this.textarea);
+    }
   }
 
   render () {
@@ -55,7 +58,7 @@ class EditableParagraph extends React.Component {
             <textarea
               ref={(el) => { this.textarea = el; }}
               className={classNames(this.props.paragraphClass, styles.textarea)}
-              style={{height: this.state.paragraphHeight}}
+              autoFocus={true}
               onKeyDown={this.onType.bind(this)}
               onBlur={this.onEditLooseFocus.bind(this)}
               tabIndex="0"
