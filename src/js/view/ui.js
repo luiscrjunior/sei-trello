@@ -34,7 +34,16 @@ const renderTrelloCard = (placeholder, card) => {
   ReactDOM.render(
     <TrelloCard
       {...card}
-      refreshCard={(cardID) => trelloController.updateCardData(cardID) }
+      refreshCard={(cardID) => trelloController.refreshCardData(cardID) }
+      onChangeName={(cardID, newName) => trelloController.updateCardData(cardID, {name: newName}) }
+      onChangeDescription={(cardID, newDescription) => {
+        const composedDescription = store
+          .getAllProcesssFromCardID(cardID)
+          .map((processNumber) => 'SEI ' + processNumber)
+          .join('\n')
+          .concat('\n' + newDescription);
+        trelloController.updateCardData(cardID, { desc: composedDescription });
+      }}
       originalAnchor={placeholder.originalAnchor} ></TrelloCard>,
     tds[2]
   );
