@@ -12,6 +12,7 @@ class TrelloCard extends React.Component {
     super(props);
     this.state = {
       showOptions: false,
+      isEditingDescription: false,
       processTooltip: {
         show: false,
         x: 0,
@@ -121,6 +122,9 @@ class TrelloCard extends React.Component {
   }
 
   render () {
+
+    const isDescriptionEmpty = !(typeof this.props.description === 'string' && this.props.description.length > 0);
+
     return (
       <div className={styles.card} >
 
@@ -141,9 +145,10 @@ class TrelloCard extends React.Component {
         <div className={styles.location}>em <u>{this.props.location.board.name}</u> / <u>{this.props.location.list.name}</u>.</div>
 
         <EditableParagraph
-          wrapperClass={classNames(styles['descr-wrapper'], { hide: (this.props.description.length === 0) })}
+          wrapperClass={classNames(styles['descr-wrapper'], { [styles['hide']]: isDescriptionEmpty && !this.state.isEditingDescription })}
           paragraphClass={styles.descr}
           value={this.props.description}
+          onChangeState={(status) => { this.setState({isEditingDescription: (status === 'edit')}); } }
           onChange={(value) => { this.onChangeDescription(value); }} ></EditableParagraph>
 
         <div className={styles.footer}>

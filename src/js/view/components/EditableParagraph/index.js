@@ -39,20 +39,32 @@ class EditableParagraph extends React.Component {
     e.preventDefault();
   }
 
+  componentDidMount () {
+    if (this.props.onChangeState) this.props.onChangeState('show');
+  }
+
   componentDidUpdate (prevProps, prevState) {
-    if (this.textarea && !prevState.isEditing && this.state.isEditing) { /* first render of the textarea */
+    if (!prevState.isEditing && this.state.isEditing) {
       autosize(this.textarea);
+      if (this.props.onChangeState) this.props.onChangeState('edit');
+    }
+    if (prevState.isEditing && !this.state.isEditing) {
+      if (this.props.onChangeState) this.props.onChangeState('show');
     }
   }
 
   render () {
+
+    const isParagraphEmpty = !(typeof this.props.value === 'string' && this.props.value.length > 0);
+    const paragraphContent = isParagraphEmpty ? 'Clique para editar...' : this.props.value;
+
     return (
       <div className={classNames(styles.wrapper, this.props.wrapperClass)}>
         {!this.state.isEditing
           ? (
             <p
               onClick={this.onParagraphClick.bind(this)}
-              className={classNames(styles.paragraph, this.props.paragraphClass)}>{this.props.value}</p>
+              className={classNames(styles.paragraph, this.props.paragraphClass, { [styles.empty]: isParagraphEmpty })}>{paragraphContent}</p>
           )
           : (
             <textarea
