@@ -112,6 +112,19 @@
   border-bottom: 1px solid #ccc;
 }
 
+.descr-wrapper.hide {
+  border: none;
+  padding: 0;
+  height: 0;
+  transition: height 0.3s ease;
+  overflow: hidden;
+
+}
+
+.card:hover .descr-wrapper.hide {
+  height: 28px;  
+}
+
 .descr {
   color: #424242;
   font-size: 12px;  
