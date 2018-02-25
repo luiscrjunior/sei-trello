@@ -71,6 +71,7 @@ class TrelloCard extends React.Component {
   };
 
   renderLabels () {
+    if (this.props.labels.length === 0) return null;
     let uiLabels = [];
     this.props.labels.forEach((label, idx) => {
       uiLabels.push(
@@ -80,7 +81,7 @@ class TrelloCard extends React.Component {
         >{label.label}</span>
       );
     });
-    return uiLabels;
+    return <div className={styles.labels}>{uiLabels}</div>;
   }
 
   renderDue () {
@@ -140,7 +141,7 @@ class TrelloCard extends React.Component {
           value={this.props.name}
           onChange={(value) => { this.onChangeName(value); }} ></EditableParagraph>
 
-        <div className={styles.labels}>{this.renderLabels()}</div>
+        {this.renderLabels()}
 
         <div className={styles.location}>em <u>{this.props.location.board.name}</u> / <u>{this.props.location.list.name}</u>.</div>
 
