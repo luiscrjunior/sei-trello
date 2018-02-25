@@ -4,6 +4,7 @@ const path = require('path');
 const { execSync } = require('child_process');
 
 const appPath = path.resolve(__dirname, 'dist/expanded');
+const outputPath = path.resolve(__dirname, 'dist/bundled');
 
 const appManifest = require(path.resolve(__dirname, 'src/manifest.json'));
 
@@ -29,6 +30,18 @@ const commands = [
   {
     descr: `Fazendo build da versão atual: ${appManifest.version}`,
     cmd: 'npm run webpack:prod',
+  },
+  {
+    descr: 'Compactando o path',
+    cmd: `cd ${appPath} && zip -r "${outputPath}/sei-trello_v${appManifest.version}.zip" ./`,
+  },
+  {
+    descr: 'Setando tag desta versão',
+    cmd: `git tag ${appManifest.version}`,
+  },
+  {
+    descr: 'Sincronizando git local com remote...',
+    cmd: 'git push origin master dev',
   },
 
 ];
