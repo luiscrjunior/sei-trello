@@ -59,7 +59,7 @@ class EditableParagraph extends React.Component {
     const paragraphContent = isParagraphEmpty ? 'Clique para editar...' : this.props.value;
 
     return (
-      <div className={classNames(styles.wrapper, this.props.wrapperClass)}>
+      <div className={this.props.wrapperClass}>
         {!this.state.isEditing
           ? (
             <p
