@@ -61,6 +61,7 @@ class EditableParagraph extends React.Component {
               autoFocus={true}
               onKeyDown={this.onType.bind(this)}
               onBlur={this.onEditLooseFocus.bind(this)}
+              rows="1"
               tabIndex="0"
               defaultValue={this.props.value}></textarea>
           )
