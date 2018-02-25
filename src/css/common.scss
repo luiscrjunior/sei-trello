@@ -6,4 +6,25 @@
   display: none !important; 
 }
 
+[data-tooltip] {
+    position: relative;
+    z-index: 999;
+}
 
+[data-tooltip]:hover:after {
+    display: block;
+    content: attr(data-tooltip);
+    padding: 4px 6px;
+    border-radius: 3px;
+    position: absolute;
+    right: -40px;
+    top: 26px;
+    height: auto;
+    width: auto;
+    font-size: 11px;
+    font-weight: 300;
+    white-space: pre;
+    background: #ffffaa;
+    box-shadow: 0 0 5px #a0a0a0;
+    color: #424242;
+}
