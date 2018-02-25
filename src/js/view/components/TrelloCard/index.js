@@ -49,13 +49,33 @@ class TrelloCard extends React.Component {
     e.preventDefault();
   }
 
+  extractProcessInfo () {
+    const defaultInfo = { type: '', specification: '' };
+    const info = this.props.originalAnchor.getAttribute('onmouseover');
+    if (!info) return defaultInfo;
+    const infosSplited = info.split('\'');
+    if (infosSplited.length !== 5) return defaultInfo;
+    return {
+      type: infosSplited[3],
+      specification: infosSplited[1] || '(sem especificação)',
+    };
+  }
+
+  onChangeName (newName) {
+    if (this.props.onChangeName) this.props.onChangeName(this.props.cardID, newName);
+  }
+
+  onChangeDescription (newDescription) {
+    if (this.props.onChangeDescription) this.props.onChangeDescription(this.props.cardID, newDescription);
+  };
+
   renderLabels () {
     let uiLabels = [];
     this.props.labels.forEach((label, idx) => {
       uiLabels.push(
         <span
           key={idx}
-          className={classNames(styles.label, (styles[label.color] || styles.default))}
+          className={classNames(styles.label, (styles['label-' + label.color] || styles.default))}
         >{label.label}</span>
       );
     });
@@ -72,18 +92,6 @@ class TrelloCard extends React.Component {
       </li>
     );
   };
-
-  extractProcessInfo () {
-    const defaultInfo = { type: '', specification: '' };
-    const info = this.props.originalAnchor.getAttribute('onmouseover');
-    if (!info) return defaultInfo;
-    const infosSplited = info.split('\'');
-    if (infosSplited.length !== 5) return defaultInfo;
-    return {
-      type: infosSplited[3],
-      specification: infosSplited[1] || '(sem especificação)',
-    };
-  }
 
   renderProcessTooltip () {
 
@@ -107,37 +115,37 @@ class TrelloCard extends React.Component {
     if (!this.props.isLoading) return null;
     return (
       <div className={styles.loadingOverlay}>
-        <img src={loadingImg} className={styles.loadingImg} />
+        <img src={loadingImg} className={loadingImg} />
       </div>
     );
   }
 
-  onChangeName (newName) {
-    if (this.props.onChangeName) this.props.onChangeName(this.props.cardID, newName);
-  }
-
-  onChangeDescription (newDescription) {
-    if (this.props.onChangeDescription) this.props.onChangeDescription(this.props.cardID, newDescription);
-  };
-
   render () {
     return (
       <div className={styles.card} >
+
         {this.renderLoadingOverlay()}
+
         <div className={styles.options}>
           <a target='#' onClick={this.refreshCard.bind(this)}><i className='fas fa-sync-alt'></i></a>
           <a target='_blank' href={this.props.url}><i className='fas fa-external-link-alt'></i></a>
         </div>
+
         <EditableParagraph
           paragraphClass={styles.name}
           value={this.props.name}
           onChange={(value) => { this.onChangeName(value); }} ></EditableParagraph>
+
         <div className={styles.labels}>{this.renderLabels()}</div>
+
         <div className={styles.location}>em <u>{this.props.location.board.name}</u> / <u>{this.props.location.list.name}</u>.</div>
+
         <EditableParagraph
-          wrapperClass={classNames(styles.descr, { hide: (this.props.description.length === 0) })}
+          wrapperClass={classNames(styles['descr-wrapper'], { hide: (this.props.description.length === 0) })}
+          paragraphClass={styles.descr}
           value={this.props.description}
           onChange={(value) => { this.onChangeDescription(value); }} ></EditableParagraph>
+
         <div className={styles.footer}>
           <ul>
             <li>

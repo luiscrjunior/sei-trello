@@ -44,7 +44,7 @@ class EditableParagraph extends React.Component {
 
   render () {
     return (
-      <div className={this.props.wrapperClass}>
+      <div className={classNames(styles.wrapper, this.props.wrapperClass)}>
         {!this.state.isEditing
           ? (
             <p
@@ -55,7 +55,7 @@ class EditableParagraph extends React.Component {
             <textarea
               ref={(el) => { this.textarea = el; }}
               className={classNames(this.props.paragraphClass, styles.textarea)}
-              style={{width: '100%', height: this.state.paragraphHeight}}
+              style={{height: this.state.paragraphHeight}}
               onKeyDown={this.onType.bind(this)}
               onBlur={this.onEditLooseFocus.bind(this)}
               tabIndex="0"

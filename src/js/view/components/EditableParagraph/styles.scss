@@ -1,12 +1,29 @@
+.wrapper {
+  
+}
+
 .paragraph {
+  cursor: pointer;
+  border: 1px solid transparent;
   margin: 0;
-  padding: 0;
+  padding: 5px;
+  white-space: pre-wrap;
 }
 
 .textarea {
+  display: block;
+  overflow: auto;
+  width: 100%;
+  box-sizing: border-box;
   margin: 0;
   padding: 5px;
   background-color: #fff !important;
-  border: none;
+  border: 1px solid #0079bf;
+  box-shadow: 0 0 2px 0 #0284c6;
   outline: none;
+  resize: none;
+}
+
+.textarea::-webkit-scrollbar {
+  display: none;
 }
