@@ -7,7 +7,8 @@
     "webpack:dev": "NODE_ENV=development node_modules/webpack/bin/webpack.js",
     "webpack:dev:watch": "NODE_ENV=development node_modules/webpack/bin/webpack.js --watch",
     "webpack:prod": "NODE_ENV=production node_modules/webpack/bin/webpack.js --config webpack.config.prod.js",
-    "lint": "node_modules/eslint/bin/eslint.js src/js/**/*.js"
+    "lint": "node_modules/eslint/bin/eslint.js src/js/**/*.js",
+    "build": "./build.js"
   },
   "author": "",
   "license": "ISC",
