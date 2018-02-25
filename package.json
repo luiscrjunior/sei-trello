@@ -7,7 +7,8 @@
     "webpack:dev": "NODE_ENV=development node_modules/webpack/bin/webpack.js",
     "webpack:dev:watch": "NODE_ENV=development node_modules/webpack/bin/webpack.js --watch",
     "webpack:prod": "NODE_ENV=production node_modules/webpack/bin/webpack.js --config webpack.config.prod.js",
-    "lint": "node_modules/eslint/bin/eslint.js src/js/**/*.js"
+    "lint": "node_modules/eslint/bin/eslint.js src/js/**/*.js",
+    "build": "./build.js"
   },
   "author": "",
   "license": "ISC",
@@ -15,6 +16,7 @@
     "@babel/core": "^7.0.0-beta.34",
     "@babel/preset-env": "^7.0.0-beta.34",
     "@babel/preset-react": "^7.0.0-beta.40",
+    "autosize": "^4.0.0",
     "axios": "^0.17.1",
     "babel-loader": "^8.0.0-beta.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
