@@ -70,3 +70,9 @@ export const setIsAddingFor = (processNumber) => {
   }
   triggerEvent('onDataChanged');
 };
+
+export const getAllProcesssFromCardID = (cardID) => {
+  return data.cards
+    .filter((card) => card.cardID === cardID)
+    .map((card) => card.processNumber);
+};
