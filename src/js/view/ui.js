@@ -30,7 +30,6 @@ const findPlaceholderByProcessNumber = (processNumber) => {
 
 const renderTrelloCard = (placeholder, card) => {
   const tds = placeholder.tableRow.querySelectorAll('td');
-
   ReactDOM.render(
     <TrelloCard
       {...card}
@@ -44,6 +43,7 @@ const renderTrelloCard = (placeholder, card) => {
           .concat('\n' + newDescription);
         trelloController.updateCardData(cardID, { desc: composedDescription });
       }}
+      hasAnotherCard={store.getAllCardsWithProcessNumber(card.processNumber).length > 1}
       originalAnchor={placeholder.originalAnchor} ></TrelloCard>,
     tds[2]
   );

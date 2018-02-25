@@ -132,9 +132,11 @@ class TrelloCard extends React.Component {
         {this.renderLoadingOverlay()}
 
         <div className={styles.options}>
-          <a target='#' onClick={this.refreshCard.bind(this)}><i className='fas fa-sync-alt'></i></a>
-          <a target='_blank' href={this.props.url}><i className='fas fa-external-link-alt'></i></a>
+          <a data-tooltip="Atualizar Cartão" target='#' onClick={this.refreshCard.bind(this)}><i className='fas fa-sync-alt'></i></a>
+          <a data-tooltip="Abrir no Trello" target='_blank' href={this.props.url}><i className='fas fa-external-link-alt'></i></a>
         </div>
+
+        <i data-tooltip="Processo com mais de um cartão. Mostrando o primeiro." className={classNames('fas', 'fa-exclamation-triangle', styles.hasAnotherCard, { hide: !this.props.hasAnotherCard })}></i>
 
         <EditableParagraph
           paragraphClass={styles.name}
