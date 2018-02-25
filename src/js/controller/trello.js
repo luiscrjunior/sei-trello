@@ -23,7 +23,7 @@ const doUpdateCards = () => {
   });
 };
 
-const doUpdateCardsWithID = (cardID) => {
+const doRefreshCardsWithID = (cardID) => {
   return new Promise((resolve, reject) => {
     api.searchCards(cardID)
       .then((response) => {
@@ -56,17 +56,37 @@ const doCreateCard = (options) => {
   });
 };
 
-export const updateCardData = (cardID) => {
+export const refreshCardData = (cardID) => {
   const cardsToUpdate = Object.assign({}, store.getData()).cards;
   cardsToUpdate
     .filter((card) => card.cardID === cardID)
     .forEach((card) => { card.isLoading = true; });
   store.setCards(cardsToUpdate);
-  doUpdateCardsWithID(cardID)
+  doRefreshCardsWithID(cardID)
     .catch((error) => {
       store.setIsLoading(false);
       console.log(error);
       alert.error(DEFAULT_SYNC_ERROR_MSG);
+    });
+};
+
+export const updateCardData = (cardID, newData) => {
+  const cardsToUpdate = Object.assign({}, store.getData()).cards;
+  cardsToUpdate
+    .filter((card) => card.cardID === cardID)
+    .forEach((card) => {
+      card.isLoading = true;
+      card = Object.assign(card, newData);
+    });
+  store.setCards(cardsToUpdate);
+  api.updateCard(cardID, newData)
+    .then((response) => {
+      doRefreshCardsWithID(cardID)
+        .catch((error) => {
+          store.setIsLoading(false);
+          console.log(error);
+          alert.error(DEFAULT_SYNC_ERROR_MSG);
+        });
     });
 };
 

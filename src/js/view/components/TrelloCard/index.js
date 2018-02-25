@@ -4,6 +4,7 @@ import styles from './styles.scss';
 import classNames from 'classnames';
 import loadingImg from './loading.svg';
 import dueFormatter from './due.js';
+import EditableParagraph from 'view/components/EditableParagraph';
 
 class TrelloCard extends React.Component {
 
@@ -111,6 +112,14 @@ class TrelloCard extends React.Component {
     );
   }
 
+  onChangeName (newName) {
+    if (this.props.onChangeName) this.props.onChangeName(this.props.cardID, newName);
+  }
+
+  onChangeDescription (newDescription) {
+    if (this.props.onChangeDescription) this.props.onChangeDescription(this.props.cardID, newDescription);
+  };
+
   render () {
     return (
       <div className={styles.card} >
@@ -119,10 +128,16 @@ class TrelloCard extends React.Component {
           <a target='#' onClick={this.refreshCard.bind(this)}><i className='fas fa-sync-alt'></i></a>
           <a target='_blank' href={this.props.url}><i className='fas fa-external-link-alt'></i></a>
         </div>
-        <h2 className={styles.name}>{this.props.name}</h2>
+        <EditableParagraph
+          paragraphClass={styles.name}
+          value={this.props.name}
+          onChange={(value) => { this.onChangeName(value); }} ></EditableParagraph>
         <div className={styles.labels}>{this.renderLabels()}</div>
         <div className={styles.location}>em <u>{this.props.location.board.name}</u> / <u>{this.props.location.list.name}</u>.</div>
-        <div className={classNames(styles.descr, { hide: (this.props.description.length === 0) })}>{this.props.description}</div>
+        <EditableParagraph
+          wrapperClass={classNames(styles.descr, { hide: (this.props.description.length === 0) })}
+          value={this.props.description}
+          onChange={(value) => { this.onChangeDescription(value); }} ></EditableParagraph>
         <div className={styles.footer}>
           <ul>
             <li>
