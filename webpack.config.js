@@ -22,7 +22,8 @@ module.exports = {
     'js/options.js': './src/js/options.js',
 
     /* página de estilos */
-    'css/default.css': './src/css/default.scss',
+    'css/common.css': './src/css/common.scss',
+    'css/process_list.css': './src/css/process_list.scss',
 
   },
   output: {
