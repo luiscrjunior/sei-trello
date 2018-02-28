@@ -1,26 +1,3 @@
-export const getBoards = (boardList) => {
-  return boardList.map((board) => {
-    return {
-      name: board.name,
-      id: board.id,
-    };
-  });
-};
-
-export const getLists = (boardList) => {
-  let lists = [];
-  boardList.forEach((board) => {
-    lists = lists.concat(board.lists.map((list) => {
-      return {
-        boardID: board.id,
-        id: list.id,
-        name: list.name,
-      };
-    }));
-  });
-  return lists;
-};
-
 export const getCards = (cardList) => {
   const extractSEIInfoRegex = /^SEI\s{1,}(\d+.\d+\/\d+-\d+).{0,}$/gm;
   let cards = [];
