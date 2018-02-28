@@ -4,6 +4,7 @@ Todas mudanças do projeto estão documentadas neste arquivo.
 ## [em desenvolvimento]
 - Implementado tooltip que esclarecem a função de alguns botões.
 - Aviso quando há mais de um cartão para o mesmo processo.
+- Possibilidade de deletar cartão.
 
 ## [1.1.0] - 25/02/2018
 - Corrigido bug que mostrava erro quando o usuário possuía muitos quadros.
