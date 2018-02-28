@@ -34,15 +34,9 @@ const renderTrelloCard = (placeholder, card) => {
     <TrelloCard
       {...card}
       refreshCard={(cardID) => trelloController.refreshCardData(cardID) }
+      deleteCard={(cardID) => trelloController.deleteCard(cardID) }
       onChangeName={(cardID, newName) => trelloController.updateCardData(cardID, {name: newName}) }
-      onChangeDescription={(cardID, newDescription) => {
-        const composedDescription = store
-          .getAllProcesssFromCardID(cardID)
-          .map((processNumber) => 'SEI ' + processNumber)
-          .join('\n')
-          .concat('\n' + newDescription);
-        trelloController.updateCardData(cardID, { desc: composedDescription });
-      }}
+      onChangeDescription={(cardID, newDescription) => trelloController.updateCardData(cardID, { description: newDescription }) }
       hasAnotherCard={store.getAllCardsWithProcessNumber(card.processNumber).length > 1}
       originalAnchor={placeholder.originalAnchor} ></TrelloCard>,
     tds[2]

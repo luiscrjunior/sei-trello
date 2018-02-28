@@ -81,3 +81,10 @@ export const getAllCardsWithProcessNumber = (processNumber) => {
   return data.cards
     .filter((card) => card.processNumber === processNumber);
 };
+
+export const updateCardsData = (cardID, newData) => {
+  data.cards
+    .filter((card) => card.cardID === cardID)
+    .map((card) => Object.assign(card, newData));
+  triggerEvent('onDataChanged');
+};

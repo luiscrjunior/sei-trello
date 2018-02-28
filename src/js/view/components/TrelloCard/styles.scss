@@ -33,7 +33,11 @@
 }
 
 .card > .options > a {
-  padding: 0 2px;
+  padding: 0 6px 0 0;
+}
+
+.card > .options > a:last-child {
+  padding-right: 0;
 }
 
 .card > .options > a > i {
