@@ -88,3 +88,13 @@ export const updateCard = (cardID, opts) => {
   return axios.put(url, params);
 
 };
+
+export const deleteCard = (cardID) => {
+
+  const url = 'https://api.trello.com/1/cards/' + cardID;
+
+  let params = Object.assign({}, genAuthData());
+
+  return axios.delete(url, { params: params });
+
+};

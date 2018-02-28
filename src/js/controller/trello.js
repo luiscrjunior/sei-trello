@@ -57,11 +57,7 @@ const doCreateCard = (options) => {
 };
 
 export const refreshCardData = (cardID) => {
-  const cardsToUpdate = Object.assign({}, store.getData()).cards;
-  cardsToUpdate
-    .filter((card) => card.cardID === cardID)
-    .forEach((card) => { card.isLoading = true; });
-  store.setCards(cardsToUpdate);
+  store.updateCardsData(cardID, { isLoading: true });
   doRefreshCardsWithID(cardID)
     .catch((error) => {
       store.setIsLoading(false);
@@ -70,16 +66,23 @@ export const refreshCardData = (cardID) => {
     });
 };
 
-export const updateCardData = (cardID, newData) => {
-  const cardsToUpdate = Object.assign({}, store.getData()).cards;
-  cardsToUpdate
-    .filter((card) => card.cardID === cardID)
-    .forEach((card) => {
-      card.isLoading = true;
-      card = Object.assign(card, newData);
-    });
-  store.setCards(cardsToUpdate);
-  api.updateCard(cardID, newData)
+export const updateCardData = (cardID, newCardData) => {
+  Object.assign(newCardData, { isLoading: true });
+  store.updateCardsData(cardID, newCardData);
+
+  const trelloData = {};
+
+  if ('description' in newCardData) {
+    trelloData['desc'] = store
+      .getAllProcesssFromCardID(cardID)
+      .map((processNumber) => 'SEI ' + processNumber)
+      .join('\n')
+      .concat('\n' + newCardData['description']);
+  }
+
+  if ('name' in newCardData) trelloData['name'] = newCardData['name'];
+
+  api.updateCard(cardID, trelloData)
     .then((response) => {
       doRefreshCardsWithID(cardID)
         .catch((error) => {
@@ -168,5 +171,16 @@ export const addCardFor = (processNumber, placeholder) => {
       store.setIsAddingFor(null);
       console.log(error);
       alert.error('Ocorreu um erro ao adicionar o cartão. Verifique se você preencheu corretamente os dados do quadro e da lista padrão nas opções.');
+    });
+};
+
+export const deleteCard = (cardID) => {
+  store.updateCardsData(cardID, { isLoading: true });
+  api.deleteCard(cardID)
+    .then((response) => refreshCardData(cardID))
+    .catch((error) => {
+      store.setIsLoading(false);
+      console.log(error);
+      alert.error('Ocorreu um erro ao remover o cartão.');
     });
 };

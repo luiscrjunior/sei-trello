@@ -1,10 +1,10 @@
 import React from 'react';
-
 import styles from './styles.scss';
 import classNames from 'classnames';
 import loadingImg from './loading.svg';
 import dueFormatter from './due.js';
 import EditableParagraph from 'view/components/EditableParagraph';
+import * as alert from 'view/alert.js';
 
 class TrelloCard extends React.Component {
 
@@ -48,6 +48,14 @@ class TrelloCard extends React.Component {
     if (this.props.isLoading) return;
     this.props.refreshCard(this.props.cardID);
     e.preventDefault();
+  }
+
+  deleteCard (e) {
+    if (!this.props.deleteCard) return;
+    alert.confirm('Você deseja mesmo remover este cartão?')
+      .then((willDelete) => {
+        if (willDelete) this.props.deleteCard(this.props.cardID);
+      });
   }
 
   extractProcessInfo () {
@@ -132,6 +140,7 @@ class TrelloCard extends React.Component {
         {this.renderLoadingOverlay()}
 
         <div className={styles.options}>
+          <a data-tooltip="Remover Cartão" target='#' onClick={this.deleteCard.bind(this)}><i className="far fa-trash-alt"></i></a>
           <a data-tooltip="Atualizar Cartão" target='#' onClick={this.refreshCard.bind(this)}><i className='fas fa-sync-alt'></i></a>
           <a data-tooltip="Abrir no Trello" target='_blank' href={this.props.url}><i className='fas fa-external-link-alt'></i></a>
         </div>
