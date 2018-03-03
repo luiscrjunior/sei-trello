@@ -14,7 +14,7 @@ module.exports = {
     'vendor/js/babel-polyfill.js': 'babel-polyfill',
 
     /* entry points da app */
-    'js/process_list.js': './src/js/process_list.js',
+    'js/process_list.js': './src/js/entries/process_list',
 
     /* outros scripts */
     'js/common.js': './src/js/common.js',
@@ -36,6 +36,7 @@ module.exports = {
       'view': path.resolve(__dirname, 'src/js/view'),
       'controller': path.resolve(__dirname, 'src/js/controller'),
       'api': path.resolve(__dirname, 'src/js/api'),
+      'actions': path.resolve(__dirname, 'src/js/actions'),
     },
   },
   module: {
