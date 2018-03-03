@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 import TrelloCard from './components/TrelloCard';
 import TrelloButton from './components/TrelloButton';
-import AddTrelloCardButton from './components/AddTrelloCardButton';
+import CreateTrelloCardButton from './components/CreateTrelloCardButton';
 
 import * as store from 'model/store.js';
 import * as actions from 'actions/trello.js';
@@ -33,10 +33,10 @@ const renderTrelloCard = (placeholder, card, hasAnotherCard, originalAnchor) => 
 
 const renderCreateTrelloCardButton = (placeholder, processNumber, data, newCardData) => {
   ReactDOM.render(
-    <AddTrelloCardButton
+    <CreateTrelloCardButton
       isAdding={data.isAddingCardFor && processNumber === data.isAddingCardFor}
       processNumber={processNumber}
-      onClick={(processNumber) => actions.addCardFor(processNumber, newCardData) }></AddTrelloCardButton>
+      onClick={(processNumber) => actions.addCardFor(processNumber, newCardData) }></CreateTrelloCardButton>
     , placeholder);
 };
 
