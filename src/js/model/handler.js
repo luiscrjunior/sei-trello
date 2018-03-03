@@ -1,3 +1,9 @@
+const removeSubstrFromStr = (startIndex, endIndex, text) => {
+  const firstPart = text.substr(0, startIndex);
+  const secondPart = text.substr(endIndex + 1);
+  return firstPart + secondPart;
+};
+
 export const getCards = (cardList) => {
   const extractSEIInfoRegex = /^SEI\s{1,}(\d+.\d+\/\d+-\d+).{0,}$/gm;
   let cards = [];
@@ -39,37 +45,4 @@ export const getCards = (cardList) => {
     });
   });
   return cards;
-};
-
-const removeSubstrFromStr = (startIndex, endIndex, text) => {
-  const firstPart = text.substr(0, startIndex);
-  const secondPart = text.substr(endIndex + 1);
-  return firstPart + secondPart;
-};
-
-export const extractRelevantInfoFromRow = (processNumber, row) => {
-  let info = {
-    name: processNumber,
-    desc: 'SEI ' + processNumber,
-  };
-
-  const noteAnchor = row.querySelector('a[href^="controlador.php?acao=anotacao_registrar"]');
-  if (noteAnchor !== null) {
-    const noteAnchorTooltipInfo = noteAnchor.getAttribute('onmouseover');
-    if (noteAnchorTooltipInfo) {
-      const noteAnchorInfoArray = noteAnchorTooltipInfo.split('\'');
-      if (noteAnchorInfoArray.length === 5) info.desc = info.desc + '\n' + noteAnchorInfoArray[1].replace(/\\r\\n/g, '\n');
-    }
-  }
-
-  const processAnchor = row.querySelector('a[href^="controlador.php?acao=procedimento_trabalhar"]');
-  if (processAnchor !== null) {
-    const processAnchorTooltipInfo = processAnchor.getAttribute('onmouseover');
-    if (processAnchorTooltipInfo) {
-      const processAnchorInfoArray = processAnchorTooltipInfo.split('\'');
-      if (processAnchorInfoArray.length === 5 && processAnchorInfoArray[1].length > 0) info.name = processAnchorInfoArray[1];
-    }
-  }
-
-  return info;
 };

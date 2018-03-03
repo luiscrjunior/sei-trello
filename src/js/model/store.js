@@ -77,11 +77,6 @@ export const getAllProcesssFromCardID = (cardID) => {
     .map((card) => card.processNumber);
 };
 
-export const getAllCardsWithProcessNumber = (processNumber) => {
-  return data.cards
-    .filter((card) => card.processNumber === processNumber);
-};
-
 export const updateCardsData = (cardID, newData) => {
   data.cards
     .filter((card) => card.cardID === cardID)
