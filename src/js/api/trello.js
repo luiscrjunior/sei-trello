@@ -43,22 +43,32 @@ export const getListsFromBoard = (boardID) => {
 
 };
 
-export const searchCards = (cardID) => {
+export const searchCards = () => {
 
   const url = 'https://api.trello.com/1/search';
 
   let params = Object.assign({}, genAuthData(), {
     query: 'description:"SEI" is:open',
     modelTypes: 'cards',
-    card_fields: 'name,desc,labels,id,idBoard,idList,due,dueComplete,shortUrl',
+    card_fields: 'name,desc,labels,id,due,dueComplete,shortUrl',
     cards_limit: '1000',
     card_board: 'true',
     card_list: 'true',
   });
 
-  if (typeof cardID !== 'undefined') {
-    params['idCards'] = cardID;
-  }
+  return axios.get(url, { params: params });
+
+};
+
+export const getCardData = (cardID) => {
+
+  const url = 'https://api.trello.com/1/cards/' + cardID;
+
+  let params = Object.assign({}, genAuthData(), {
+    fields: 'name,desc,labels,id,due,dueComplete,shortUrl',
+    board: 'true',
+    list: 'true',
+  });
 
   return axios.get(url, { params: params });
 

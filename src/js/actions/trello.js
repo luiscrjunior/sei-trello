@@ -20,13 +20,18 @@ const doRefreshAllCards = () => {
 
 const doRefreshCardsWithID = (cardID) => {
   return new Promise((resolve, reject) => {
-    api.searchCards(cardID)
+    api.getCardData(cardID)
       .then((response) => {
-        store.updateCardsWithID(cardID, handler.getCards(response.data.cards));
+        store.updateCardsWithID(cardID, handler.getCards([response.data]));
         resolve();
       })
       .catch((error) => {
-        reject(error);
+        if (error.response.status === 404) { /* cartão não existe mais, removê-lo da lista */
+          store.updateCardsWithID(cardID, []);
+          resolve();
+        } else {
+          reject(error);
+        }
       });
   });
 };
