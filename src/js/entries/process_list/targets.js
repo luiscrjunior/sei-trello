@@ -13,7 +13,8 @@ const mapProcessRows = () => {
     .filter((anchor) => {
       return (
         anchor.parentNode.parentNode.tagName === 'TR' &&
-        anchor.parentNode.parentNode.querySelectorAll('td').length === 4
+        (anchor.parentNode.parentNode.querySelectorAll('td').length === 4 ||
+        anchor.parentNode.parentNode.querySelectorAll('td').length === 6)
       );
     })
     .map((anchor) => {
