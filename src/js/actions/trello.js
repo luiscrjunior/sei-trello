@@ -142,12 +142,17 @@ const getDefaultBoardAndList = () => {
   });
 };
 
-export const addCardFor = (processNumber, placeholder) => {
+export const addCardFor = (processNumber, newCardData) => {
   const isAdding = store.getData().isAddingCardFor;
   const isLoading = store.getData().isLoading;
   if (isAdding || isLoading) return;
   store.setIsAddingFor(processNumber);
-  let options = handler.extractRelevantInfoFromRow(processNumber, placeholder.tableRow);
+  let options = {
+    name: processNumber,
+    desc: 'SEI ' + processNumber,
+  };
+  if ('name' in newCardData) options['name'] = newCardData['name'];
+  if ('description' in newCardData) options['desc'] += '\n' + newCardData['description'];
 
   getDefaultBoardAndList()
     .then((response) => {
