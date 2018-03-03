@@ -12,7 +12,7 @@ export const load = (opts) => {
 
     api.setKeys(items.appKey, items.appToken);
 
-    store.onDataChanged(() => ui.render(opts.targets));
+    store.onDataChanged(() => ui.render());
 
     actions.refreshAllCards();
 

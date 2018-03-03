@@ -7,7 +7,6 @@ import CreateTrelloCardButton from './components/CreateTrelloCardButton';
 
 import * as store from 'model/store.js';
 import * as actions from 'actions/trello.js';
-import * as helper from './helper.js';
 
 const renderMainButton = (placeholder, data) => {
   ReactDOM.render(
@@ -40,16 +39,15 @@ const renderCreateTrelloCardButton = (placeholder, processNumber, data, newCardD
     , placeholder);
 };
 
-const renderTrelloCardInARow = (row, data) => {
+const renderTrelloBox = (box, data) => {
 
-  const tds = row.querySelectorAll('td');
-  const processAnchor = tds[2].querySelector('a');
-  const cardPlaceholder = tds[2].querySelector('.trello-card-placeholder');
-  const createCardPlaceholder = tds[1].querySelector('.trello-create-card-button-placeholder');
+  const processNumber = box.getAttribute('data-trello-process-number');
+  const processAnchor = box.querySelector('.trello-process-anchor');
+  const cardPlaceholder = box.querySelector('.trello-card');
+  const createCardPlaceholder = box.querySelector('.trello-create-card-button');
 
-  if (!processAnchor || !cardPlaceholder || !createCardPlaceholder) return;
+  if (!processNumber || !cardPlaceholder || !createCardPlaceholder) return;
 
-  const processNumber = processAnchor.textContent.trim();
   const cardsForThisProcess = data.cards
     .filter((card) => card.processNumber === processNumber);
 
@@ -58,43 +56,54 @@ const renderTrelloCardInARow = (row, data) => {
   if (hasTrelloCard) {
 
     /* render trello card */
-    processAnchor.style.display = 'none';
-    cardPlaceholder.style.display = 'block';
+    if (processAnchor) processAnchor.classList.add('hide');
+    cardPlaceholder.classList.remove('hide');
     renderTrelloCard(cardPlaceholder, cardsForThisProcess[0], (cardsForThisProcess.length > 1), processAnchor);
 
     /* remove create card button */
-    createCardPlaceholder.style.display = 'none';
+    createCardPlaceholder.classList.add('hide');
     ReactDOM.unmountComponentAtNode(createCardPlaceholder);
 
   } else {
 
-    const relevantDataFromRow = helper.extractRelevantDataFromRow(row);
     let newCardData = {};
-    if ('processSpecification' in relevantDataFromRow) newCardData.name = relevantDataFromRow['processSpecification'];
-    if ('noteDescription' in relevantDataFromRow) newCardData.description = relevantDataFromRow['noteDescription'];
+    if (box.hasAttribute('data-trello-process-specification')) newCardData.name = box.getAttribute('data-trello-process-specification');
+    if (box.hasAttribute('data-trello-note-description')) newCardData.description = box.getAttribute('data-trello-note-description');
 
     /* render create card button */
     renderCreateTrelloCardButton(createCardPlaceholder, processNumber, data, newCardData);
+    createCardPlaceholder.classList.remove('hide');
 
     /* remove trello card */
-    cardPlaceholder.style.display = 'none';
-    processAnchor.style.display = 'block';
+    cardPlaceholder.classList.add('hide');
+    if (processAnchor) processAnchor.classList.remove('hide');
     ReactDOM.unmountComponentAtNode(cardPlaceholder);
-    createCardPlaceholder.style.display = 'inline-block';
 
   }
 
 };
 
-export const render = (targets) => {
+export const render = () => {
 
   const data = store.getData();
 
+  const targets = [
+    {
+      selector: '.trello-main-button',
+      fn: renderMainButton,
+    },
+    {
+      selector: '.trello-process-box',
+      fn: renderTrelloBox,
+    },
+  ];
+
   targets.forEach((target) => {
-    if (target.type === 'main-button') {
-      renderMainButton(target.ref, data);
-    } else if (target.type === 'process-row') {
-      renderTrelloCardInARow(target.ref, data);
+    const elements = document.querySelectorAll(target.selector);
+    for (let i = 0; i < elements.length; i++) {
+      const element = elements[i];
+      target.fn(element, data);
     }
   });
+
 };
