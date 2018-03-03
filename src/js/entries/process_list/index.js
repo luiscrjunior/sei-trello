@@ -1,12 +1,6 @@
 import * as dom from './dom.js';
-import * as targets from './targets.js';
 import * as controller from 'controller/trello.js';
 
-dom.addTrelloButtonPlaceHolder();
-dom.addTrelloCardPlaceHolders();
+dom.prepare();
 
-const pageTargets = targets.map();
-
-controller.load({
-  targets: pageTargets,
-});
+controller.load();

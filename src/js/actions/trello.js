@@ -105,6 +105,20 @@ export const refreshCardData = (cardID) => {
     });
 };
 
+export const refreshAllCards = () => {
+  store.setIsLoading(true);
+  doRefreshAllCards()
+    .then(() => {
+      store.setIsLoading(false);
+    })
+    .catch((error) => {
+      store.setIsLoading(false);
+      console.log(error);
+      alert.error(DEFAULT_SYNC_ERROR_MSG);
+      store.resetData();
+    });
+};
+
 export const updateCardData = (cardID, newCardData) => {
   Object.assign(newCardData, { isLoading: true });
   store.updateCardsData(cardID, newCardData);
@@ -130,20 +144,6 @@ export const updateCardData = (cardID, newCardData) => {
           console.log(error);
           alert.error(DEFAULT_SYNC_ERROR_MSG);
         });
-    });
-};
-
-export const refreshAllCards = () => {
-  store.setIsLoading(true);
-  doRefreshAllCards()
-    .then(() => {
-      store.setIsLoading(false);
-    })
-    .catch((error) => {
-      store.setIsLoading(false);
-      console.log(error);
-      alert.error(DEFAULT_SYNC_ERROR_MSG);
-      store.resetData();
     });
 };
 
