@@ -7,6 +7,7 @@ import AddTrelloCardButton from './components/AddTrelloCardButton';
 
 import * as store from 'model/store.js';
 import * as actions from 'actions/trello.js';
+import * as helper from './helper.js';
 
 const renderMainButton = (placeholder, data) => {
   ReactDOM.render(
@@ -15,9 +16,7 @@ const renderMainButton = (placeholder, data) => {
       isLoading={data.isLoading} ></TrelloButton>, placeholder);
 };
 
-const renderTrelloCard = (placeholder, cardsForThisProcess, originalAnchor) => {
-
-  const card = cardsForThisProcess[0]; /* consider first card */
+const renderTrelloCard = (placeholder, card, hasAnotherCard, originalAnchor) => {
 
   ReactDOM.render(
     <TrelloCard
@@ -26,18 +25,18 @@ const renderTrelloCard = (placeholder, cardsForThisProcess, originalAnchor) => {
       deleteCard={(cardID) => actions.deleteCard(cardID) }
       onChangeName={(cardID, newName) => actions.updateCardData(cardID, {name: newName}) }
       onChangeDescription={(cardID, newDescription) => actions.updateCardData(cardID, { description: newDescription }) }
-      hasAnotherCard={cardsForThisProcess.length > 1}
+      hasAnotherCard={hasAnotherCard}
       originalAnchor={originalAnchor} ></TrelloCard>,
     placeholder
   );
 };
 
-const renderAddTrelloCardButton = (placeholder, processNumber, data) => {
+const renderCreateTrelloCardButton = (placeholder, processNumber, data, newCardData) => {
   ReactDOM.render(
     <AddTrelloCardButton
       isAdding={data.isAddingCardFor && processNumber === data.isAddingCardFor}
       processNumber={processNumber}
-      onClick={(processNumber) => actions.addCardFor(processNumber, placeholder) }></AddTrelloCardButton>
+      onClick={(processNumber) => actions.addCardFor(processNumber, newCardData) }></AddTrelloCardButton>
     , placeholder);
 };
 
@@ -45,9 +44,10 @@ const renderTrelloCardInARow = (row, data) => {
 
   const tds = row.querySelectorAll('td');
   const processAnchor = tds[2].querySelector('a');
-  const cardAnchor = tds[2].querySelector('.trello-card-placeholder');
+  const cardPlaceholder = tds[2].querySelector('.trello-card-placeholder');
+  const createCardPlaceholder = tds[1].querySelector('.trello-create-card-button-placeholder');
 
-  if (!processAnchor) return;
+  if (!processAnchor || !cardPlaceholder || !createCardPlaceholder) return;
 
   const processNumber = processAnchor.textContent.trim();
   const cardsForThisProcess = data.cards
@@ -55,22 +55,33 @@ const renderTrelloCardInARow = (row, data) => {
 
   const hasTrelloCard = (cardsForThisProcess.length > 0);
 
-  /* render create card button */
-  const createCardPlaceholder = tds[1].querySelector('.trello-create-card-button-placeholder');
-  renderAddTrelloCardButton(createCardPlaceholder, processNumber, data);
-  createCardPlaceholder.style.display = hasTrelloCard ? 'none' : 'inline-block';
-
   if (hasTrelloCard) {
+
     /* render trello card */
     processAnchor.style.display = 'none';
-    cardAnchor.style.display = 'block';
-    renderTrelloCard(cardAnchor, cardsForThisProcess, processAnchor);
+    cardPlaceholder.style.display = 'block';
+    renderTrelloCard(cardPlaceholder, cardsForThisProcess[0], (cardsForThisProcess.length > 1), processAnchor);
+
+    /* remove create card button */
+    createCardPlaceholder.style.display = 'none';
+    ReactDOM.unmountComponentAtNode(createCardPlaceholder);
 
   } else {
+
+    const relevantDataFromRow = helper.extractRelevantDataFromRow(row);
+    let newCardData = {};
+    if ('processSpecification' in relevantDataFromRow) newCardData.name = relevantDataFromRow['processSpecification'];
+    if ('noteDescription' in relevantDataFromRow) newCardData.description = relevantDataFromRow['noteDescription'];
+
+    /* render create card button */
+    renderCreateTrelloCardButton(createCardPlaceholder, processNumber, data, newCardData);
+
     /* remove trello card */
-    ReactDOM.unmountComponentAtNode(cardAnchor);
+    cardPlaceholder.style.display = 'none';
     processAnchor.style.display = 'block';
-    cardAnchor.style.display = 'none';
+    ReactDOM.unmountComponentAtNode(cardPlaceholder);
+    createCardPlaceholder.style.display = 'inline-block';
+
   }
 
 };
