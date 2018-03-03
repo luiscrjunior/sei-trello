@@ -26,6 +26,6 @@ const bootstrap = () => {
   ui.renderAll();
 
   /* trigger initial update */
-  trelloController.updateAllData();
+  trelloController.refreshAllCards();
 
 };

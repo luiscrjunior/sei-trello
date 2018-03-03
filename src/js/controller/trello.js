@@ -10,7 +10,7 @@ store.onDataChanged(() => {
   ui.renderAll();
 });
 
-const doUpdateCards = () => {
+const doRefreshAllCards = () => {
   return new Promise((resolve, reject) => {
     api.searchCards()
       .then((response) => {
@@ -72,6 +72,7 @@ export const updateCardData = (cardID, newCardData) => {
 
   const trelloData = {};
 
+  /* adicionar os processos na descrição nova */
   if ('description' in newCardData) {
     trelloData['desc'] = store
       .getAllProcesssFromCardID(cardID)
@@ -93,9 +94,9 @@ export const updateCardData = (cardID, newCardData) => {
     });
 };
 
-export const updateAllData = () => {
+export const refreshAllCards = () => {
   store.setIsLoading(true);
-  doUpdateCards()
+  doRefreshAllCards()
     .then(() => {
       store.setIsLoading(false);
     })

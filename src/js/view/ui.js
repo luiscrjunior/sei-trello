@@ -89,7 +89,7 @@ export const renderAll = () => {
   const buttonPlaceholder = document.querySelector('#trello-button-placeholder');
   ReactDOM.render(
     <TrelloButton
-      onClick={() => trelloController.updateAllData()}
+      onClick={() => trelloController.refreshAllCards()}
       isLoading={data.isLoading} ></TrelloButton>, buttonPlaceholder);
 
   /* render new (or re-render existent) Trello Cards */
