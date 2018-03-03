@@ -51,6 +51,45 @@ const doCreateCard = (options) => {
   });
 };
 
+const getDefaultBoardAndList = () => {
+  return new Promise((resolve, reject) => {
+    chrome.storage.sync.get({
+      defaultBoard: '',
+      defaultList: '',
+    }, (items) => {
+      if (!items.defaultBoard || !items.defaultList) reject(new Error());
+      api.searchBoardsByName(items.defaultBoard)
+        .then((response) => {
+          if ('data' in response && 'boards' in response.data && response.data.boards.length > 0) {
+            const defaultBoard = response.data.boards[0];
+            api.getListsFromBoard(defaultBoard.id)
+              .then((response) => {
+                const defaultList = response.data.lists.find((list) => list.name === items.defaultList);
+                if (defaultList) {
+
+                  resolve({
+                    defaultBoard: defaultBoard,
+                    defaultList: defaultList,
+                  });
+
+                } else {
+                  reject(new Error('lista padrão não encontrada'));
+                }
+              })
+              .catch((error) => {
+                reject(error);
+              });
+          } else {
+            reject(new Error('quadro padrão não encontrado'));
+          }
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  });
+};
+
 export const refreshCardData = (cardID) => {
   store.updateCardsData(cardID, { isLoading: true });
   doRefreshCardsWithID(cardID)
@@ -103,45 +142,6 @@ export const refreshAllCards = () => {
     });
 };
 
-const getDefaultBoardAndList = () => {
-  return new Promise((resolve, reject) => {
-    chrome.storage.sync.get({
-      defaultBoard: '',
-      defaultList: '',
-    }, (items) => {
-      if (!items.defaultBoard || !items.defaultList) reject(new Error());
-      api.searchBoardsByName(items.defaultBoard)
-        .then((response) => {
-          if ('data' in response && 'boards' in response.data && response.data.boards.length > 0) {
-            const defaultBoard = response.data.boards[0];
-            api.getListsFromBoard(defaultBoard.id)
-              .then((response) => {
-                const defaultList = response.data.lists.find((list) => list.name === items.defaultList);
-                if (defaultList) {
-
-                  resolve({
-                    defaultBoard: defaultBoard,
-                    defaultList: defaultList,
-                  });
-
-                } else {
-                  reject(new Error('lista padrão não encontrada'));
-                }
-              })
-              .catch((error) => {
-                reject(error);
-              });
-          } else {
-            reject(new Error('quadro padrão não encontrado'));
-          }
-        })
-        .catch((error) => {
-          reject(error);
-        });
-    });
-  });
-};
-
 export const addCardFor = (processNumber, newCardData) => {
   const isAdding = store.getData().isAddingCardFor;
   const isLoading = store.getData().isLoading;
@@ -178,7 +178,7 @@ export const addCardFor = (processNumber, newCardData) => {
 export const deleteCard = (cardID) => {
   store.updateCardsData(cardID, { isLoading: true });
   api.deleteCard(cardID)
-    .then((response) => refreshCardData(cardID))
+    .then((response) => doRefreshCardsWithID(cardID))
     .catch((error) => {
       store.setIsLoading(false);
       console.log(error);
