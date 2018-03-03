@@ -130,6 +130,27 @@ class TrelloCard extends React.Component {
     );
   }
 
+  renderProcessAnchor () {
+    if (!this.props.originalAnchor) return null;
+
+    const relevantClasses = this.props.originalAnchor
+      .getAttribute('class')
+      .split(' ')
+      .filter((className) => className.startsWith('processo'));
+
+    return (
+      <li>
+        <i className={classNames(styles['ic-footer'], 'fas', 'fa-align-left')}></i>
+        <a
+          className={classNames(relevantClasses)}
+          onMouseOver={this.showTooltip.bind(this)}
+          onMouseOut={this.hideTooltip.bind(this)}
+          href={this.props.originalAnchor.getAttribute('href')}>{this.props.originalAnchor.textContent.trim()}​</a>
+        {this.renderProcessTooltip()}
+      </li>
+    );
+  }
+
   render () {
 
     const isDescriptionEmpty = !(typeof this.props.description === 'string' && this.props.description.length > 0);
@@ -165,15 +186,7 @@ class TrelloCard extends React.Component {
 
         <div className={styles.footer}>
           <ul>
-            <li>
-              <i className={classNames(styles['ic-footer'], 'fas', 'fa-align-left')}></i>
-              <a
-                className={this.props.originalAnchor.getAttribute('class')}
-                onMouseOver={this.showTooltip.bind(this)}
-                onMouseOut={this.hideTooltip.bind(this)}
-                href={this.props.originalAnchor.getAttribute('href')}>{this.props.originalAnchor.innerText.trim()}​</a>
-              {this.renderProcessTooltip()}
-            </li>
+            {this.renderProcessAnchor()}
             {this.renderDue()}
           </ul>
         </div>
