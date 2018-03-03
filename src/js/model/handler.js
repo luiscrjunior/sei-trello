@@ -1,3 +1,9 @@
+const removeSubstrFromStr = (startIndex, endIndex, text) => {
+  const firstPart = text.substr(0, startIndex);
+  const secondPart = text.substr(endIndex + 1);
+  return firstPart + secondPart;
+};
+
 export const getCards = (cardList) => {
   const extractSEIInfoRegex = /^SEI\s{1,}(\d+.\d+\/\d+-\d+).{0,}$/gm;
   let cards = [];
@@ -39,10 +45,4 @@ export const getCards = (cardList) => {
     });
   });
   return cards;
-};
-
-const removeSubstrFromStr = (startIndex, endIndex, text) => {
-  const firstPart = text.substr(0, startIndex);
-  const secondPart = text.substr(endIndex + 1);
-  return firstPart + secondPart;
 };
