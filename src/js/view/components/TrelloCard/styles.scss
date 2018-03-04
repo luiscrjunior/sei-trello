@@ -9,7 +9,7 @@
   width: 300px;
   overflow: visible;
 
-  div, p, span {
+  div, p, span, textarea {
     font-family: Helvetica Neue,Arial,Helvetica,sans-serif;
   }
 
@@ -115,6 +115,7 @@
 .location {
   margin: 0px 5px;
   color: #838c91;
+  font-size: 12px;
 
   > u {
     text-decoration: underline;
