@@ -9,6 +9,16 @@ const alert = (type, text) => {
   });
 };
 
+export const confirm = (text) => {
+  return swal({
+    title: 'Tem certeza?',
+    text: text,
+    icon: 'warning',
+    buttons: ['Não', 'Sim, remover!'],
+    dangerMode: true,
+  });
+};
+
 export const error = (text) => {
   alert('error', text);
 };

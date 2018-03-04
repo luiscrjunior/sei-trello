@@ -1,10 +1,10 @@
 import React from 'react';
-
 import styles from './styles.scss';
 import classNames from 'classnames';
 import loadingImg from './loading.svg';
 import dueFormatter from './due.js';
 import EditableParagraph from 'view/components/EditableParagraph';
+import * as alert from 'view/alert.js';
 
 class TrelloCard extends React.Component {
 
@@ -48,6 +48,14 @@ class TrelloCard extends React.Component {
     if (this.props.isLoading) return;
     this.props.refreshCard(this.props.cardID);
     e.preventDefault();
+  }
+
+  deleteCard (e) {
+    if (!this.props.deleteCard) return;
+    alert.confirm('Você deseja mesmo remover este cartão?')
+      .then((willDelete) => {
+        if (willDelete) this.props.deleteCard(this.props.cardID);
+      });
   }
 
   extractProcessInfo () {
@@ -122,19 +130,43 @@ class TrelloCard extends React.Component {
     );
   }
 
+  renderProcessAnchor () {
+    if (!this.props.originalAnchor) return null;
+
+    const relevantClasses = this.props.originalAnchor
+      .getAttribute('class')
+      .split(' ')
+      .filter((className) => className.startsWith('processo'));
+
+    return (
+      <li>
+        <i className={classNames(styles['ic-footer'], 'fas', 'fa-align-left')}></i>
+        <a
+          className={classNames(relevantClasses)}
+          onMouseOver={this.showTooltip.bind(this)}
+          onMouseOut={this.hideTooltip.bind(this)}
+          href={this.props.originalAnchor.getAttribute('href')}>{this.props.originalAnchor.textContent.trim()}​</a>
+        {this.renderProcessTooltip()}
+      </li>
+    );
+  }
+
   render () {
 
     const isDescriptionEmpty = !(typeof this.props.description === 'string' && this.props.description.length > 0);
 
     return (
-      <div className={styles.card} >
+      <div className={classNames(styles.card, { [styles['full-width']]: this.props.fullWidth }) } >
 
         {this.renderLoadingOverlay()}
 
         <div className={styles.options}>
-          <a target='#' onClick={this.refreshCard.bind(this)}><i className='fas fa-sync-alt'></i></a>
-          <a target='_blank' href={this.props.url}><i className='fas fa-external-link-alt'></i></a>
+          <a data-tooltip="Remover Cartão" target='#' onClick={this.deleteCard.bind(this)}><i className="far fa-trash-alt"></i></a>
+          <a data-tooltip="Atualizar Cartão" target='#' onClick={this.refreshCard.bind(this)}><i className='fas fa-sync-alt'></i></a>
+          <a data-tooltip="Abrir no Trello" target='_blank' href={this.props.url}><i className='fas fa-external-link-alt'></i></a>
         </div>
+
+        <i data-tooltip="Processo com mais de um cartão. Mostrando o primeiro." className={classNames('fas', 'fa-exclamation-triangle', styles.hasAnotherCard, { hide: !this.props.hasAnotherCard })}></i>
 
         <EditableParagraph
           paragraphClass={styles.name}
@@ -154,15 +186,7 @@ class TrelloCard extends React.Component {
 
         <div className={styles.footer}>
           <ul>
-            <li>
-              <i className={classNames(styles['ic-footer'], 'fas', 'fa-align-left')}></i>
-              <a
-                className={this.props.originalAnchor.getAttribute('class')}
-                onMouseOver={this.showTooltip.bind(this)}
-                onMouseOut={this.hideTooltip.bind(this)}
-                href={this.props.originalAnchor.getAttribute('href')}>{this.props.originalAnchor.innerText.trim()}​</a>
-              {this.renderProcessTooltip()}
-            </li>
+            {this.renderProcessAnchor()}
             {this.renderDue()}
           </ul>
         </div>

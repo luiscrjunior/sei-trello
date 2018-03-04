@@ -13,7 +13,6 @@ class AddTrelloCardButton extends React.Component {
   }
 
   render () {
-    if (!this.props.show) return null;
     return (
       <a href='#' onClick={this.onClick.bind(this)} className={styles.button} >
         <img title='Criar cartão relacionado a este processo' src={buttonBG} className={classNames(styles.buttonBG, { hide: this.props.isAdding })} />
