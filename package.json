@@ -8,7 +8,8 @@
     "webpack:dev:watch": "NODE_ENV=development node_modules/webpack/bin/webpack.js --watch",
     "webpack:prod": "NODE_ENV=production node_modules/webpack/bin/webpack.js --config webpack.config.prod.js",
     "lint": "node_modules/eslint/bin/eslint.js src/js/**/*.js",
-    "build": "./build.js"
+    "build": "./build.js",
+    "server:stage": "NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --config webpack.config.stage.js",
   },
   "author": "",
   "license": "ISC",
@@ -44,6 +45,8 @@
     "uglifyjs-webpack-plugin": "^1.2.0",
     "url-loader": "^0.6.2",
     "webpack": "^3.9.1",
+    "webpack-cli": "^2.0.10",
+    "webpack-dev-server": "^2.11.1",
     "webpack-merge": "^4.1.1"
   }
 }
