@@ -156,7 +156,7 @@ class TrelloCard extends React.Component {
     const isDescriptionEmpty = !(typeof this.props.description === 'string' && this.props.description.length > 0);
 
     return (
-      <div className={styles.card} >
+      <div className={classNames(styles.card, { [styles['full-width']]: this.props.fullWidth }) } >
 
         {this.renderLoadingOverlay()}
 

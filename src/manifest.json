@@ -28,6 +28,7 @@
   "content_scripts": [
     {
       "matches": ["*://*.br/sei/*"],
+      "all_frames": true,
       "run_at": "document_start",
       "js": [
         "js/common.js"
@@ -45,6 +46,17 @@
       ],
       "js": [
         "js/process_list.js"
+      ]
+    },
+    {
+      "matches": ["*://*.br/sei/controlador.php?acao=procedimento_visualizar*"],
+      "run_at": "document_end",
+      "all_frames": true,
+      "css": [
+        "vendor/css/fontawesome-all.css"
+      ],
+      "js": [
+        "js/process_content.js"
       ]
     }
   ],
