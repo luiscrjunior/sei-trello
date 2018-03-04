@@ -5,9 +5,9 @@ import * as alert from 'view/alert.js';
 
 const DEFAULT_SYNC_ERROR_MSG = 'Erro ao sincronizar com o Trello. Verifique se as credenciais informadas nas opções estão corretas. Caso positivo, tente novamente mais tarde, pois os servidores podem estar fora do ar. Se o problema persistir, entre em contato com o administrador da extensão.';
 
-const doRefreshAllCards = () => {
+const doRefreshCards = (processNumber) => {
   return new Promise((resolve, reject) => {
-    api.searchCards()
+    api.searchCards(processNumber)
       .then((response) => {
         store.setCards(handler.getCards(response.data.cards));
         resolve();
@@ -105,9 +105,9 @@ export const refreshCardData = (cardID) => {
     });
 };
 
-export const refreshAllCards = () => {
+export const refreshCards = (processNumber) => {
   store.setIsLoading(true);
-  doRefreshAllCards()
+  doRefreshCards(processNumber)
     .then(() => {
       store.setIsLoading(false);
     })

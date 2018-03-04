@@ -11,11 +11,13 @@ import * as actions from 'actions/trello.js';
 const renderMainButton = (placeholder, data) => {
   ReactDOM.render(
     <TrelloButton
-      onClick={() => actions.refreshAllCards()}
+      onClick={() => actions.refreshCards()}
       isLoading={data.isLoading} ></TrelloButton>, placeholder);
 };
 
 const renderTrelloCard = (placeholder, card, hasAnotherCard, originalAnchor) => {
+
+  const fullWidth = placeholder.hasAttribute('full-width');
 
   ReactDOM.render(
     <TrelloCard
@@ -25,6 +27,7 @@ const renderTrelloCard = (placeholder, card, hasAnotherCard, originalAnchor) => 
       onChangeName={(cardID, newName) => actions.updateCardData(cardID, {name: newName}) }
       onChangeDescription={(cardID, newDescription) => actions.updateCardData(cardID, { description: newDescription }) }
       hasAnotherCard={hasAnotherCard}
+      fullWidth={fullWidth}
       originalAnchor={originalAnchor} ></TrelloCard>,
     placeholder
   );

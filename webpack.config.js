@@ -15,6 +15,7 @@ module.exports = {
 
     /* entry points da app */
     'js/process_list.js': './src/js/entries/process_list',
+    'js/process_content.js': './src/js/entries/process_content',
 
     /* outros scripts */
     'js/common.js': './src/js/common.js',

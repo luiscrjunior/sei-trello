@@ -14,7 +14,11 @@ export const load = (opts) => {
 
     store.onDataChanged(() => ui.render());
 
-    actions.refreshAllCards();
+    if (opts && 'processNumber' in opts) {
+      actions.refreshCards(opts['processNumber']);
+    } else {
+      actions.refreshCards();
+    }
 
   });
 
