@@ -76,3 +76,10 @@ export const getAllProcesssFromCardID = (cardID) => {
     .filter((card) => card.cardID === cardID)
     .map((card) => card.processNumber);
 };
+
+export const updateCardsData = (cardID, newData) => {
+  data.cards
+    .filter((card) => card.cardID === cardID)
+    .map((card) => Object.assign(card, newData));
+  triggerEvent('onDataChanged');
+};

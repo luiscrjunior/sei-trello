@@ -41,7 +41,7 @@ const commands = [
   },
   {
     descr: 'Sincronizando git local com remote...',
-    cmd: 'git push origin master dev',
+    cmd: 'git push --tags origin master dev',
   },
 
 ];

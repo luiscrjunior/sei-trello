@@ -1,6 +1,13 @@
 # Changelog
 Todas mudanças do projeto estão documentadas neste arquivo.
 
+## [em desenvolvimento]
+- Implementado tooltip que esclarecem a função de alguns botões.
+- Aviso quando há mais de um cartão para o mesmo processo.
+- Possibilidade de deletar cartão.
+- Melhorada comunicação com a API do Trello ao atualizar cartões (cartões recém adicionados não estavam sincronizando).
+- O cartão Trello agora aparece de dentro da visualização do processo.
+
 ## [1.1.0] - 25/02/2018
 - Corrigido bug que mostrava erro quando o usuário possuía muitos quadros.
 - Corrigido bug que mostrava erro quando havia um quadro compartilhado, que o usuário não era proprietário.

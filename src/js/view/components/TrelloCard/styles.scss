@@ -9,9 +9,16 @@
   width: 300px;
   overflow: visible;
 
-  div, p, span {
+  div, p, span, textarea {
     font-family: Helvetica Neue,Arial,Helvetica,sans-serif;
   }
+
+}
+
+.card.full-width {
+  width: auto;
+  margin-right: 10px;
+
 }
 
 .card > .options {
@@ -33,7 +40,12 @@
 }
 
 .card > .options > a {
-  padding: 0 2px;
+  padding: 0 6px 0 0;
+  cursor: pointer;
+}
+
+.card > .options > a:last-child {
+  padding-right: 0;
 }
 
 .card > .options > a > i {
@@ -103,6 +115,7 @@
 .location {
   margin: 0px 5px;
   color: #838c91;
+  font-size: 12px;
 
   > u {
     text-decoration: underline;
@@ -140,6 +153,7 @@
 .descr {
   color: #424242;
   font-size: 12px;  
+  word-break: break-word;
 }
 
 
@@ -216,4 +230,11 @@
     padding: 0;
     word-break: break-word;
   }
+}
+
+.hasAnotherCard {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  color: #EF6C00;
 }
