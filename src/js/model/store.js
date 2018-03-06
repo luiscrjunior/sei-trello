@@ -1,4 +1,4 @@
-import { isEqual } from 'underscore';
+import { isEqual } from 'lodash';
 
 let initialData = {
   isLoading: false,
@@ -93,8 +93,16 @@ export const updateCardsData = (cardID, newData) => {
 };
 
 export const setCurrentLabels = (labels) => {
-  if (!isEqual(labels, data.currentLabels)) {
+  if (!isEqual(labels, data.currentLabels)) { /* prevent infinite loop */
     data.currentLabels = labels;
+    triggerEvent('onDataChanged');
+  }
+};
+
+export const updateFilter = (newFilter) => {
+  if (!isEqual(newFilter, data.filter)) { /* prevent infinite loop */
+    data.filter = newFilter;
+    console.log(data.filter);
     triggerEvent('onDataChanged');
   }
 };

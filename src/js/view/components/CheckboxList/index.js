@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './styles.scss';
 import classNames from 'classnames';
-import { isEqual, isArray } from 'underscore';
+import { isEqual, isArray } from 'lodash';
 
 class CheckboxList extends React.Component {
 
@@ -17,9 +17,7 @@ class CheckboxList extends React.Component {
     } else if (typeof this.props.selected === 'string') {
       return (key === this.props.selected);
     } else if (isArray(this.props.selected)) {
-      return (this.props.selected.indexOf(key) > -1);
-    } else if (typeof this.props.selected === 'object') {
-      return (isEqual(this.props.selected, key));
+      return this.props.selected.some((itemInSelection) => isEqual(itemInSelection, key));
     } else {
       return false;
     }
