@@ -1,8 +1,11 @@
-.loadingImg {
-  display: inline-block;
-  position: absolute;
-  left: 10px;
-  top: 10px;
-  height: 24px;
-  width: 24px;  
+.wrapper {
+	position: relative;
+	overflow: visible;
 }
+
+.filter-panel {
+	position: absolute;
+	left: 0;
+	top: 42px;
+}
+
