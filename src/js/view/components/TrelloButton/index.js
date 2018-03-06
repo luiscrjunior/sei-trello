@@ -14,8 +14,8 @@ class TrelloButton extends React.Component {
 
   render () {
     return (
-      <a href='#' onClick={this.onClick.bind(this)} className={styles.button} >
-        <img title='Atualizar cartões do Trello' src={buttonBG} className={styles.buttonBG} />
+      <a href='#' title={this.props.title} onClick={this.onClick.bind(this)} className={styles.button} >
+        <img src={buttonBG} className={styles.buttonBG} />
         <div className={styles['icon-holder']}>
           <i className={classNames(this.props.icon, styles['icon'])}></i>
         </div>
