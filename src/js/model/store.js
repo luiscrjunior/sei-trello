@@ -1,7 +1,15 @@
+import { isEqual } from 'underscore';
+
 let initialData = {
   isLoading: false,
   isAddingCardFor: null,
   cards: [],
+  filter: {
+    process: null,
+    labels: null,
+    due: null,
+  },
+  currentLabels: [],
 };
 
 let data = Object.assign({}, initialData);
@@ -82,4 +90,11 @@ export const updateCardsData = (cardID, newData) => {
     .filter((card) => card.cardID === cardID)
     .map((card) => Object.assign(card, newData));
   triggerEvent('onDataChanged');
+};
+
+export const setCurrentLabels = (labels) => {
+  if (!isEqual(labels, data.currentLabels)) {
+    data.currentLabels = labels;
+    triggerEvent('onDataChanged');
+  }
 };

@@ -1,13 +1,14 @@
 import React from 'react';
 import styles from './styles.scss';
 import classNames from 'classnames';
+import { isEqual, isArray } from 'underscore';
 
 class CheckboxList extends React.Component {
 
-  handleClick (isSelected, key, e) {
+  handleClick (isSelected, item, e) {
     e.preventDefault();
     if (!this.props.onClick) return;
-    this.props.onClick(!isSelected, key);
+    this.props.onClick(!isSelected, item);
   }
 
   isSelected (key) {
@@ -15,8 +16,10 @@ class CheckboxList extends React.Component {
       return false;
     } else if (typeof this.props.selected === 'string') {
       return (key === this.props.selected);
-    } else if (typeof this.props.selected === 'object') {
+    } else if (isArray(this.props.selected)) {
       return (this.props.selected.indexOf(key) > -1);
+    } else if (typeof this.props.selected === 'object') {
+      return (isEqual(this.props.selected, key));
     } else {
       return false;
     }
@@ -24,11 +27,11 @@ class CheckboxList extends React.Component {
 
   renderItems () {
     if (!this.props.options) return null;
-    return this.props.options.map((item) => {
+    return this.props.options.map((item, idx) => {
       const isSelected = this.isSelected(item.key);
-      const colorStyle = item.key.replace('LABEL_', 'color-block-').toLowerCase();
+      const colorStyle = (typeof item.key === 'object' && 'color' in item.key) ? 'color-block-' + item.key.color.toLowerCase() : null;
       return (
-        <li key={item.key} className={classNames(styles.item, { [styles.selected]: isSelected })}>
+        <li key={idx} className={classNames(styles.item, { [styles.selected]: isSelected })}>
           <a href="#" className={styles.anchor} onClick={this.handleClick.bind(this, isSelected, item.key)}>
             <span className={classNames(styles['color-block'], styles[colorStyle], { hide: !this.props.color })}></span>
             <span className={styles.label}>{item.label}</span>

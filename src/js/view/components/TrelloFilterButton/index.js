@@ -22,6 +22,11 @@ class TrelloFilterButton extends React.Component {
     this.setState({ isOpen: false });
   }
 
+  onFilterChange (type, checked, key) {
+    if (!this.props.onFilterChange) return;
+    this.props.onFilterChange(type, checked, key);
+  }
+
   render () {
     return (
       <div className={styles.wrapper}>
@@ -32,9 +37,10 @@ class TrelloFilterButton extends React.Component {
         </TrelloButton>
         <FilterPanel
           className={classNames(styles['filter-panel'], { hide: !this.state.isOpen }) }
-          filter={{process: null, labels: null, due: null}}
+          filter={this.props.filter}
+          currentLabels={this.props.currentLabels}
           onClose={this.onPanelClose.bind(this)}
-          onClick={this.onClick.bind(this)}> ></FilterPanel>  
+          onFilterChange={this.onFilterChange.bind(this)}> ></FilterPanel>
       </div>
     );
   }

@@ -19,7 +19,8 @@ const renderRefreshButton = (placeholder, data) => {
 const renderFilterButton = (placeholder, data) => {
   ReactDOM.render(
     <TrelloFilterButton
-      onClick={() => console.log('filter')}></TrelloFilterButton>, placeholder);
+      currentLabels={data.currentLabels}
+      onFilterChange={(type, checked, key) => console.log(type, checked, key)}></TrelloFilterButton>, placeholder);
 };
 
 const renderTrelloCard = (placeholder, card, hasAnotherCard, originalAnchor) => {
@@ -93,31 +94,53 @@ const renderTrelloBox = (box, data) => {
 
 };
 
+const updateCurrentLabels = (data, processBoxes) => {
+
+  const allProcess = Array.prototype.slice.call(processBoxes)
+    .map((processBox) => processBox.getAttribute('data-trello-process-number'))
+    .filter((processBox) => processBox); /* exclude null */
+
+  let uniqLabels = [];
+  data.cards
+    .filter((card) => allProcess.some((process) => card.processNumber === process))
+    .forEach((card) => {
+      card.labels.forEach((label) => {
+        const labelAlreadyAdded = uniqLabels.some((labelAdded) => labelAdded.color === label.color && labelAdded.label === label.label);
+        if (!labelAlreadyAdded) uniqLabels.push(label);
+      });
+    });
+
+  store.setCurrentLabels(uniqLabels);
+};
+
 export const render = () => {
 
   const data = store.getData();
 
-  const targets = [
-    {
+  const targets = {
+    'refresh-button': {
       selector: '.trello-refresh-button',
       fn: renderRefreshButton,
+      elements: [],
     },
-    {
+    'filter-button': {
       selector: '.trello-filter-button',
       fn: renderFilterButton,
+      elements: [],
     },
-    {
+    'process-box': {
       selector: '.trello-process-box',
       fn: renderTrelloBox,
+      elements: [],
     },
-  ];
+  };
 
-  targets.forEach((target) => {
-    const elements = document.querySelectorAll(target.selector);
-    for (let i = 0; i < elements.length; i++) {
-      const element = elements[i];
-      target.fn(element, data);
-    }
-  });
+  /* populate dom elements and execute function */
+  for (let k in targets) {
+    targets[k].elements = document.querySelectorAll(targets[k].selector);
+    for (let i = 0; i < targets[k].elements.length; i++) targets[k].fn(targets[k].elements[i], data);
+  }
+
+  updateCurrentLabels(data, targets['process-box'].elements);
 
 };
