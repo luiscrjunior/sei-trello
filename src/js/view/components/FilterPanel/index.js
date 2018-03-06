@@ -46,6 +46,7 @@ class FilterPanel extends React.Component {
   }
 
   updateLabels (currentLabels) {
+    if (!currentLabels) currentLabels = [];
     return defaultOptions.labels.concat(currentLabels.map((newLabel) => {
       return {
         key: 'LABEL_' + newLabel.color.toUpperCase(),
@@ -64,9 +65,17 @@ class FilterPanel extends React.Component {
     console.log(type, checked, key);
   }
 
+  onClose () {
+    if (!this.props.onClose) return;
+    this.props.onClose();
+  }
+
   render () {
     return (
-      <FloatingPanel title="Filtros">
+      <FloatingPanel
+        title="Filtros"
+        className={this.props.className}
+        onClose={this.onClose.bind(this)}>
         <CheckboxList
           selected={this.props.filter.process}
           options={this.state.options.process}

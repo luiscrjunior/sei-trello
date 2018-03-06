@@ -10,6 +10,7 @@
   overflow: hidden;
   width: 300px;
   min-height: 50px;
+  z-index: 999;
 
   span, p, a {
     font-family: Helvetica Neue,Arial,Helvetica,sans-serif;
@@ -36,6 +37,10 @@ a.btn-close {
   color: #838c91; 
   font-size: 28px;
   vertical-align: top;
+  text-decoration: none;
+
+  &:hover { text-decoration: none; }
+  
 }
 
 .content {
