@@ -15,12 +15,21 @@
   border: .1em solid black;  
 }
 
+.icon-holder {
+	overflow: hidden;
+	position: absolute;
+	bottom: 2px;
+	right: -1px;
+	width: 14px;
+	height: 14px;
+	border-radius: 50%;
+	background-color: #00C853;
+}
 
-.loadingImg {
-  display: inline-block;
-  position: absolute;
-  left: 10px;
-  top: 10px;
-  height: 24px;
-  width: 24px;  
+.icon {
+	position: absolute;
+	left: 3px;
+	top: 3px;
+	font-size: 8px;
+	color: #fff;
 }

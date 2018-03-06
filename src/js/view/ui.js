@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import TrelloCard from './components/TrelloCard';
-import TrelloButton from './components/TrelloButton';
+import TrelloRefreshButton from './components/TrelloRefreshButton';
 import CreateTrelloCardButton from './components/CreateTrelloCardButton';
 
 import * as store from 'model/store.js';
@@ -10,9 +10,9 @@ import * as actions from 'actions/trello.js';
 
 const renderMainButton = (placeholder, data) => {
   ReactDOM.render(
-    <TrelloButton
+    <TrelloRefreshButton
       onClick={() => actions.refreshCards()}
-      isLoading={data.isLoading} ></TrelloButton>, placeholder);
+      isLoading={data.isLoading} ></TrelloRefreshButton>, placeholder);
 };
 
 const renderTrelloCard = (placeholder, card, hasAnotherCard, originalAnchor) => {
