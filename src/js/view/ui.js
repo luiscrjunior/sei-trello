@@ -3,16 +3,23 @@ import ReactDOM from 'react-dom';
 
 import TrelloCard from './components/TrelloCard';
 import TrelloRefreshButton from './components/TrelloRefreshButton';
+import TrelloFilterButton from './components/TrelloFilterButton';
 import CreateTrelloCardButton from './components/CreateTrelloCardButton';
 
 import * as store from 'model/store.js';
 import * as actions from 'actions/trello.js';
 
-const renderMainButton = (placeholder, data) => {
+const renderRefreshButton = (placeholder, data) => {
   ReactDOM.render(
     <TrelloRefreshButton
       onClick={() => actions.refreshCards()}
       isLoading={data.isLoading} ></TrelloRefreshButton>, placeholder);
+};
+
+const renderFilterButton = (placeholder, data) => {
+  ReactDOM.render(
+    <TrelloFilterButton
+      onClick={() => console.log('filter')}></TrelloFilterButton>, placeholder);
 };
 
 const renderTrelloCard = (placeholder, card, hasAnotherCard, originalAnchor) => {
@@ -92,8 +99,12 @@ export const render = () => {
 
   const targets = [
     {
-      selector: '.trello-main-button',
-      fn: renderMainButton,
+      selector: '.trello-refresh-button',
+      fn: renderRefreshButton,
+    },
+    {
+      selector: '.trello-filter-button',
+      fn: renderFilterButton,
     },
     {
       selector: '.trello-process-box',
