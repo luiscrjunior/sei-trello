@@ -37,6 +37,12 @@ const defaultOptions = {
   ],
 };
 
+const defaultFilter = {
+  process: null,
+  labels: null,
+  due: null,
+};
+
 class FilterPanel extends React.Component {
 
   constructor (props) {
@@ -49,7 +55,7 @@ class FilterPanel extends React.Component {
     if (!currentLabels) currentLabels = [];
     return defaultOptions.labels.concat(currentLabels.map((newLabel) => {
       return {
-        key: 'LABEL_' + newLabel.color.toUpperCase(),
+        key: newLabel,
         label: newLabel.label,
       };
     }));
@@ -61,8 +67,9 @@ class FilterPanel extends React.Component {
     this.setState({ options: currentOptions });
   }
 
-  onItemClick (type, checked, key) {
-    console.log(type, checked, key);
+  onFilterChange (type, checked, key) {
+    if (!this.props.onFilterChange) return;
+    this.props.onFilterChange(type, checked, key);
   }
 
   onClose () {
@@ -71,26 +78,29 @@ class FilterPanel extends React.Component {
   }
 
   render () {
+
+    const filter = this.props.filter || defaultFilter;
+
     return (
       <FloatingPanel
         title="Filtros"
         className={this.props.className}
         onClose={this.onClose.bind(this)}>
         <CheckboxList
-          selected={this.props.filter.process}
+          selected={filter.process}
           options={this.state.options.process}
-          onClick={(checked, key) => this.onItemClick('process', checked, key)} />
+          onClick={(checked, key) => this.onFilterChange('process', checked, key)} />
         <hr />
         <CheckboxList
           color={true}
-          selected={this.props.filter.labels}
+          selected={filter.labels}
           options={this.state.options.labels}
-          onClick={(checked, key) => this.onItemClick('labels', checked, key)} />
+          onClick={(checked, key) => this.onFilterChange('labels', checked, key)} />
         <hr />
         <CheckboxList
-          selected={this.props.filter.due}
+          selected={filter.due}
           options={this.state.options.due}
-          onClick={(checked, key) => this.onItemClick('due', checked, key)} />
+          onClick={(checked, key) => this.onFilterChange('due', checked, key)} />
       </FloatingPanel>
     );
   }
