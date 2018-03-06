@@ -20,7 +20,8 @@ const renderFilterButton = (placeholder, data) => {
   ReactDOM.render(
     <TrelloFilterButton
       currentLabels={data.currentLabels}
-      onFilterChange={(type, checked, key) => console.log(type, checked, key)}></TrelloFilterButton>, placeholder);
+      filter={data.filter}
+      onFilterChange={(type, checked, key) => actions.updateFilter(type, checked, key)}></TrelloFilterButton>, placeholder);
 };
 
 const renderTrelloCard = (placeholder, card, hasAnotherCard, originalAnchor) => {
