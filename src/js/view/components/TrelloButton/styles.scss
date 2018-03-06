@@ -1,25 +1,31 @@
 .button {
   position: relative;
   display: inline-block;
-}
-
-.buttonBG {
-  display: inline-block;
   height: 40px;
   width: 40px;  
   background-color: #0494c7;
   border: .1em solid white;
+  vertical-align: middle;
 }
 
-.buttonBG:hover {
+.button:hover {
   border: .1em solid black;  
+}
+
+.buttonBG {
+  display: inline-block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 32px;
+  width: 32px;  
 }
 
 .icon-holder {
 	overflow: hidden;
 	position: absolute;
-	bottom: 2px;
-	right: -1px;
+	bottom: 3px;
+	right: 3px;
 	width: 14px;
 	height: 14px;
 	border-radius: 50%;
