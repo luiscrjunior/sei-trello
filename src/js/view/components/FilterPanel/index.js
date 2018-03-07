@@ -5,16 +5,6 @@ import FloatingPanel from 'view/components/FloatingPanel';
 import CheckboxList from 'view/components/CheckboxList';
 
 const defaultOptions = {
-  process: [
-    {
-      key: 'WITH_TRELLO_CARD',
-      label: 'Processos com cartão',
-    },
-    {
-      key: 'WITHOUT_TRELLO_CARD',
-      label: 'Processos sem cartão',
-    },
-  ],
   labels: [
     {
       key: 'NO_LABEL',
@@ -38,7 +28,6 @@ const defaultOptions = {
 };
 
 const defaultFilter = {
-  process: null,
   labels: null,
   due: null,
 };
@@ -86,11 +75,6 @@ class FilterPanel extends React.Component {
         title="Filtros"
         className={this.props.className}
         onClose={this.onClose.bind(this)}>
-        <CheckboxList
-          selected={filter.process}
-          options={this.state.options.process}
-          onClick={(checked, key) => this.onFilterChange('process', checked, key)} />
-        <hr />
         <CheckboxList
           color={true}
           selected={filter.labels}
