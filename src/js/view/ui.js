@@ -51,6 +51,20 @@ const renderCreateTrelloCardButton = (placeholder, processNumber, data, newCardD
     , placeholder);
 };
 
+const checkIfFiltered = (cards, filter) => {
+
+  if (cards.length === 0) return false;
+
+  const card = cards[0];
+
+  if (
+    filter.due && filter.due === 'WITH_INCOMPLETE_DUE' &&
+    card.due !== null && card.dueComplete === false
+  ) return false;
+
+  return true;
+};
+
 const renderTrelloBox = (box, data) => {
 
   const processNumber = box.getAttribute('data-trello-process-number');
@@ -92,6 +106,15 @@ const renderTrelloBox = (box, data) => {
     ReactDOM.unmountComponentAtNode(cardPlaceholder);
 
   }
+
+  // const isFiltered = checkIfFiltered(cardsForThisProcess, data.filter);
+  // console.log(isFiltered);
+  // if (isFiltered) {
+  //   if (!box.classList.contains('hide')) box.classList.add('hide');
+  // } else {
+  //   if (box.classList.contains('hide')) box.classList.remove('hide');
+
+  // }
 
 };
 

@@ -5,7 +5,6 @@ let initialData = {
   isAddingCardFor: null,
   cards: [],
   filter: {
-    process: null,
     labels: null,
     due: null,
   },
@@ -102,7 +101,6 @@ export const setCurrentLabels = (labels) => {
 export const updateFilter = (newFilter) => {
   if (!isEqual(newFilter, data.filter)) { /* prevent infinite loop */
     data.filter = newFilter;
-    console.log(data.filter);
     triggerEvent('onDataChanged');
   }
 };
