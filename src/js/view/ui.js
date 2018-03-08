@@ -6,6 +6,8 @@ import TrelloRefreshButton from './components/TrelloRefreshButton';
 import TrelloFilterButton from './components/TrelloFilterButton';
 import CreateTrelloCardButton from './components/CreateTrelloCardButton';
 
+import * as filter from './helper/filter.js';
+
 import * as store from 'model/store.js';
 import * as actions from 'actions/trello.js';
 
@@ -51,20 +53,6 @@ const renderCreateTrelloCardButton = (placeholder, processNumber, data, newCardD
     , placeholder);
 };
 
-const checkIfFiltered = (cards, filter) => {
-
-  if (cards.length === 0) return false;
-
-  const card = cards[0];
-
-  if (
-    filter.due && filter.due === 'WITH_INCOMPLETE_DUE' &&
-    card.due !== null && card.dueComplete === false
-  ) return false;
-
-  return true;
-};
-
 const renderTrelloBox = (box, data) => {
 
   const processNumber = box.getAttribute('data-trello-process-number');
@@ -79,12 +67,22 @@ const renderTrelloBox = (box, data) => {
 
   const hasTrelloCard = (cardsForThisProcess.length > 0);
 
+  const cardToConsider = hasTrelloCard ? cardsForThisProcess[0] : null;
+
+  const passedInFilter = filter.mustShow(data.filter, hasTrelloCard, cardToConsider);
+
+  if (passedInFilter) {
+    if (box.classList.contains('hide')) box.classList.remove('hide');
+  } else {
+    if (!box.classList.contains('hide')) box.classList.add('hide');
+  }
+
   if (hasTrelloCard) {
 
     /* render trello card */
     if (processAnchor) processAnchor.classList.add('hide');
     cardPlaceholder.classList.remove('hide');
-    renderTrelloCard(cardPlaceholder, cardsForThisProcess[0], (cardsForThisProcess.length > 1), processAnchor);
+    renderTrelloCard(cardPlaceholder, cardToConsider, (cardsForThisProcess.length > 1), processAnchor);
 
     /* remove create card button */
     createCardPlaceholder.classList.add('hide');
@@ -106,15 +104,6 @@ const renderTrelloBox = (box, data) => {
     ReactDOM.unmountComponentAtNode(cardPlaceholder);
 
   }
-
-  // const isFiltered = checkIfFiltered(cardsForThisProcess, data.filter);
-  // console.log(isFiltered);
-  // if (isFiltered) {
-  //   if (!box.classList.contains('hide')) box.classList.add('hide');
-  // } else {
-  //   if (box.classList.contains('hide')) box.classList.remove('hide');
-
-  // }
 
 };
 
