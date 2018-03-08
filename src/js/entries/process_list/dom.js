@@ -73,8 +73,19 @@ const addTrelloBoxes = () => {
 
   });
 };
+const addFilterMessages = () => {
+  const recordMessages = document.querySelectorAll('.infraCaption');
+
+  for (let i = 0; i < recordMessages.length; i++) {
+    let placeholder = document.createElement('span');
+    placeholder.classList.add('trello-filter-message');
+    recordMessages[i].appendChild(placeholder);
+  }
+
+};
 
 export const prepare = () => {
   addTrelloCommandButtons();
   addTrelloBoxes();
+  addFilterMessages();
 };
