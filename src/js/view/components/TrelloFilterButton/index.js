@@ -29,7 +29,7 @@ class TrelloFilterButton extends React.Component {
 
   render () {
     return (
-      <div className={styles.wrapper}>
+      <div className={classNames(styles.wrapper, 'btn-with-filter')}>
         <TrelloButton
           title="Filtrar"
           icon="fas fa-filter"
@@ -37,9 +37,9 @@ class TrelloFilterButton extends React.Component {
         </TrelloButton>
         <FilterPanel
           className={classNames(styles['filter-panel'], { hide: !this.state.isOpen }) }
-          filter={this.props.filter}
           currentLabels={this.props.currentLabels}
           onClose={this.onPanelClose.bind(this)}
+          filter={this.props.filter}
           onFilterChange={this.onFilterChange.bind(this)}> ></FilterPanel>
       </div>
     );
