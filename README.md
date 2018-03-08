@@ -29,7 +29,7 @@ _Obs.: não testei esse setup no Windows, apenas no linux. Os comandos provavelm
 Para criar o ambiente de desenvolvimento, você deve primeiro clonar este repositório ou seu fork:
 
 ```
-git clone <url>
+git clone git@github.com:luiscrjunior/sei-trello.git
 ```
 
 Entre no diretório do repositório e faça um:
