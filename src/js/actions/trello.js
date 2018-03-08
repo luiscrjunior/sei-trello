@@ -1,3 +1,5 @@
+import { merge, isEqual } from 'lodash';
+
 import * as api from 'api/trello.js';
 import * as store from 'model/store.js';
 import * as handler from 'model/handler.js';
@@ -189,4 +191,27 @@ export const deleteCard = (cardID) => {
       console.log(error);
       alert.error('Ocorreu um erro ao remover o cartão.');
     });
+};
+
+export const updateFilter = (type, checked, key) => {
+
+  let filter = merge({}, store.getData().filter);
+
+  if (type === 'process') filter.process = (checked) ? key : null;
+
+  if (type === 'due') filter.due = (checked) ? key : null;
+
+  if (type === 'labels') {
+    if (checked) {
+      if (!filter.labels) filter.labels = [];
+      filter.labels.push(key);
+    } else {
+      if (filter.labels) {
+        filter.labels = filter.labels.filter((label) => !isEqual(label, key));
+        if (filter.labels.length === 0) filter.labels = null;
+      }
+    }
+  }
+
+  store.updateFilter(filter);
 };
