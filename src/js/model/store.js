@@ -1,7 +1,14 @@
+import { isEqual } from 'lodash';
+
 let initialData = {
   isLoading: false,
   isAddingCardFor: null,
   cards: [],
+  filter: {
+    labels: null,
+    due: null,
+  },
+  currentLabels: [],
 };
 
 let data = Object.assign({}, initialData);
@@ -82,4 +89,18 @@ export const updateCardsData = (cardID, newData) => {
     .filter((card) => card.cardID === cardID)
     .map((card) => Object.assign(card, newData));
   triggerEvent('onDataChanged');
+};
+
+export const setCurrentLabels = (labels) => {
+  if (!isEqual(labels, data.currentLabels)) { /* prevent infinite loop */
+    data.currentLabels = labels;
+    triggerEvent('onDataChanged');
+  }
+};
+
+export const updateFilter = (newFilter) => {
+  if (!isEqual(newFilter, data.filter)) { /* prevent infinite loop */
+    data.filter = newFilter;
+    triggerEvent('onDataChanged');
+  }
 };
