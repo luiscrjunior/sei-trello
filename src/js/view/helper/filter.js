@@ -1,12 +1,5 @@
 import { isEqual } from 'lodash';
 
-const isFilterEmpty = (filter) => {
-  for (let k in filter) {
-    if (filter[k] !== null) return false;
-  }
-  return true;
-};
-
 const isFilterPassed = (filterChecks) => {
   for (let k in filterChecks) {
     if (filterChecks[k].show === false) return false;
@@ -45,6 +38,13 @@ const mustShowDue = (filter, hasTrelloCard, card) => {
   ) return true;
 
   return false;
+};
+
+export const isFilterEmpty = (filter) => {
+  for (let k in filter) {
+    if (filter[k] !== null) return false;
+  }
+  return true;
 };
 
 export const mustShow = (filter, hasTrelloCard, card) => {

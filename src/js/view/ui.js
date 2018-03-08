@@ -5,6 +5,7 @@ import TrelloCard from './components/TrelloCard';
 import TrelloRefreshButton from './components/TrelloRefreshButton';
 import TrelloFilterButton from './components/TrelloFilterButton';
 import CreateTrelloCardButton from './components/CreateTrelloCardButton';
+import FilterMessage from './components/FilterMessage';
 
 import * as filter from './helper/filter.js';
 
@@ -107,6 +108,10 @@ const renderTrelloBox = (box, data) => {
 
 };
 
+const renderFilterMessage = (placeholder, data) => {
+  ReactDOM.render(<FilterMessage show={ !filter.isFilterEmpty(data.filter) }></FilterMessage>, placeholder);
+};
+
 const updateCurrentLabels = (data, processBoxes) => {
 
   const allProcess = Array.prototype.slice.call(processBoxes)
@@ -144,6 +149,11 @@ export const render = () => {
     'process-box': {
       selector: '.trello-process-box',
       fn: renderTrelloBox,
+      elements: [],
+    },
+    'filter-message': {
+      selector: '.trello-filter-message',
+      fn: renderFilterMessage,
       elements: [],
     },
   };
