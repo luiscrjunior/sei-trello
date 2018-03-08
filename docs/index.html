@@ -10,7 +10,8 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   
   <style type="text/css">
-    h4 { margin: 40px 0 10px 0; }
+    body { padding-bottom: 40px; }
+    h4 { margin: 50px 0 10px 0; }
   </style>
 
 </head>
@@ -23,23 +24,29 @@
 
     <h4>O que é?</h4>
 
-    <p>O <a href="https://chrome.google.com/webstore/detail/sei%2Btrello/dnjlkohajpocckjiddppmfhkpfdbkecl?hl=pt-BR"><span class="badge badge-light">SEI+Trello</span></a> é uma extensão do <a href="https://www.google.com.br/chrome/">Chrome</a> que permite uma integração entre o Sistema Eletrônico de Informações (SEI) e o <a href="https://www.trello.com/">Trello</a>.</p>
+    <p>O <span class="badge badge-light">SEI+Trello</span> é uma extensão do <a href="https://www.google.com.br/chrome/">Chrome</a> que permite uma integração entre o Sistema Eletrônico de Informações (SEI) e o <a href="https://www.trello.com/">Trello</a>.</p>
+
+    <h4>Como instalar?</h4>
+
+    <p>Primeiro, acesse a página da extensão publicada <a href="https://chrome.google.com/webstore/detail/sei%2Btrello/dnjlkohajpocckjiddppmfhkpfdbkecl?hl=pt-BR">na Chrome Web Store</a>. Depois, clique em <strong>USAR NO CHROME</strong> (canto superior direito) e, depois de instalada, configure-a na página de opções (credenciais e outras informações, tais como lista e quadro padrão) e pronto! Abra o SEI e seu Trello já estará integrado.
 
     <h4>Funcionalidades</h4>
 
     <p>Atualmente, a extensão conta com as seguintes funcionalidades:</p>
 
     <ul>
-      <li>Na página <code>controle de processos</code>, o cartão Trello vinculado a um processo aparece no lugar do número do Processo.</li>
+      <li>Na página <code>controle de processos</code>, os cartões Trello vinculados aos respectivos processos SEI aparecem no lugar do número do Processo.</li>
+      <li>Na página de <code>visualização do processo</code>, o cartão Trello vinculado àquele processo aparece em cima da árvore de documentos.</li>
       <li>O cartão Trello que aparece no SEI mostra o nome do cartão, a descrição, as etiquetas, onde se encontra (quadro e lista) e a data de entrega relacionada ao cartão. Se a data está próxima, ou atrasada, um destaque aparece junto à data.</li>
-      <li>É possível criar um cartão novo no Trello, vinculado a um Processo. Este cartão já vem preenchido com a especificação do processo (nome do cartão) e as observações da unidade (descrição), se houver alguma.</li>
-      <li>É possível editar o nome do cartão e a descrição pelo SEI.</li>      
-      <li><p><strong>Confira as atualizações de cada versão <a href="https://github.com/luiscrjunior/sei-trello/blob/master/CHANGELOG.md">aqui</a>.</strong></p></li>
+      <li>É possível criar um cartão novo no Trello de dentro do SEI, vinculado a um Processo. Este cartão já vem preenchido com a especificação do processo (nome do cartão) e as observações da unidade (descrição), quando esta informação estiver disponível.</li>
+      <li>É possível editar o nome do cartão e a descrição, de dentro do SEI.</li>      
+      <li>É possível filtrar os cartões por etiqueta e data de entrega (em aberto, sem data de entrega e concluídos).</li>      
     </ul>
 
+    <p><strong>Acompanhe as atualizações de cada versão <a href="https://github.com/luiscrjunior/sei-trello/blob/master/CHANGELOG.md">aqui</a>.</strong></p>
     
-    <img src="overview.png" width="100%" />
-    <p><small>Demonstração das funcionalidades nesta imagem.</small></p>
+    <img src="overview.png" width="100%" style="margin-top: 40px; max-width: 720px" />
+    <p><small>Demonstração das funcionalidades.</small></p>
 
     <h4>Como vincular um cartão Trello a um Processo SEI?</h4>
 
@@ -47,7 +54,7 @@
 
     <p>Fazendo isto, em qualquer linha da descrição, o cartão já aparecerá no SEI.</p>
 
-    <img src="cardDescription.png" width="100%" />
+    <img src="cardDescription.png" width="100%" style="margin-top: 40px; max-width: 500px" />
     <p><small>Exemplo de como vincular um cartão Trello ao SEI</small></p>
 
     <h4>Configuração</h4>
@@ -62,12 +69,23 @@
 
     <p>Você deve também configurar o quadro e a lista padrão para poder criar um novo cartão pelo SEI.</p>    
 
-    <img src="optionsPage.png" width="100%" />
+    <img src="optionsPage.png" width="100%" style="margin-top: 40px; max-width: 900px"  />
     <p><small>Página de opções.</small></p>
 
+    <h4>Dúvidas? Sugestões? Críticas?</h4>
+    
+    <p>Envie um e-mail para <a href="mailto:luis.reischak@gmail.com">luis.reischak@gmail.com</a></p>
+    
+    <p>Acesse a página do repositório (código fonte) em <a href="https://github.com/luiscrjunior/sei-trello">https://github.com/luiscrjunior/sei-trello</a>.</p>
+
+
   </div>
+  
 
   <a href="https://github.com/luiscrjunior/sei-trello"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>  
+
+
+
 
 </body>
 </html>
