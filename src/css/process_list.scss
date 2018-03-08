@@ -2,9 +2,14 @@
   Estilo para ser inserido na página Controle de Processos
 */
 
-.trello-main-button {
+.trello-refresh-button,
+.trello-filter-button {
   display: inline-block;
+  vertical-align: top;
 }
+
+.trello-refresh-button { margin-left: -1px; }
+.trello-filter-button { margin-left: 1px; }
 
 .trello-card {
   display: block;
