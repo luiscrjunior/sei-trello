@@ -16,7 +16,7 @@ A extensão está sendo mantida neste repositório e quem quiser colaborar, fiqu
 
 ### Tecnologias utilizadas
 
-O código é escrito em `javascript` (todo ele em `es6`), com transpilação para es5 via `babel`. O gerenciador de pacotes é o `npm`, o bundler é o `webpack` e a renderização usa componentes escritos em `react`. Então, o desenvolvedor deve ter conhecimentos mínimos nessas ferramentas, além do `git`, claro.
+O código é escrito em `javascript` (todo ele em [`es6`](http://www.ecma-international.org/ecma-262/6.0/)), com transpilação para es5 via [`babel`](https://babeljs.io/). O gerenciador de pacotes é o [`npm`](https://www.npmjs.com/), o bundler é o [`webpack`](https://webpack.js.org/) e a renderização usa [`react`](https://reactjs.org/). Então, o desenvolvedor deve ter conhecimentos mínimos nessas ferramentas, além do `git`, claro.
 
 ### Requisito mínimo
 
