@@ -1,8 +1,15 @@
 # Changelog
 Todas mudanças do projeto estão documentadas neste arquivo.
 
+## [em desenvolvimento]
+- Possibilidade de filtar por quadro/lista.
+- Resolvido bug de não criar cartões de dentro do processo quando o protocolo está fora do padrão SEI.
+
+## [1.3.0] - 08/03/2018
+- Implementado possibilidade de filtrar (botão filtro).
+
 ## [1.2.0] - 04/03/2018
-- Implementado tooltip que esclarecem a função de alguns botões.
+- Implementado tooltip que esclarece a função de alguns botões.
 - Aviso quando há mais de um cartão para o mesmo processo.
 - Possibilidade de deletar cartão.
 - Melhorada comunicação com a API do Trello ao atualizar cartões (cartões recém adicionados não estavam sincronizando).

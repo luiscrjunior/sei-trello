@@ -21,7 +21,7 @@ const extractRelevantDataFromRow = (row) => {
     const processAnchorTooltipInfo = processAnchor.getAttribute('onmouseover');
     if (processAnchorTooltipInfo) {
       const processAnchorInfoArray = processAnchorTooltipInfo.split('\'');
-      if (processAnchorInfoArray.length === 5 && processAnchorInfoArray[1].length > 0) { 
+      if (processAnchorInfoArray.length === 5 && processAnchorInfoArray[1].length > 0) {
         data['process-specification'] = processAnchorInfoArray[1];
       }
     }
@@ -30,11 +30,17 @@ const extractRelevantDataFromRow = (row) => {
   return data;
 };
 
-const addTrelloMainButton = () => {
+const addTrelloCommandButtons = () => {
   const whereToAdd = document.querySelector('#divComandos');
-  const placeHolder = document.createElement('div');
-  placeHolder.classList.add('trello-main-button');
-  whereToAdd.appendChild(placeHolder);
+
+  let placeholder = document.createElement('div');
+  placeholder.classList.add('trello-refresh-button');
+  whereToAdd.appendChild(placeholder);
+
+  placeholder = document.createElement('div');
+  placeholder.classList.add('trello-filter-button');
+  whereToAdd.appendChild(placeholder);
+
 };
 
 const addTrelloBoxes = () => {
@@ -67,8 +73,19 @@ const addTrelloBoxes = () => {
 
   });
 };
+const addFilterMessages = () => {
+  const recordMessages = document.querySelectorAll('.infraCaption');
+
+  for (let i = 0; i < recordMessages.length; i++) {
+    let placeholder = document.createElement('span');
+    placeholder.classList.add('trello-filter-message');
+    recordMessages[i].appendChild(placeholder);
+  }
+
+};
 
 export const prepare = () => {
-  addTrelloMainButton();
+  addTrelloCommandButtons();
   addTrelloBoxes();
+  addFilterMessages();
 };

@@ -15,9 +15,9 @@ class TrelloRefreshButton extends React.Component {
 
   render () {
     return (
-      <TrelloButton 
+      <TrelloButton
         title="Atualizar cartões do Trello"
-        icon="fas fa-sync-alt" 
+        icon="fas fa-sync-alt"
         onClick={this.onClick.bind(this)}>
         <img src={loadingImg} className={classNames(styles.loadingImg, { hide: !this.props.isLoading })} />
       </TrelloButton>

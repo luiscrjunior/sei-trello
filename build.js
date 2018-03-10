@@ -33,7 +33,7 @@ const commands = [
   },
   {
     descr: 'Compactando o path',
-    cmd: `cd ${appPath} && zip -r "${outputPath}/sei-trello_v${appManifest.version}.zip" ./`,
+    cmd: `cd ${appPath} && mkdir -p ${outputPath} && zip -r "${outputPath}/sei-trello_v${appManifest.version}.zip" ./`,
   },
   {
     descr: 'Setando tag desta versão',
