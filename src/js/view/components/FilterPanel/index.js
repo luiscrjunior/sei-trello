@@ -55,12 +55,18 @@ class FilterPanel extends React.Component {
 
   updateLocations (updateLocations) {
     if (!updateLocations) updateLocations = [];
-    return updateLocations.map((newLocation) => {
+    let newLocations = updateLocations.map((newLocation) => {
       return {
         key: newLocation,
         label: newLocation.board.name + ' » ' + newLocation.list.name,
       };
     });
+    newLocations.sort((a, b) => {
+      const label1 = a.label.toUpperCase();
+      const label2 = b.label.toUpperCase();
+      return (label1 < label2) ? -1 : (label1 > label2) ? 1 : 0;
+    });
+    return newLocations;
   };
 
   componentWillReceiveProps (nextProps) {
