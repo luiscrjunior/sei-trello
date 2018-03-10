@@ -5,6 +5,7 @@ import FloatingPanel from 'view/components/FloatingPanel';
 import CheckboxList from 'view/components/CheckboxList';
 
 const defaultOptions = {
+  location: [],
   labels: [
     {
       key: 'NO_LABEL',
@@ -28,6 +29,7 @@ const defaultOptions = {
 };
 
 const defaultFilter = {
+  location: null,
   labels: null,
   due: null,
 };
@@ -38,6 +40,7 @@ class FilterPanel extends React.Component {
     super(props);
     this.state = { options: Object.assign({}, defaultOptions) };
     this.state.options.labels = this.updateLabels(props.currentLabels);
+    this.state.options.locations = this.updateLocations(props.currentLocations);
   }
 
   updateLabels (currentLabels) {
@@ -50,9 +53,20 @@ class FilterPanel extends React.Component {
     }));
   }
 
+  updateLocations (updateLocations) {
+    if (!updateLocations) updateLocations = [];
+    return updateLocations.map((newLocation) => {
+      return {
+        key: newLocation,
+        label: newLocation.board.name + ' » ' + newLocation.list.name,
+      };
+    });
+  };
+
   componentWillReceiveProps (nextProps) {
     let currentOptions = Object.assign({}, this.state.options);
     currentOptions.labels = this.updateLabels(nextProps.currentLabels);
+    currentOptions.locations = this.updateLocations(nextProps.currentLocations);
     this.setState({ options: currentOptions });
   }
 
@@ -75,6 +89,11 @@ class FilterPanel extends React.Component {
         title="Filtros"
         className={this.props.className}
         onClose={this.onClose.bind(this)}>
+        <CheckboxList
+          selected={filter.locations}
+          options={this.state.options.locations}
+          onClick={(checked, key) => this.onFilterChange('locations', checked, key)} />        
+        <hr />
         <CheckboxList
           color={true}
           selected={filter.labels}
