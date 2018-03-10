@@ -40,6 +40,15 @@ const mustShowDue = (filter, hasTrelloCard, card) => {
   return false;
 };
 
+const mustShowLocations = (filter, hasTrelloCard, card) => {
+
+  if (
+    filter.some((filterLocation) => isEqual(card.location, filterLocation))
+  ) return true;
+
+  return false;
+};
+
 export const isFilterEmpty = (filter) => {
   for (let k in filter) {
     if (filter[k] !== null) return false;
@@ -61,6 +70,10 @@ export const mustShow = (filter, hasTrelloCard, card) => {
     'due': {
       show: true,
       check: mustShowDue,
+    },
+    'locations': {
+      show: true,
+      check: mustShowLocations,
     },
   };
 

@@ -1,14 +1,16 @@
-import { isEqual } from 'lodash';
+import { isEqual, merge } from 'lodash';
 
 let initialData = {
   isLoading: false,
   isAddingCardFor: null,
   cards: [],
   filter: {
+    locations: null,
     labels: null,
     due: null,
   },
   currentLabels: [],
+  currentLocations: [],
 };
 
 let data = Object.assign({}, initialData);
@@ -87,13 +89,20 @@ export const getAllProcesssFromCardID = (cardID) => {
 export const updateCardsData = (cardID, newData) => {
   data.cards
     .filter((card) => card.cardID === cardID)
-    .map((card) => Object.assign(card, newData));
+    .map((card) => merge(card, newData));
   triggerEvent('onDataChanged');
 };
 
 export const setCurrentLabels = (labels) => {
   if (!isEqual(labels, data.currentLabels)) { /* prevent infinite loop */
     data.currentLabels = labels;
+    triggerEvent('onDataChanged');
+  }
+};
+
+export const setCurrentLocations = (locations) => {
+  if (!isEqual(locations, data.currentLocations)) { /* prevent infinite loop */
+    data.currentLocations = locations;
     triggerEvent('onDataChanged');
   }
 };
