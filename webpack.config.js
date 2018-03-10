@@ -107,7 +107,7 @@ module.exports = {
     }),
     new ChromeExtensionReloader({
       port: 9090,
-      reloadPage: true,
+      reloadPage: false,
       entries: {
         contentScript: 'js/process_list.js',
         background: 'js/background.js',
