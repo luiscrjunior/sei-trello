@@ -1,6 +1,9 @@
 # Changelog
 Todas mudanças do projeto estão documentadas neste arquivo.
 
+## [em desenvolvimento]
+- Possibilidade de filtar por quadro/lista.
+
 ## [1.3.0] - 08/03/2018
 - Implementado possibilidade de filtrar (botão filtro).
 

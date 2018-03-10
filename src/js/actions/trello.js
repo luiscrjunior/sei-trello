@@ -213,5 +213,17 @@ export const updateFilter = (type, checked, key) => {
     }
   }
 
+  if (type === 'locations') {
+    if (checked) {
+      if (!filter.locations) filter.locations = [];
+      filter.locations.push(key);
+    } else {
+      if (filter.locations) {
+        filter.locations = filter.locations.filter((location) => !isEqual(location, key));
+        if (filter.locations.length === 0) filter.locations = null;
+      }
+    }
+  }
+
   store.updateFilter(filter);
 };
