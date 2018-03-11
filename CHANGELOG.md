@@ -4,6 +4,7 @@ Todas mudanças do projeto estão documentadas neste arquivo.
 ## [em desenvolvimento]
 - Possibilidade de filtar por quadro/lista.
 - Resolvido bug de não criar cartões de dentro do processo quando o protocolo está fora do padrão SEI.
+- Possibilidade de editar a localização do cartão através de um menu suspenso (quadro e lista).
 
 ## [1.3.0] - 08/03/2018
 - Implementado possibilidade de filtrar (botão filtro).
