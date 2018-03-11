@@ -3,8 +3,11 @@ import * as controller from 'controller/trello.js';
 
 dom.prepare();
 
-const processNumber = document
-  .querySelector('.trello-process-box')
-  .getAttribute('data-trello-process-number');
+const firstTrelloBox = document.querySelector('.trello-process-box');
 
-controller.load({ processNumber: processNumber });
+if (firstTrelloBox) {
+  const processNumber = firstTrelloBox.getAttribute('data-trello-process-number');
+  if (processNumber) {
+    controller.load({ processNumber: processNumber });
+  }
+}

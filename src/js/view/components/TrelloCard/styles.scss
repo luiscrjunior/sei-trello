@@ -116,10 +116,6 @@
   color: #838c91;
   font-size: 12px;
 
-  > u {
-    text-decoration: underline;
-    color: #838c91;
-  }
 }
 
 .descr-wrapper {
@@ -236,4 +232,5 @@
   bottom: 5px;
   right: 5px;
   color: #EF6C00;
+  z-index: 5;
 }

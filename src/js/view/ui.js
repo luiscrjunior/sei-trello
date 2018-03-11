@@ -1,3 +1,4 @@
+import { isEqual, merge } from 'lodash';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -8,6 +9,7 @@ import CreateTrelloCardButton from './components/CreateTrelloCardButton';
 import FilterMessage from './components/FilterMessage';
 
 import * as filter from './helper/filter.js';
+import updateCurrentData from './helper/current-data.js';
 
 import * as store from 'model/store.js';
 import * as actions from 'actions/trello.js';
@@ -23,6 +25,7 @@ const renderFilterButton = (placeholder, data) => {
   ReactDOM.render(
     <TrelloFilterButton
       currentLabels={data.currentLabels}
+      currentLocations={data.currentLocations}
       filter={data.filter}
       onFilterChange={(type, checked, key) => actions.updateFilter(type, checked, key)}></TrelloFilterButton>, placeholder);
 };
@@ -38,6 +41,7 @@ const renderTrelloCard = (placeholder, card, hasAnotherCard, originalAnchor) => 
       deleteCard={(cardID) => actions.deleteCard(cardID) }
       onChangeName={(cardID, newName) => actions.updateCardData(cardID, {name: newName}) }
       onChangeDescription={(cardID, newDescription) => actions.updateCardData(cardID, { description: newDescription }) }
+      onChangeLocation={(cardID, type, newLocation) => actions.updateCardData(cardID, { [type]: newLocation }) }
       hasAnotherCard={hasAnotherCard}
       fullWidth={fullWidth}
       originalAnchor={originalAnchor} ></TrelloCard>,
@@ -112,25 +116,6 @@ const renderFilterMessage = (placeholder, data) => {
   ReactDOM.render(<FilterMessage show={ !filter.isFilterEmpty(data.filter) }></FilterMessage>, placeholder);
 };
 
-const updateCurrentLabels = (data, processBoxes) => {
-
-  const allProcess = Array.prototype.slice.call(processBoxes)
-    .map((processBox) => processBox.getAttribute('data-trello-process-number'))
-    .filter((processBox) => processBox); /* exclude null */
-
-  let uniqLabels = [];
-  data.cards
-    .filter((card) => allProcess.some((process) => card.processNumber === process))
-    .forEach((card) => {
-      card.labels.forEach((label) => {
-        const labelAlreadyAdded = uniqLabels.some((labelAdded) => labelAdded.color === label.color && labelAdded.label === label.label);
-        if (!labelAlreadyAdded) uniqLabels.push(label);
-      });
-    });
-
-  store.setCurrentLabels(uniqLabels);
-};
-
 export const render = () => {
 
   const data = store.getData();
@@ -164,6 +149,6 @@ export const render = () => {
     for (let i = 0; i < targets[k].elements.length; i++) targets[k].fn(targets[k].elements[i], data);
   }
 
-  updateCurrentLabels(data, targets['process-box'].elements);
+  updateCurrentData(data, targets['process-box'].elements);
 
 };
