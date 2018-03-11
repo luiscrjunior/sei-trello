@@ -138,6 +138,10 @@ export const updateCardData = (cardID, newCardData) => {
 
   if ('name' in newCardData) trelloData['name'] = newCardData['name'];
 
+  if ('list' in newCardData) trelloData['idList'] = newCardData['list'].id;
+
+  if ('board' in newCardData) trelloData['idBoard'] = newCardData['board'].id;
+
   api.updateCard(cardID, trelloData)
     .then((response) => {
       doRefreshCardsWithID(cardID)
@@ -209,6 +213,18 @@ export const updateFilter = (type, checked, key) => {
       if (filter.labels) {
         filter.labels = filter.labels.filter((label) => !isEqual(label, key));
         if (filter.labels.length === 0) filter.labels = null;
+      }
+    }
+  }
+
+  if (type === 'locations') {
+    if (checked) {
+      if (!filter.locations) filter.locations = [];
+      filter.locations.push(key);
+    } else {
+      if (filter.locations) {
+        filter.locations = filter.locations.filter((location) => !isEqual(location, key));
+        if (filter.locations.length === 0) filter.locations = null;
       }
     }
   }
