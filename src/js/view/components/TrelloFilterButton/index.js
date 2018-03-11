@@ -29,7 +29,7 @@ class TrelloFilterButton extends React.Component {
 
   render () {
     return (
-      <div className={classNames(styles.wrapper, 'btn-with-filter')}>
+      <div className={classNames(styles.wrapper, 'btn-panel-trigger')}>
         <TrelloButton
           title="Filtrar"
           icon="fas fa-filter"
