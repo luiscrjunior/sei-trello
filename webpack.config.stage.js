@@ -6,7 +6,7 @@ const common = require('./webpack.config.js');
 const outputPath = path.resolve(__dirname, 'stage/output');
 
 common.entry = {
-  'bundle.js': './stage/filter-panel.js',
+  'bundle.js': './stage/trello-card.js',
   'common.css': './src/css/common.scss',
 };
 
