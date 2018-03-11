@@ -16,6 +16,12 @@ class ContextMenu extends React.Component {
     this.props.onClose();
   }
 
+  onClick (key, e) {
+    e.preventDefault();
+    if (!this.props.onClick) return;
+    this.props.onClick(key);
+  }
+
   onBGClick (e) {
     const clickedElement = e.target;
     const menu = ReactDOM.findDOMNode(this.menu);
@@ -42,7 +48,7 @@ class ContextMenu extends React.Component {
   renderItems () {
     if (!this.props.items) return null;
     return this.props.items.map((item, idx) => (
-      <li key={idx} className={styles.item}><a href="#">{item.label}</a></li>
+      <li key={idx} className={styles.item}><a href="#" onClick={this.onClick.bind(this, item.key)}>{item.label}</a></li>
     ));
   }
 

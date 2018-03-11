@@ -30,6 +30,21 @@ export const searchBoardsByName = (boardName) => {
 
 };
 
+export const searchAllBoards = () => {
+
+  const url = 'https://api.trello.com/1/search';
+
+  let params = Object.assign({}, genAuthData(), {
+    query: 'is:open',
+    modelTypes: 'boards',
+    board_fields: 'name',
+    boards_limit: '1000',
+  });
+
+  return axios.get(url, { params: params });
+
+};
+
 export const getListsFromBoard = (boardID) => {
 
   const url = 'https://api.trello.com/1/boards/' + boardID;

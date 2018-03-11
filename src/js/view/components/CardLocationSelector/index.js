@@ -1,14 +1,22 @@
+import { isEqual } from 'lodash';
+
 import React from 'react';
 import styles from './styles.scss';
 import classNames from 'classnames';
 
 import ContextMenu from 'view/components/ContextMenu';
 
+import * as api from 'api/trello.js';
+
 class CardLocationSelector extends React.Component {
 
   constructor (props) {
     super(props);
-    this.state = { menuOpen: false };
+    this.state = {
+      menuOpen: false,
+      isLoading: false,
+      items: [],
+    };
   }
 
   onCloseMenu () {
@@ -16,13 +24,62 @@ class CardLocationSelector extends React.Component {
   }
 
   onCaretClick (e) {
-    this.setState({ menuOpen: !this.state.menuOpen });
+    if (this.state.menuOpen === false) {
+      this.setState({
+        menuOpen: true,
+        isLoading: true,
+      });
+      if (this.props.type === 'board') this.loadBoards();
+      if (this.props.type === 'list') this.loadLists();
+    } else {
+      this.setState({
+        menuOpen: false,
+        isLoading: true,
+      });
+    }
+  }
+
+  setItems (newItems) {
+    this.setState({
+      isLoading: false,
+      items: newItems.map((item) => {
+        return {
+          label: item.name,
+          key: item,
+        };
+      }),
+    });
+  }
+
+  loadBoards () {
+    api.searchAllBoards()
+      .then((data) => this.setItems(data.data.boards))
+      .catch((error) => {
+        this.setState({ menuOpen: false });
+        console.log(error);
+      });
+  }
+
+  loadLists () {
+    api.getListsFromBoard(this.props.currentBoard.id)
+      .then((data) => this.setItems(data.data.lists))
+      .catch((error) => {
+        this.setState({ menuOpen: false });
+        console.log(error);
+      });
   }
 
   componentWillReceiveProps (nextProps) {
     if (this.props.showSelector === true && nextProps.showSelector === false) {
       this.setState({ menuOpen: false }); /* turn off menu when user hover out card */
     }
+  }
+
+  onItemClick (key) {
+    this.setState({ menuOpen: false });
+    if (isEqual(key, this.props.selected)) return;
+    if (!this.props.onChange) return;
+    this.props.onChange(this.props.type, key);
   }
 
   render () {
@@ -38,8 +95,9 @@ class CardLocationSelector extends React.Component {
         <ContextMenu
           className={classNames({ hide: !this.state.menuOpen }) }
           onClose={this.onCloseMenu.bind(this)}
-          items={[{label: 'SEI'}, {label: 'OUTROS'}]}
-          isLoading={false}></ContextMenu>
+          onClick={this.onItemClick.bind(this)}
+          items={this.state.items}
+          isLoading={this.state.isLoading}></ContextMenu>
       </div>
     );
   }
