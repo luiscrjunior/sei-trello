@@ -82,6 +82,10 @@ class TrelloCard extends React.Component {
     if (this.props.onChangeDescription) this.props.onChangeDescription(this.props.cardID, newDescription);
   };
 
+  onChangeLocation (type, newLocation) {
+    if (this.props.onChangeLocation) this.props.onChangeLocation(this.props.cardID, type, newLocation);
+  }
+
   onMouseEnter (e) {
     this.setState({ isHovering: true });
   }
@@ -193,11 +197,14 @@ class TrelloCard extends React.Component {
         <div className={styles.location}>em <CardLocationSelector
           type="board"
           showSelector={this.state.isHovering}
+          onChange={this.onChangeLocation.bind(this)}
           selected={this.props.location.board}
         ></CardLocationSelector> / <CardLocationSelector
           type="list"
           showSelector={this.state.isHovering}
+          onChange={this.onChangeLocation.bind(this)}
           selected={this.props.location.list}
+          currentBoard={this.props.location.board}
         ></CardLocationSelector></div>
 
         <EditableParagraph

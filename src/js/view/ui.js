@@ -41,6 +41,7 @@ const renderTrelloCard = (placeholder, card, hasAnotherCard, originalAnchor) => 
       deleteCard={(cardID) => actions.deleteCard(cardID) }
       onChangeName={(cardID, newName) => actions.updateCardData(cardID, {name: newName}) }
       onChangeDescription={(cardID, newDescription) => actions.updateCardData(cardID, { description: newDescription }) }
+      onChangeLocation={(cardID, type, newLocation) => actions.updateCardData(cardID, { [type]: newLocation }) }
       hasAnotherCard={hasAnotherCard}
       fullWidth={fullWidth}
       originalAnchor={originalAnchor} ></TrelloCard>,

@@ -138,6 +138,10 @@ export const updateCardData = (cardID, newCardData) => {
 
   if ('name' in newCardData) trelloData['name'] = newCardData['name'];
 
+  if ('list' in newCardData) trelloData['idList'] = newCardData['list'].id;
+
+  if ('board' in newCardData) trelloData['idBoard'] = newCardData['board'].id;
+
   api.updateCard(cardID, trelloData)
     .then((response) => {
       doRefreshCardsWithID(cardID)
