@@ -3,7 +3,6 @@ const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const ChromeExtensionReloader = require('webpack-chrome-extension-reloader');
 
 /* este diretório é onde será gerada automaticamente toda estrutura da extensão */
 const outputPath = path.resolve(__dirname, 'dist/expanded');
@@ -104,14 +103,6 @@ module.exports = {
       DEVELOPMENT: JSON.stringify(process.env.NODE_ENV === 'development'),
       PRODUCTION: JSON.stringify(process.env.NODE_ENV === 'production'),
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
-    }),
-    new ChromeExtensionReloader({
-      port: 9090,
-      reloadPage: false,
-      entries: {
-        contentScript: 'js/process_list.js',
-        background: 'js/background.js',
-      },
     }),
   ],
 };
