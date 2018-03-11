@@ -1,5 +1,17 @@
 import { isEqual } from 'lodash';
 import * as store from 'model/store.js';
+import * as actions from 'actions/trello.js';
+
+const removeOldFilters = (data) => {
+
+  if (data.filter.locations) {
+    data.filter.locations.forEach((location) => {
+      const exists = data.currentLocations.some((currentLocation) => isEqual(currentLocation, location));
+      if (!exists) actions.updateFilter('locations', false, location);
+    });
+  }
+
+};
 
 export default (data, processBoxes) => {
 
@@ -27,4 +39,6 @@ export default (data, processBoxes) => {
 
   store.setCurrentLabels(uniqLabels);
   store.setCurrentLocations(uniqLocations);
+
+  removeOldFilters(data);
 };
