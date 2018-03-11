@@ -3,7 +3,10 @@ import styles from './styles.scss';
 import classNames from 'classnames';
 import loadingImg from './loading.svg';
 import dueFormatter from './due.js';
+
 import EditableParagraph from 'view/components/EditableParagraph';
+import CardLocationSelector from 'view/components/CardLocationSelector';
+
 import * as alert from 'view/alert.js';
 
 class TrelloCard extends React.Component {
@@ -18,6 +21,7 @@ class TrelloCard extends React.Component {
         x: 0,
         y: 0,
       },
+      isHovering: false,
     };
   }
 
@@ -77,6 +81,14 @@ class TrelloCard extends React.Component {
   onChangeDescription (newDescription) {
     if (this.props.onChangeDescription) this.props.onChangeDescription(this.props.cardID, newDescription);
   };
+
+  onMouseEnter (e) {
+    this.setState({ isHovering: true });
+  }
+
+  onMouseLeave (e) {
+    this.setState({ isHovering: false });
+  }
 
   renderLabels () {
     if (this.props.labels.length === 0) return null;
@@ -156,7 +168,10 @@ class TrelloCard extends React.Component {
     const isDescriptionEmpty = !(typeof this.props.description === 'string' && this.props.description.length > 0);
 
     return (
-      <div className={classNames(styles.card, { [styles['full-width']]: this.props.fullWidth }) } >
+      <div
+        className={classNames(styles.card, { [styles['full-width']]: this.props.fullWidth }) }
+        onMouseEnter={this.onMouseEnter.bind(this)}
+        onMouseLeave={this.onMouseLeave.bind(this)}>
 
         {this.renderLoadingOverlay()}
 
@@ -175,7 +190,15 @@ class TrelloCard extends React.Component {
 
         {this.renderLabels()}
 
-        <div className={styles.location}>em <u>{this.props.location.board.name}</u> / <u>{this.props.location.list.name}</u>.</div>
+        <div className={styles.location}>em <CardLocationSelector
+          type="board"
+          showSelector={this.state.isHovering}
+          selected={this.props.location.board}
+        ></CardLocationSelector> / <CardLocationSelector
+          type="list"
+          showSelector={this.state.isHovering}
+          selected={this.props.location.list}
+        ></CardLocationSelector></div>
 
         <EditableParagraph
           wrapperClass={classNames(styles['descr-wrapper'], { [styles['hide']]: isDescriptionEmpty && !this.state.isEditingDescription })}
