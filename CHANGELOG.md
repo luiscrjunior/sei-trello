@@ -1,6 +1,9 @@
 # Changelog
 Todas mudanças do projeto estão documentadas neste arquivo.
 
+## [1.3.2] - 11/03/2018
+- Corrigido bug de remover cartão assim que se fazia uma atribuição em massa dos processos pela árvore.
+
 ## [1.3.1] - 11/03/2018
 - Possibilidade de filtar por quadro/lista.
 - Resolvido bug de não criar cartões de dentro do processo quando o protocolo está fora do padrão SEI.
