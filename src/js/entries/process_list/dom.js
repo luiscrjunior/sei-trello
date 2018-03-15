@@ -12,7 +12,7 @@ const extractRelevantDataFromRow = (row) => {
     const noteAnchorTooltipInfo = noteAnchor.getAttribute('onmouseover');
     if (noteAnchorTooltipInfo) {
       const noteAnchorInfoArray = noteAnchorTooltipInfo.split('\'');
-      if (noteAnchorInfoArray.length === 5) data['note-description'] = noteAnchorInfoArray[1].replace(/\\r\\n/g, '\n');
+      if (noteAnchorInfoArray.length === 5) data['default-description'] = noteAnchorInfoArray[1].replace(/\\r\\n/g, '\n');
     }
   }
 
@@ -22,7 +22,7 @@ const extractRelevantDataFromRow = (row) => {
     if (processAnchorTooltipInfo) {
       const processAnchorInfoArray = processAnchorTooltipInfo.split('\'');
       if (processAnchorInfoArray.length === 5 && processAnchorInfoArray[1].length > 0) {
-        data['process-specification'] = processAnchorInfoArray[1];
+        data['default-name'] = processAnchorInfoArray[1];
       }
     }
   }
