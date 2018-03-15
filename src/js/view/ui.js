@@ -61,7 +61,7 @@ const renderCreateTrelloCardButton = (placeholder, processNumber, data, newCardD
 const renderTrelloBox = (box, data) => {
 
   const processNumber = box.getAttribute('data-trello-process-number');
-  const processAnchor = box.querySelector('.trello-process-anchor');
+  const processAnchor = box.querySelector('[data-trello-process-anchor]');
   const cardPlaceholder = box.querySelector('.trello-card');
   const createCardPlaceholder = box.querySelector('.trello-create-card-button');
 
@@ -132,7 +132,7 @@ export const render = () => {
       elements: [],
     },
     'process-box': {
-      selector: '.trello-process-box',
+      selector: '[data-trello-process-box]',
       fn: renderTrelloBox,
       elements: [],
     },

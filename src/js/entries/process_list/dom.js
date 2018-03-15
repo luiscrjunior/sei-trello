@@ -51,11 +51,11 @@ const addTrelloBoxes = () => {
     const processNumber = anchor.textContent.trim();
 
     /* transform the row in a process-box */
-    tableRow.classList.add('trello-process-box');
+    tableRow.setAttribute('data-trello-process-box', '');
     tableRow.setAttribute('data-trello-process-number', processNumber);
 
     /* mark the anchor */
-    anchor.classList.add('trello-process-anchor');
+    anchor.setAttribute('data-trello-process-anchor', '');
 
     /* add trello card placeholder */
     const cardPlaceholder = document.createElement('div');
