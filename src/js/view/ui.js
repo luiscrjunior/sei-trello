@@ -96,8 +96,8 @@ const renderTrelloBox = (box, data) => {
   } else {
 
     let newCardData = {};
-    if (box.hasAttribute('data-trello-process-specification')) newCardData.name = box.getAttribute('data-trello-process-specification');
-    if (box.hasAttribute('data-trello-note-description')) newCardData.description = box.getAttribute('data-trello-note-description');
+    if (box.hasAttribute('data-trello-default-name')) newCardData.name = box.getAttribute('data-trello-default-name');
+    if (box.hasAttribute('data-trello-default-description')) newCardData.description = box.getAttribute('data-trello-default-description');
 
     /* render create card button */
     renderCreateTrelloCardButton(createCardPlaceholder, processNumber, data, newCardData);
