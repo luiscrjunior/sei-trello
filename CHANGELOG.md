@@ -4,6 +4,7 @@ Todas mudanças do projeto estão documentadas neste arquivo.
 ## [1.3.2] - 11/03/2018
 - Corrigido bug de remover cartão assim que se fazia uma atribuição em massa dos processos pela árvore.
 - Corrigido bug de não mostrar erro quando se escolhia um quadro sem lista.
+- Corrigido bug de não mostrar alguns quadros (corrigida forma de buscar).
 
 ## [1.3.1] - 11/03/2018
 - Possibilidade de filtar por quadro/lista.
