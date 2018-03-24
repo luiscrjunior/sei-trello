@@ -26,7 +26,7 @@ const addTrelloBox = () => {
   if (!processNumber) return; /* couldn't find a process number */
 
   const trelloBox = document.createElement('div');
-  trelloBox.classList.add('trello-process-box');
+  trelloBox.setAttribute('data-trello-process-box', '');
   trelloBox.setAttribute('data-trello-process-number', processNumber);
 
   /* add trello card placeholder */

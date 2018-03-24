@@ -143,13 +143,11 @@ export const updateCardData = (cardID, newCardData) => {
   if ('board' in newCardData) trelloData['idBoard'] = newCardData['board'].id;
 
   api.updateCard(cardID, trelloData)
-    .then((response) => {
-      doRefreshCardsWithID(cardID)
-        .catch((error) => {
-          store.setIsLoading(false);
-          console.log(error);
-          alert.error(DEFAULT_SYNC_ERROR_MSG);
-        });
+    .then((response) => doRefreshCardsWithID(cardID))
+    .catch((error) => {
+      store.setIsLoading(false);
+      console.log(error);
+      alert.error('Erro ao atualizar o cartão.');
     });
 };
 
