@@ -62,16 +62,12 @@ export const searchCards = (processNumber) => {
 
   const url = 'https://api.trello.com/1/search';
 
-  let description = 'description:';
+  let description = 'SEI ';
 
-  if (processNumber) {
-    description += `"SEI ${processNumber}"`;
-  } else {
-    description += '"SEI "';
-  }
+  if (processNumber) description += processNumber;
 
   let params = Object.assign({}, genAuthData(), {
-    query: description + ' is:open',
+    query: `description:${description} is:open`,
     modelTypes: 'cards',
     card_fields: 'name,desc,labels,id,due,dueComplete,shortUrl',
     cards_limit: '1000',
