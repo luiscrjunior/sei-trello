@@ -38,6 +38,7 @@ module.exports = {
       'controller': path.resolve(__dirname, 'src/js/controller'),
       'api': path.resolve(__dirname, 'src/js/api'),
       'actions': path.resolve(__dirname, 'src/js/actions'),
+      'utils': path.resolve(__dirname, 'src/js/utils'),
     },
   },
   module: {
