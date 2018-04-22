@@ -1,6 +1,10 @@
 # Changelog
 Todas mudanças do projeto estão documentadas neste arquivo.
 
+## [1.3.3] - 22/04/2018
+- O cartão também fica destacado em vermelho em caso de processo não visualizado.
+- Adicionado filtro para selecionar apenas processos sem cartão vinculado.
+
 ## [1.3.2] - 11/03/2018
 - Corrigido bug de remover cartão assim que se fazia uma atribuição em massa dos processos pela árvore.
 - Corrigido bug de não mostrar erro quando se escolhia um quadro sem lista.

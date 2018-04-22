@@ -26,6 +26,12 @@ const defaultOptions = {
       label: 'Sem data de entrega',
     },
   ],
+  processes: [
+    {
+      key: 'WITHOUT_CARD',
+      label: 'Processos sem cartão',
+    },
+  ],
 };
 
 const defaultFilter = {
@@ -110,6 +116,11 @@ class FilterPanel extends React.Component {
           selected={filter.due}
           options={this.state.options.due}
           onClick={(checked, key) => this.onFilterChange('due', checked, key)} />
+        <hr />
+        <CheckboxList
+          selected={filter.processes}
+          options={this.state.options.processes}
+          onClick={(checked, key) => this.onFilterChange('processes', checked, key)} />
       </FloatingPanel>
     );
   }

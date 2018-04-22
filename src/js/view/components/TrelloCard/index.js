@@ -171,9 +171,11 @@ class TrelloCard extends React.Component {
 
     const isDescriptionEmpty = !(typeof this.props.description === 'string' && this.props.description.length > 0);
 
+    const highlightCard = this.props.originalAnchor && this.props.originalAnchor.classList.contains('processoNaoVisualizado');
+
     return (
       <div
-        className={classNames(styles.card, { [styles['full-width']]: this.props.fullWidth }) }
+        className={classNames(styles.card, { [styles['full-width']]: this.props.fullWidth, [styles['highlight']]: highlightCard }) }
         onMouseEnter={this.onMouseEnter.bind(this)}
         onMouseLeave={this.onMouseLeave.bind(this)}>
 
