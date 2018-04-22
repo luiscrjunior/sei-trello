@@ -8,6 +8,7 @@ let initialData = {
     locations: null,
     labels: null,
     due: null,
+    processes: null,
   },
   currentLabels: [],
   currentLocations: [],

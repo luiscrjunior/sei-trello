@@ -199,8 +199,6 @@ export const updateFilter = (type, checked, key) => {
 
   let filter = merge({}, store.getData().filter);
 
-  if (type === 'process') filter.process = (checked) ? key : null;
-
   if (type === 'due') filter.due = (checked) ? key : null;
 
   if (type === 'labels') {
@@ -226,6 +224,8 @@ export const updateFilter = (type, checked, key) => {
       }
     }
   }
+
+  if (type === 'processes') filter.processes = (checked) ? key : null;
 
   store.updateFilter(filter);
 };

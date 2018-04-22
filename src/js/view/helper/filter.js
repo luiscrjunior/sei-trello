@@ -9,6 +9,8 @@ const isFilterPassed = (filterChecks) => {
 
 const mustShowLabels = (filter, hasTrelloCard, card) => {
 
+  if (!hasTrelloCard) return false; /* don't show if there is no card */
+
   if (
     filter.indexOf('NO_LABEL') > -1 && card.labels.length === 0
   ) return true;
@@ -21,6 +23,8 @@ const mustShowLabels = (filter, hasTrelloCard, card) => {
 };
 
 const mustShowDue = (filter, hasTrelloCard, card) => {
+
+  if (!hasTrelloCard) return false; /* don't show if there is no card */
 
   if (
     filter === 'WITH_INCOMPLETE_DUE' &&
@@ -42,8 +46,19 @@ const mustShowDue = (filter, hasTrelloCard, card) => {
 
 const mustShowLocations = (filter, hasTrelloCard, card) => {
 
+  if (!hasTrelloCard) return false; /* don't show if there is no card */
+
   if (
     filter.some((filterLocation) => isEqual(card.location, filterLocation))
+  ) return true;
+
+  return false;
+};
+
+const mustShowProcesses = (filter, hasTrelloCard, card) => {
+
+  if (
+    filter === 'WITHOUT_CARD' && !hasTrelloCard
   ) return true;
 
   return false;
@@ -60,8 +75,6 @@ export const mustShow = (filter, hasTrelloCard, card) => {
 
   if (isFilterEmpty(filter)) return true;
 
-  if (!hasTrelloCard) return false; /* filter is on, but no trello card: does not show */
-
   const filterChecks = {
     'labels': {
       show: true,
@@ -74,6 +87,10 @@ export const mustShow = (filter, hasTrelloCard, card) => {
     'locations': {
       show: true,
       check: mustShowLocations,
+    },
+    'processes': {
+      show: true,
+      check: mustShowProcesses,
     },
   };
 
