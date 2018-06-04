@@ -1,6 +1,10 @@
 # Changelog
 Todas mudanças do projeto estão documentadas neste arquivo.
 
+## [1.3.4] - 04/06/2018
+- Corrigido BUG de compatibilidade com a nova versão do SEI++, em relação à mensagem de filtro ligado.
+- Corrigido BUG na aparência da lista de filtros (estava aparecendo um marcador indesejado ao lado de cada item).
+
 ## [1.3.3] - 22/04/2018
 - O cartão também fica destacado em vermelho em caso de processo não visualizado.
 - Adicionado filtro para selecionar apenas processos sem cartão vinculado.
