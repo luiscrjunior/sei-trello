@@ -27,6 +27,7 @@ const renderFilterButton = (placeholder, data) => {
       currentLabels={data.currentLabels}
       currentLocations={data.currentLocations}
       filter={data.filter}
+      hasFilter={ !filter.isFilterEmpty(data.filter) }
       onFilterChange={(type, checked, key) => actions.updateFilter(type, checked, key)}></TrelloFilterButton>, placeholder);
 };
 
@@ -134,11 +135,6 @@ export const render = () => {
     'process-box': {
       selector: '[data-trello-process-box]',
       fn: renderTrelloBox,
-      elements: [],
-    },
-    'filter-message': {
-      selector: '.trello-filter-message',
-      fn: renderFilterMessage,
       elements: [],
     },
   };

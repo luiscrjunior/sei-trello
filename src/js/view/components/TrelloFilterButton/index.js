@@ -35,6 +35,11 @@ class TrelloFilterButton extends React.Component {
           icon="fas fa-filter"
           onClick={this.onClick.bind(this)}>
         </TrelloButton>
+
+        { this.props.hasFilter && 
+          <span className={styles['filter-message']}>ligado</span>  
+        }
+        
         <FilterPanel
           className={classNames(styles['filter-panel'], { hide: !this.state.isOpen }) }
           currentLabels={this.props.currentLabels}
