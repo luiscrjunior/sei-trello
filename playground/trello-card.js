@@ -1,22 +1,44 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
 import TrelloCard from 'view/components/TrelloCard';
 
-import card from './data/card1.json';
+import cardData from './data/card1.json';
 
 const placeholder = document.querySelector('#app');
 const anchor = document.querySelector('a');
 
-ReactDOM.render(
-  <TrelloCard
-    {...card}
-    refreshCard={(cardID) => console.log('refresh: ', cardID) }
-    deleteCard={(cardID) => console.log('delete: ', cardID) }
-    onChangeName={(cardID, newName) => console.log('change name: ', newName) }
-    onChangeDescription={(cardID, newDescription) => console.log('change description: ', newDescription) }
-    hasAnotherCard={false}
-    fullWidth={false}
-    originalAnchor={anchor} ></TrelloCard>,
-  placeholder
-);
+class Flow {
+
+  constructor (initialData) {
+    this.data = initialData;
+  }
+
+  updateData (newData) {
+    this.data.isLoading = true;
+    this.render();
+    window.setTimeout(() => {
+      this.data = { ...this.data, ...newData, isLoading: false };
+      this.render();
+    }, 500);
+
+  }
+
+  render () {
+    ReactDOM.render(
+      <TrelloCard
+        {...this.data}
+        refreshCard={(cardID) => this.updateData({}) }
+        deleteCard={(cardID) => console.log('delete: ', cardID) }
+        onChangeName={(cardID, newName) => this.updateData({name: newName}) }
+        onChangeDescription={(cardID, newDescription) => this.updateData({description: newDescription}) }
+        onChangeLocation={(cardID, type, newLocation) => this.updateData({ [type]: newLocation }) }
+        hasAnotherCard={false}
+        fullWidth={false}
+        originalAnchor={anchor} ></TrelloCard>,
+      placeholder
+    );
+  }
+}
+
+const flow = new Flow(cardData);
+flow.render();
