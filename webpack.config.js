@@ -9,6 +9,8 @@ const outputPath = path.resolve(__dirname, 'dist/expanded');
 
 module.exports = {
 
+  mode: 'development',
+
   entry: {
     /* importante para compatibilidade com as promises */
     'vendor/js/babel-polyfill.js': 'babel-polyfill',
