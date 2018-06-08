@@ -1,6 +1,9 @@
 # Changelog
 Todas mudanças do projeto estão documentadas neste arquivo.
 
+## [1.3.5] - 08/06/2018
+- Possibilidade de editar a data de entrega do cartão (e se ela foi concluída) de dentro do SEI.
+
 ## [1.3.4] - 04/06/2018
 - Corrigido BUG de compatibilidade com a nova versão do SEI++, em relação à mensagem de filtro ligado.
 - Corrigido BUG na aparência da lista de filtros (estava aparecendo um marcador indesejado ao lado de cada item).
