@@ -67,6 +67,15 @@ module.exports = {
         use: ['style-loader', 'css-loader?modules&importLoaders=1', 'postcss-loader', 'sass-loader'],
       },
 
+      /* estilos dos componentes importados do node_modules */
+      {
+        test: /\.(scss|css)$/,
+        include: [
+          path.resolve(__dirname, 'node_modules'),
+        ],
+        use: ['style-loader', 'css-loader?importLoaders=1', 'sass-loader'],
+      },
+
       /* transforma os js */
       {
         test: /\.js$/,
