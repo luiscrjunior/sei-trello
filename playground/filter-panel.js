@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 
 import FilterPanel from 'view/components/FilterPanel';
 
+if (module.hot) module.hot.accept();
+
 const placeholder = document.querySelector('#app');
 
 const currentFilter = {

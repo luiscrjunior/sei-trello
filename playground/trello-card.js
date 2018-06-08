@@ -7,6 +7,8 @@ import cardData from './data/card1.json';
 const placeholder = document.querySelector('#app');
 const anchor = document.querySelector('a');
 
+if (module.hot) module.hot.accept();
+
 class Flow {
 
   constructor (initialData) {
