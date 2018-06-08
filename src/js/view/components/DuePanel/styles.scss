@@ -1,0 +1,48 @@
+.panel {
+  position: absolute;
+  top: 20px;
+  right: 42px;
+  min-width: auto;
+}
+
+.wrapper {
+  width: 100%;
+  padding: 20px 0 0 0;
+}
+
+.wrapper:after {
+  display: block;
+  clear: both;
+  content: '';
+}
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+
+.due-complete-wrapper {
+
+  > * {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  > span {
+    margin-left: 10px;
+    font-size: 14px;
+  }
+
+}
+
+/* force month header center */
+:global .react-datepicker__current-month {
+  text-align: center !important;
+}
+
+:global .switch-toggle {
+  margin: 0 !important;
+}

@@ -4,7 +4,7 @@
   "cardID": "1",
   "name": "Nome do cartão",
   "description": "linha 1\nlinha 2",
-  "due": null,
+  "due": "2018-06-09T14:00:00.000Z",
   "dueComplete": true,
   "labels": [
     {

@@ -39,7 +39,7 @@ a.btn-close {
   vertical-align: top;
   text-decoration: none;
 
-  &:hover { text-decoration: none; }
+  &:hover { text-decoration: none !important; }
   
 }
 

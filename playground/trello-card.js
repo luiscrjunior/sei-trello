@@ -16,6 +16,7 @@ class Flow {
   }
 
   updateData (newData) {
+    console.log(newData);
     this.data.isLoading = true;
     this.render();
     window.setTimeout(() => {
@@ -34,6 +35,7 @@ class Flow {
         onChangeName={(cardID, newName) => this.updateData({name: newName}) }
         onChangeDescription={(cardID, newDescription) => this.updateData({description: newDescription}) }
         onChangeLocation={(cardID, type, newLocation) => this.updateData({ [type]: newLocation }) }
+        onChangeDue={(cardID, due, dueComplete) => this.updateData({ due: due, dueComplete: dueComplete }) }
         hasAnotherCard={false}
         fullWidth={false}
         originalAnchor={anchor} ></TrelloCard>,

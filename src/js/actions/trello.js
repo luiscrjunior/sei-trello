@@ -137,6 +137,8 @@ export const updateCardData = (cardID, newCardData) => {
   }
 
   if ('name' in newCardData) trelloData['name'] = newCardData['name'];
+  if ('due' in newCardData) trelloData['due'] = newCardData['due'] === null ? 'null' : newCardData['due'];
+  if ('dueComplete' in newCardData) trelloData['dueComplete'] = newCardData['dueComplete'];
 
   if ('list' in newCardData) trelloData['idList'] = newCardData['list'].id;
 
