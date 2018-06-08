@@ -37,7 +37,11 @@ class FloatingPanel extends React.Component {
       <div
         className={classNames(styles.panel, this.props.className)}
         ref={(el) => { this.panel = el; }}>
-        <span className={styles.title}>{this.props.title}</span>
+
+        { this.props.title &&
+          <span className={styles.title}>{this.props.title}</span>
+        }
+
         <a href="#" className={styles['btn-close']} onClick={this.onClose.bind(this)}>&times;</a>
         <div className={styles.content}>{this.props.children}</div>
       </div>

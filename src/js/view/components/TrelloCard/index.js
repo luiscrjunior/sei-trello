@@ -182,6 +182,7 @@ class TrelloCard extends React.Component {
         {this.renderLoadingOverlay()}
 
         <div className={styles.options}>
+          <a data-tooltip="Especificar data de entrega" target='#' onClick={null}><i className="far fa-clock"></i></a>
           <a data-tooltip="Remover Cartão" target='#' onClick={this.deleteCard.bind(this)}><i className="far fa-trash-alt"></i></a>
           <a data-tooltip="Atualizar Cartão" target='#' onClick={this.refreshCard.bind(this)}><i className='fas fa-sync-alt'></i></a>
           <a data-tooltip="Abrir no Trello" target='_blank' href={this.props.url}><i className='fas fa-external-link-alt'></i></a>
