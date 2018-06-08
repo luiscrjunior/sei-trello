@@ -9,6 +9,8 @@ const outputPath = path.resolve(__dirname, 'dist/expanded');
 
 module.exports = {
 
+  mode: 'development',
+
   entry: {
     /* importante para compatibilidade com as promises */
     'vendor/js/babel-polyfill.js': 'babel-polyfill',
@@ -63,6 +65,15 @@ module.exports = {
           path.resolve(__dirname, 'src/js'),
         ],
         use: ['style-loader', 'css-loader?modules&importLoaders=1', 'postcss-loader', 'sass-loader'],
+      },
+
+      /* estilos dos componentes importados do node_modules */
+      {
+        test: /\.(scss|css)$/,
+        include: [
+          path.resolve(__dirname, 'node_modules'),
+        ],
+        use: ['style-loader', 'css-loader?importLoaders=1', 'sass-loader'],
       },
 
       /* transforma os js */

@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import loadingImg from './loading.svg';
 import dueFormatter from './due.js';
 
+import DuePanel from 'view/components/DuePanel';
 import EditableParagraph from 'view/components/EditableParagraph';
 import CardLocationSelector from 'view/components/CardLocationSelector';
 
@@ -16,6 +17,7 @@ class TrelloCard extends React.Component {
     this.state = {
       showOptions: false,
       isEditingDescription: false,
+      isEditingDue: false,
       processTooltip: {
         show: false,
         x: 0,
@@ -86,12 +88,29 @@ class TrelloCard extends React.Component {
     if (this.props.onChangeLocation) this.props.onChangeLocation(this.props.cardID, type, newLocation);
   }
 
+  onChangeDue (due, dueComplete) {
+    this.setState({isEditingDue: false});
+    if (this.props.onChangeDue) this.props.onChangeDue(this.props.cardID, due, dueComplete);
+  }
+
   onMouseEnter (e) {
     this.setState({ isHovering: true });
   }
 
   onMouseLeave (e) {
-    this.setState({ isHovering: false });
+    this.setState({
+      isHovering: false,
+      isEditingDue: false, /* close due panel on hover out */
+    });
+  }
+
+  openDuePanel (e) {
+    this.setState({ isEditingDue: true });
+    e.preventDefault();
+  }
+
+  closeDuePanel () {
+    this.setState({ isEditingDue: false });
   }
 
   renderLabels () {
@@ -181,7 +200,17 @@ class TrelloCard extends React.Component {
 
         {this.renderLoadingOverlay()}
 
+        {this.state.isEditingDue &&
+          <DuePanel
+            due={this.props.due}
+            dueComplete={this.props.dueComplete}
+            onClose={this.closeDuePanel.bind(this)}
+            onChangeDue={this.onChangeDue.bind(this)}
+          />
+        }
+
         <div className={styles.options}>
+          <a data-tooltip="Especificar data de entrega" target='#' onClick={this.openDuePanel.bind(this)}><i className="far fa-clock"></i></a>
           <a data-tooltip="Remover Cartão" target='#' onClick={this.deleteCard.bind(this)}><i className="far fa-trash-alt"></i></a>
           <a data-tooltip="Atualizar Cartão" target='#' onClick={this.refreshCard.bind(this)}><i className='fas fa-sync-alt'></i></a>
           <a data-tooltip="Abrir no Trello" target='_blank' href={this.props.url}><i className='fas fa-external-link-alt'></i></a>

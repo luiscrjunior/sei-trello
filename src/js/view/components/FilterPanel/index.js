@@ -104,7 +104,7 @@ class FilterPanel extends React.Component {
         <CheckboxList
           selected={filter.locations}
           options={this.state.options.locations}
-          onClick={(checked, key) => this.onFilterChange('locations', checked, key)} />        
+          onClick={(checked, key) => this.onFilterChange('locations', checked, key)} />
         <hr />
         <CheckboxList
           color={true}
