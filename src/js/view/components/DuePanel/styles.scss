@@ -43,6 +43,12 @@
   text-align: center !important;
 }
 
+:global .react-datepicker__day, :global .react-datepicker__day-name {
+  width: 1.4rem !important;
+  line-height: 1.4rem !important;
+  margin: 0.12rem;
+}
+
 :global .switch-toggle {
   margin: 0 !important;
 }
