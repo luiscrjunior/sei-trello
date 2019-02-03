@@ -1,7 +1,7 @@
 # Changelog
 Todas mudanças do projeto estão documentadas neste arquivo.
 
-## [1.3.6] - ?
+## [1.3.6] - 03/02/2019
 - Reduzido o tamanho do calendário.
 - Corrigido o bug de, em algumas ocasiões, encontrar outro quadro padrão, diferente do especificado nas configurações.
 - Extẽnsão agora reconhece alguns protocolos de processos antigos.
