@@ -1,6 +1,11 @@
 # Changelog
 Todas mudanças do projeto estão documentadas neste arquivo.
 
+## [1.3.6] - ?
+- Reduzido o tamanho do calendário.
+- Corrigido o bug de, em algumas ocasiões, encontrar outro quadro padrão, diferente do especificado nas configurações.
+- Extẽnsão agora reconhece alguns protocolos de processos antigos.
+
 ## [1.3.5] - 08/06/2018
 - Possibilidade de editar a data de entrega do cartão (e se ela foi concluída) de dentro do SEI.
 
