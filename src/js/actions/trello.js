@@ -68,24 +68,28 @@ const getDefaultBoardAndList = () => {
       api.searchBoardsByName(items.defaultBoard)
         .then((response) => {
           if ('data' in response && 'boards' in response.data && response.data.boards.length > 0) {
-            const defaultBoard = response.data.boards[0];
-            api.getListsFromBoard(defaultBoard.id)
-              .then((response) => {
-                const defaultList = response.data.lists.find((list) => list.name === items.defaultList);
-                if (defaultList) {
+            const defaultBoard = response.data.boards.find((board) => board.name === items.defaultBoard);
+            if (defaultBoard) {
+              api.getListsFromBoard(defaultBoard.id)
+                .then((response) => {
+                  const defaultList = response.data.lists.find((list) => list.name === items.defaultList);
+                  if (defaultList) {
 
-                  resolve({
-                    defaultBoard: defaultBoard,
-                    defaultList: defaultList,
-                  });
+                    resolve({
+                      defaultBoard: defaultBoard,
+                      defaultList: defaultList,
+                    });
 
-                } else {
-                  reject(new Error('lista padrão não encontrada'));
-                }
-              })
-              .catch((error) => {
-                reject(error);
-              });
+                  } else {
+                    reject(new Error('lista padrão não encontrada'));
+                  }
+                })
+                .catch((error) => {
+                  reject(error);
+                });
+            } else {
+              reject(new Error('quadro padrão não encontrado'));
+            }
           } else {
             reject(new Error('quadro padrão não encontrado'));
           }
