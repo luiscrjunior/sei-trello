@@ -1,6 +1,9 @@
 # Changelog
 Todas mudanças do projeto estão documentadas neste arquivo.
 
+## [1.3.7] - 24/02/2019
+- Corrigido o bug de incompatibilidade com o SEI versão 3.0.15+.
+
 ## [1.3.6] - 03/02/2019
 - Reduzido o tamanho do calendário.
 - Corrigido o bug de, em algumas ocasiões, encontrar outro quadro padrão, diferente do especificado nas configurações.
