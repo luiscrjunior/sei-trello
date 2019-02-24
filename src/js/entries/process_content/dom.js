@@ -16,7 +16,13 @@ const getProcessNumber = () => {
   return match[1];
 };
 
+const checkIfSEI3015 = () => {
+  return (!!document.querySelector('div#header') && !!document.querySelector('div#container'));
+};
+
 const addTrelloBox = () => {
+
+  if (checkIfSEI3015()) document.documentElement.classList.add('sei-v3015');
 
   const body = document.querySelector('body');
   const mainForm = document.querySelector('form#frmArvore');
@@ -32,7 +38,7 @@ const addTrelloBox = () => {
   /* add trello card placeholder */
   const cardPlaceholder = document.createElement('div');
   cardPlaceholder.classList.add('trello-card');
-  cardPlaceholder.setAttribute('full-width', null);
+  cardPlaceholder.setAttribute('data-full-width', '');
   trelloBox.appendChild(cardPlaceholder);
 
   /* add create trello card button placeholder */
@@ -40,10 +46,11 @@ const addTrelloBox = () => {
   createCardPlaceHolder.classList.add('trello-create-card-button');
   trelloBox.appendChild(createCardPlaceHolder);
 
-  body.insertBefore(trelloBox, mainForm);
+  body.insertAdjacentElement('afterbegin', trelloBox);
 
 };
 
 export const prepare = () => {
+
   addTrelloBox();
 };

@@ -33,7 +33,7 @@ const renderFilterButton = (placeholder, data) => {
 
 const renderTrelloCard = (placeholder, card, hasAnotherCard, originalAnchor) => {
 
-  const fullWidth = placeholder.hasAttribute('full-width');
+  const fullWidth = placeholder.hasAttribute('data-full-width');
 
   ReactDOM.render(
     <TrelloCard

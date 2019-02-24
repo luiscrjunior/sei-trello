@@ -27,6 +27,7 @@ module.exports = {
     /* página de estilos */
     'css/common.css': './src/css/common.scss',
     'css/process_list.css': './src/css/process_list.scss',
+    'css/process_content.css': './src/css/process_content.scss',
 
   },
   output: {
