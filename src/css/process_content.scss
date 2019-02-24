@@ -1,0 +1,36 @@
+/*
+  Estilo para ser inserido na Árvore do Processo
+*/
+
+
+
+/* styles to handle sei v3.0.15 new tree structure */
+html.sei-v3015 {
+
+  height: 100%;
+
+  > body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    margin: 0;
+
+    > [data-trello-process-box] {
+      margin: inherit;
+    }
+
+    > #header {
+      position: static;
+      overflow: hidden;      
+    }
+
+    > #container {
+      position: static;
+      height: auto;
+      margin-top: 0;
+      flex: 1;    
+    }
+
+  }
+
+}

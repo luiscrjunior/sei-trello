@@ -52,6 +52,7 @@
       "run_at": "document_end",
       "all_frames": true,
       "css": [
+        "css/process_content.css",
         "vendor/css/fontawesome-all.css"
       ],
       "js": [
