@@ -1,6 +1,10 @@
 # Changelog
 Todas mudanças do projeto estão documentadas neste arquivo.
 
+## [1.3.8] - 02/03/2019
+- Corrigido o bug de o menu suspenso estar por baixo do número do processo (na tela de visualização do processo).
+- Reconhece o formato de número de protocolo do MP/AM.
+
 ## [1.3.7] - 24/02/2019
 - Corrigido o bug de incompatibilidade com o SEI versão 3.0.15+.
 
