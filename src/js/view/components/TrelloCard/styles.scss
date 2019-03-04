@@ -40,6 +40,11 @@
 
 }
 
+.card.highlight > .options {
+  top: 4px;
+  right: 4px;
+}
+
 .card:hover > .options {
   opacity: 1;
 }
