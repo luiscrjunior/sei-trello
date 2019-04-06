@@ -1,6 +1,10 @@
 # Changelog
 Todas mudanças do projeto estão documentadas neste arquivo.
 
+## [1.3.9] - 06/04/2019
+- Corrigido o bug de posicionamento das opções em quadros com destaque vermelho.
+- Reconhece o formato de url do SEI de outras instituições: aquelas que possuem o /web no caminho (ex.: UFPR).
+
 ## [1.3.8] - 02/03/2019
 - Corrigido o bug de o menu suspenso estar por baixo do número do processo (na tela de visualização do processo).
 - Reconhece o formato de número de protocolo do MP/AM.
