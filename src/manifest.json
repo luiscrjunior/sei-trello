@@ -37,7 +37,7 @@
       ]
     },    
     {
-      "matches": ["*://*.br/sei/controlador.php?acao=procedimento_controlar*"],
+      "matches": ["*://*.br/sei/*controlador.php?acao=procedimento_controlar*"],
       "run_at": "document_end",
       "css": [
         "css/process_list.css",
@@ -48,7 +48,7 @@
       ]
     },
     {
-      "matches": ["*://*.br/sei/controlador.php?acao=procedimento_visualizar*"],
+      "matches": ["*://*.br/sei/*controlador.php?acao=procedimento_visualizar*"],
       "run_at": "document_end",
       "all_frames": true,
       "css": [
