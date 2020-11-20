@@ -2,11 +2,8 @@
   Estilo para ser inserido na Árvore do Processo
 */
 
-
-
 /* styles to handle sei v3.0.15 new tree structure */
 html.sei-v3015 {
-
   height: 100%;
 
   > body {
@@ -21,16 +18,14 @@ html.sei-v3015 {
 
     > #header {
       position: static;
-      overflow: hidden;      
+      overflow: hidden;
     }
 
     > #container {
       position: static;
       height: auto;
       margin-top: 0;
-      flex: 1;    
+      flex: 1;
     }
-
   }
-
 }

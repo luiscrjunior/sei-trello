@@ -25,7 +25,6 @@
 }
 
 .due-complete-wrapper {
-
   > * {
     display: inline-block;
     vertical-align: middle;
@@ -35,7 +34,6 @@
     margin-left: 10px;
     font-size: 14px;
   }
-
 }
 
 /* force month header center */
@@ -43,7 +41,8 @@
   text-align: center !important;
 }
 
-:global .react-datepicker__day, :global .react-datepicker__day-name {
+:global .react-datepicker__day,
+:global .react-datepicker__day-name {
   width: 1.4rem !important;
   line-height: 1.4rem !important;
   margin: 0.12rem;

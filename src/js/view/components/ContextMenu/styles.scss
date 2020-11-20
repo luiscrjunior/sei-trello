@@ -6,7 +6,7 @@ ul.list {
   top: 16px;
   left: 0;
   background-color: #424242;
-  box-shadow: 1px 1px 6px 1px #BDBDBD;
+  box-shadow: 1px 1px 6px 1px #bdbdbd;
   border-radius: 1px;
   border: 1px solid #616161;
   min-width: 30px;
@@ -21,11 +21,11 @@ li.item {
 
 li.item > a {
   display: block;
-  white-space: nowrap;  
+  white-space: nowrap;
   text-decoration: none;
   margin: 0;
   padding: 5px 8px;
-  font-family: Helvetica Neue,Arial,Helvetica,sans-serif;
+  font-family: Helvetica Neue, Arial, Helvetica, sans-serif;
   font-size: 10px;
   line-height: 10px;
   color: #f2f2f2;
@@ -34,7 +34,7 @@ li.item > a {
 li.item a:hover {
   text-decoration: none;
   background-color: #212121;
-  color: #FAFAFA;
+  color: #fafafa;
 }
 
 img.loadingImg {

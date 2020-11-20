@@ -6,16 +6,17 @@
   border-radius: 3px;
   border: 1px solid #d6dadc;
   border-bottom-color: #c4c9cc;
-  box-shadow: 0 1px 6px rgba(0,0,0,.15);
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.15);
   overflow: hidden;
   min-width: 300px;
   min-height: 50px;
   z-index: 1000;
 
-  span, p, a {
-    font-family: Helvetica Neue,Arial,Helvetica,sans-serif;
+  span,
+  p,
+  a {
+    font-family: Helvetica Neue, Arial, Helvetica, sans-serif;
   }
-
 }
 
 .title {
@@ -34,13 +35,14 @@ a.btn-close {
   position: absolute;
   right: 10px;
   top: 5px;
-  color: #838c91; 
+  color: #838c91;
   font-size: 28px;
   vertical-align: top;
   text-decoration: none;
 
-  &:hover { text-decoration: none !important; }
-  
+  &:hover {
+    text-decoration: none !important;
+  }
 }
 
 .content {

@@ -6,7 +6,7 @@
 .label {
   text-decoration: underline;
   color: #838c91;
-  font-size: 12px; 
+  font-size: 12px;
 }
 
 .caret {
@@ -19,7 +19,7 @@
   transition: all 0.2s ease;
   width: 0;
   margin: 0;
-  opacity: 0;   
+  opacity: 0;
 }
 
 .caret.show {
