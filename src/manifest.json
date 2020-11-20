@@ -45,7 +45,7 @@
     }
   ],
 
-  "permissions": ["<all_urls>", "tabs", "storage", "webNavigation"],
+  "permissions": ["storage"],
   "web_accessible_resources": ["vendor/webfonts/*"],
   "content_security_policy": "script-src 'self' 'unsafe-eval' https://www.google-analytics.com; object-src 'self'"
 }
