@@ -194,7 +194,7 @@ export const addCardFor = (processNumber, newCardData) => {
       store.setIsAddingFor(null);
       console.log(error);
       alert.error(
-        'Ocorreu um erro ao adicionar o cartão. Verifique se você preencheu corretamente os dados do quadro e da lista padrão nas opções.'
+        'Ocorreu um erro ao adicionar o cartão. Verifique se você preencheu corretamente os dados do quadro e da lista padrão nas opções.\n\nImportante: certifique-se de que o quadro e a lista especificados existem na sua conta, pois a extensão não os cria automaticamente.'
       );
     });
 };
