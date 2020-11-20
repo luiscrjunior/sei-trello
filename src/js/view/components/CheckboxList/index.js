@@ -4,18 +4,17 @@ import classNames from 'classnames';
 import { isEqual, isArray } from 'lodash';
 
 class CheckboxList extends React.Component {
-
-  handleClick (isSelected, item, e) {
+  handleClick(isSelected, item, e) {
     e.preventDefault();
     if (!this.props.onClick) return;
     this.props.onClick(!isSelected, item);
   }
 
-  isSelected (key) {
+  isSelected(key) {
     if (!this.props.selected) {
       return false;
     } else if (typeof this.props.selected === 'string') {
-      return (key === this.props.selected);
+      return key === this.props.selected;
     } else if (isArray(this.props.selected)) {
       return this.props.selected.some((itemInSelection) => isEqual(itemInSelection, key));
     } else {
@@ -23,11 +22,12 @@ class CheckboxList extends React.Component {
     }
   }
 
-  renderItems () {
+  renderItems() {
     if (!this.props.options) return null;
     return this.props.options.map((item, idx) => {
       const isSelected = this.isSelected(item.key);
-      const colorStyle = (typeof item.key === 'object' && 'color' in item.key) ? 'color-block-' + item.key.color.toLowerCase() : null;
+      const colorStyle =
+        typeof item.key === 'object' && 'color' in item.key ? 'color-block-' + item.key.color.toLowerCase() : null;
       return (
         <li key={idx} className={classNames(styles.item, { [styles.selected]: isSelected })}>
           <a href="#" className={styles.anchor} onClick={this.handleClick.bind(this, isSelected, item.key)}>
@@ -40,13 +40,9 @@ class CheckboxList extends React.Component {
     });
   }
 
-  render () {
-    return (
-      <ul className={styles.list}>
-        {this.renderItems()}
-      </ul>
-    );
+  render() {
+    return <ul className={styles.list}>{this.renderItems()}</ul>;
   }
-};
+}
 
 export default CheckboxList;

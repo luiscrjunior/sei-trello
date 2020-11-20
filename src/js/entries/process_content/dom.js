@@ -17,15 +17,13 @@ const getProcessNumber = () => {
 };
 
 const checkIfSEI3015 = () => {
-  return (!!document.querySelector('div#header') && !!document.querySelector('div#container'));
+  return !!document.querySelector('div#header') && !!document.querySelector('div#container');
 };
 
 const addTrelloBox = () => {
-
   if (checkIfSEI3015()) document.documentElement.classList.add('sei-v3015');
 
   const body = document.querySelector('body');
-  const mainForm = document.querySelector('form#frmArvore');
 
   const processNumber = getProcessNumber();
 
@@ -47,10 +45,8 @@ const addTrelloBox = () => {
   trelloBox.appendChild(createCardPlaceHolder);
 
   body.insertAdjacentElement('afterbegin', trelloBox);
-
 };
 
 export const prepare = () => {
-
   addTrelloBox();
 };

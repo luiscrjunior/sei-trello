@@ -4,7 +4,5 @@ const common = require('./webpack.config.js');
 
 module.exports = merge(common, {
   mode: 'production',
-  plugins: [
-    new UglifyJSPlugin(),
-  ],
+  plugins: [new UglifyJSPlugin()],
 });

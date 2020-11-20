@@ -5,11 +5,13 @@ import * as store from 'model/store.js';
 import * as handler from 'model/handler.js';
 import * as alert from 'view/alert.js';
 
-const DEFAULT_SYNC_ERROR_MSG = 'Erro ao sincronizar com o Trello. Verifique se as credenciais informadas nas opções estão corretas. Caso positivo, tente novamente mais tarde, pois os servidores podem estar fora do ar. Se o problema persistir, entre em contato com o administrador da extensão.';
+const DEFAULT_SYNC_ERROR_MSG =
+  'Erro ao sincronizar com o Trello. Verifique se as credenciais informadas nas opções estão corretas. Caso positivo, tente novamente mais tarde, pois os servidores podem estar fora do ar. Se o problema persistir, entre em contato com o administrador da extensão.';
 
 const doRefreshCards = (processNumber) => {
   return new Promise((resolve, reject) => {
-    api.searchCards(processNumber)
+    api
+      .searchCards(processNumber)
       .then((response) => {
         store.setCards(handler.getCards(response.data.cards));
         resolve();
@@ -22,13 +24,15 @@ const doRefreshCards = (processNumber) => {
 
 const doRefreshCardsWithID = (cardID) => {
   return new Promise((resolve, reject) => {
-    api.getCardData(cardID)
+    api
+      .getCardData(cardID)
       .then((response) => {
         store.updateCardsWithID(cardID, handler.getCards([response.data]));
         resolve();
       })
       .catch((error) => {
-        if (error.response.status === 404) { /* cartão não existe mais, removê-lo da lista */
+        if (error.response.status === 404) {
+          /* cartão não existe mais, removê-lo da lista */
           store.updateCardsWithID(cardID, []);
           resolve();
         } else {
@@ -40,11 +44,11 @@ const doRefreshCardsWithID = (cardID) => {
 
 const doCreateCard = (options) => {
   return new Promise((resolve, reject) => {
-    api.createCard(options)
+    api
+      .createCard(options)
       .then((response) => {
-        store.addCards(handler
-          .getCards([response.data])
-          .map((card) => {
+        store.addCards(
+          handler.getCards([response.data]).map((card) => {
             card.location.list = options.defaultList;
             card.location.board = options.defaultBoard;
             return card;
@@ -60,55 +64,57 @@ const doCreateCard = (options) => {
 
 const getDefaultBoardAndList = () => {
   return new Promise((resolve, reject) => {
-    chrome.storage.sync.get({
-      defaultBoard: '',
-      defaultList: '',
-    }, (items) => {
-      if (!items.defaultBoard || !items.defaultList) reject(new Error());
-      api.searchBoardsByName(items.defaultBoard)
-        .then((response) => {
-          if ('data' in response && 'boards' in response.data && response.data.boards.length > 0) {
-            const defaultBoard = response.data.boards.find((board) => board.name === items.defaultBoard);
-            if (defaultBoard) {
-              api.getListsFromBoard(defaultBoard.id)
-                .then((response) => {
-                  const defaultList = response.data.lists.find((list) => list.name === items.defaultList);
-                  if (defaultList) {
-
-                    resolve({
-                      defaultBoard: defaultBoard,
-                      defaultList: defaultList,
-                    });
-
-                  } else {
-                    reject(new Error('lista padrão não encontrada'));
-                  }
-                })
-                .catch((error) => {
-                  reject(error);
-                });
+    chrome.storage.sync.get(
+      {
+        defaultBoard: '',
+        defaultList: '',
+      },
+      (items) => {
+        if (!items.defaultBoard || !items.defaultList) reject(new Error());
+        api
+          .searchBoardsByName(items.defaultBoard)
+          .then((response) => {
+            if ('data' in response && 'boards' in response.data && response.data.boards.length > 0) {
+              const defaultBoard = response.data.boards.find((board) => board.name === items.defaultBoard);
+              if (defaultBoard) {
+                api
+                  .getListsFromBoard(defaultBoard.id)
+                  .then((response) => {
+                    const defaultList = response.data.lists.find((list) => list.name === items.defaultList);
+                    if (defaultList) {
+                      resolve({
+                        defaultBoard: defaultBoard,
+                        defaultList: defaultList,
+                      });
+                    } else {
+                      reject(new Error('lista padrão não encontrada'));
+                    }
+                  })
+                  .catch((error) => {
+                    reject(error);
+                  });
+              } else {
+                reject(new Error('quadro padrão não encontrado'));
+              }
             } else {
               reject(new Error('quadro padrão não encontrado'));
             }
-          } else {
-            reject(new Error('quadro padrão não encontrado'));
-          }
-        })
-        .catch((error) => {
-          reject(error);
-        });
-    });
+          })
+          .catch((error) => {
+            reject(error);
+          });
+      }
+    );
   });
 };
 
 export const refreshCardData = (cardID) => {
   store.updateCardsData(cardID, { isLoading: true });
-  doRefreshCardsWithID(cardID)
-    .catch((error) => {
-      store.setIsLoading(false);
-      console.log(error);
-      alert.error(DEFAULT_SYNC_ERROR_MSG);
-    });
+  doRefreshCardsWithID(cardID).catch((error) => {
+    store.setIsLoading(false);
+    console.log(error);
+    alert.error(DEFAULT_SYNC_ERROR_MSG);
+  });
 };
 
 export const refreshCards = (processNumber) => {
@@ -148,8 +154,9 @@ export const updateCardData = (cardID, newCardData) => {
 
   if ('board' in newCardData) trelloData['idBoard'] = newCardData['board'].id;
 
-  api.updateCard(cardID, trelloData)
-    .then((response) => doRefreshCardsWithID(cardID))
+  api
+    .updateCard(cardID, trelloData)
+    .then(() => doRefreshCardsWithID(cardID))
     .catch((error) => {
       store.setIsLoading(false);
       console.log(error);
@@ -186,14 +193,17 @@ export const addCardFor = (processNumber, newCardData) => {
     .catch((error) => {
       store.setIsAddingFor(null);
       console.log(error);
-      alert.error('Ocorreu um erro ao adicionar o cartão. Verifique se você preencheu corretamente os dados do quadro e da lista padrão nas opções.');
+      alert.error(
+        'Ocorreu um erro ao adicionar o cartão. Verifique se você preencheu corretamente os dados do quadro e da lista padrão nas opções.'
+      );
     });
 };
 
 export const deleteCard = (cardID) => {
   store.updateCardsData(cardID, { isLoading: true });
-  api.deleteCard(cardID)
-    .then((response) => doRefreshCardsWithID(cardID))
+  api
+    .deleteCard(cardID)
+    .then(() => doRefreshCardsWithID(cardID))
     .catch((error) => {
       store.setIsLoading(false);
       console.log(error);
@@ -202,10 +212,9 @@ export const deleteCard = (cardID) => {
 };
 
 export const updateFilter = (type, checked, key) => {
-
   let filter = merge({}, store.getData().filter);
 
-  if (type === 'due') filter.due = (checked) ? key : null;
+  if (type === 'due') filter.due = checked ? key : null;
 
   if (type === 'labels') {
     if (checked) {
@@ -231,7 +240,7 @@ export const updateFilter = (type, checked, key) => {
     }
   }
 
-  if (type === 'processes') filter.processes = (checked) ? key : null;
+  if (type === 'processes') filter.processes = checked ? key : null;
 
   store.updateFilter(filter);
 };

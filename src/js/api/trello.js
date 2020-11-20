@@ -16,7 +16,6 @@ export const setKeys = (appKey, appToken) => {
 };
 
 export const searchBoardsByName = (boardName) => {
-
   const url = 'https://api.trello.com/1/search';
 
   let params = Object.assign({}, genAuthData(), {
@@ -27,11 +26,9 @@ export const searchBoardsByName = (boardName) => {
   });
 
   return axios.get(url, { params: params });
-
 };
 
 export const searchAllBoards = () => {
-
   const url = 'https://api.trello.com/1/search';
 
   let params = Object.assign({}, genAuthData(), {
@@ -42,11 +39,9 @@ export const searchAllBoards = () => {
   });
 
   return axios.get(url, { params: params });
-
 };
 
 export const getListsFromBoard = (boardID) => {
-
   const url = 'https://api.trello.com/1/boards/' + boardID;
 
   return axios.get(url, {
@@ -55,11 +50,9 @@ export const getListsFromBoard = (boardID) => {
       list_fields: 'id,name',
     }),
   });
-
 };
 
 export const searchCards = (processNumber) => {
-
   const url = 'https://api.trello.com/1/search';
 
   let description = 'SEI ';
@@ -76,11 +69,9 @@ export const searchCards = (processNumber) => {
   });
 
   return axios.get(url, { params: params });
-
 };
 
 export const getCardData = (cardID) => {
-
   const url = 'https://api.trello.com/1/cards/' + cardID;
 
   let params = Object.assign({}, genAuthData(), {
@@ -90,11 +81,9 @@ export const getCardData = (cardID) => {
   });
 
   return axios.get(url, { params: params });
-
 };
 
 export const createCard = (opts) => {
-
   const url = 'https://api.trello.com/1/cards';
 
   let params = Object.assign({}, genAuthData(), {
@@ -105,25 +94,20 @@ export const createCard = (opts) => {
   });
 
   return axios.post(url, params);
-
 };
 
 export const updateCard = (cardID, opts) => {
-
   const url = 'https://api.trello.com/1/cards/' + cardID;
 
   let params = Object.assign({}, genAuthData(), opts);
 
   return axios.put(url, params);
-
 };
 
 export const deleteCard = (cardID) => {
-
   const url = 'https://api.trello.com/1/cards/' + cardID;
 
   let params = Object.assign({}, genAuthData());
 
   return axios.delete(url, { params: params });
-
 };

@@ -11,7 +11,7 @@ const appManifest = require(path.resolve(__dirname, 'src/manifest.json'));
 const runCommands = (commands) => {
   for (let i = 0; i < commands.length; i++) {
     const command = commands[i];
-    const step = (i + 1);
+    const step = i + 1;
     try {
       console.log(`\x1b[33m[${step}]\x1b[0m '${command.descr}'...`);
       const output = execSync(command.cmd, { stdio: 'ignore' });
@@ -43,7 +43,6 @@ const commands = [
     descr: 'Sincronizando git local com remote...',
     cmd: 'git push --tags origin master dev',
   },
-
 ];
 
 runCommands(commands);

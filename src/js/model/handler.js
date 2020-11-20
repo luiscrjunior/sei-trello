@@ -13,7 +13,7 @@ export const getCards = (cardList) => {
     let processList = [];
     while ((match = new RegExp(extractSEIInfoRegex).exec(description))) {
       processList.push(match[1]);
-      description = removeSubstrFromStr(match.index, (match.index + match[0].length), description);
+      description = removeSubstrFromStr(match.index, match.index + match[0].length, description);
     }
     processList.forEach((processNumber) => {
       cards.push({
@@ -31,14 +31,18 @@ export const getCards = (cardList) => {
           };
         }),
         location: {
-          board: (cardFromTrello.board ? {
-            id: cardFromTrello.board.id,
-            name: cardFromTrello.board.name,
-          } : null),
-          list: (cardFromTrello.list ? {
-            id: cardFromTrello.list.id,
-            name: cardFromTrello.list.name,
-          } : null),
+          board: cardFromTrello.board
+            ? {
+                id: cardFromTrello.board.id,
+                name: cardFromTrello.board.name,
+              }
+            : null,
+          list: cardFromTrello.list
+            ? {
+                id: cardFromTrello.list.id,
+                name: cardFromTrello.list.name,
+              }
+            : null,
         },
         url: cardFromTrello.shortUrl,
       });

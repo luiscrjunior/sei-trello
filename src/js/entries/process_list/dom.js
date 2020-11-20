@@ -4,15 +4,15 @@ const findAllProcessAnchors = () => {
 };
 
 const extractRelevantDataFromRow = (row) => {
-
   let data = {};
 
   const noteAnchor = row.querySelector('a[href^="controlador.php?acao=anotacao_registrar"]');
   if (noteAnchor !== null) {
     const noteAnchorTooltipInfo = noteAnchor.getAttribute('onmouseover');
     if (noteAnchorTooltipInfo) {
-      const noteAnchorInfoArray = noteAnchorTooltipInfo.split('\'');
-      if (noteAnchorInfoArray.length === 5) data['default-description'] = noteAnchorInfoArray[1].replace(/\\r\\n/g, '\n');
+      const noteAnchorInfoArray = noteAnchorTooltipInfo.split("'");
+      if (noteAnchorInfoArray.length === 5)
+        data['default-description'] = noteAnchorInfoArray[1].replace(/\\r\\n/g, '\n');
     }
   }
 
@@ -20,7 +20,7 @@ const extractRelevantDataFromRow = (row) => {
   if (processAnchor !== null) {
     const processAnchorTooltipInfo = processAnchor.getAttribute('onmouseover');
     if (processAnchorTooltipInfo) {
-      const processAnchorInfoArray = processAnchorTooltipInfo.split('\'');
+      const processAnchorInfoArray = processAnchorTooltipInfo.split("'");
       if (processAnchorInfoArray.length === 5 && processAnchorInfoArray[1].length > 0) {
         data['default-name'] = processAnchorInfoArray[1];
       }
@@ -40,7 +40,6 @@ const addTrelloCommandButtons = () => {
   placeholder = document.createElement('div');
   placeholder.classList.add('trello-filter-button');
   whereToAdd.appendChild(placeholder);
-
 };
 
 const addTrelloBoxes = () => {
@@ -70,7 +69,6 @@ const addTrelloBoxes = () => {
     /* get more data from row */
     const extraData = extractRelevantDataFromRow(tableRow);
     for (let key in extraData) tableRow.setAttribute('data-trello-' + key, extraData[key]);
-
   });
 };
 

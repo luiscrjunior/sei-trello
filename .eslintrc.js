@@ -1,24 +1,29 @@
 module.exports = {
-    "extends": "standard",
-    "env": { 
-      "es6": true
+  extends: ['eslint:recommended', 'plugin:react/recommended'],
+  env: {
+    es6: true,
+    browser: true,
+    node: true,
+  },
+  parserOptions: {
+    ecmaVersion: 12,
+    sourceType: 'module',
+    ecmaFeatures: {
+      jsx: true,
     },
-    "parserOptions": { 
-      "ecmaVersion": 6 
+  },
+  rules: {
+    'react/prop-types': 0,
+    'react/no-find-dom-node': 0,
+  },
+  settings: {
+    react: {
+      version: 'detect',
     },
-    "rules": {
-        "semi": ["error", "always"],
-        "no-var": "error",
-        "quotes": ["error", "single"],
-        "indent": ["error", 2],
-        "no-unused-vars": "off",
-        "padded-blocks": "off",
-        "comma-dangle": ["error", "always-multiline"],
-        "spaced-comment": "off",
-    },
-    "globals": {
-        "chrome": true,
-        "PRODUCTION": true,
-        "DEVELOPMENT": true,
-    }
+  },
+  globals: {
+    chrome: true,
+    PRODUCTION: true,
+    DEVELOPMENT: true,
+  },
 };

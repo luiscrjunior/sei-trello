@@ -1,4 +1,3 @@
-import { isEqual, merge } from 'lodash';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -6,7 +5,6 @@ import TrelloCard from './components/TrelloCard';
 import TrelloRefreshButton from './components/TrelloRefreshButton';
 import TrelloFilterButton from './components/TrelloFilterButton';
 import CreateTrelloCardButton from './components/CreateTrelloCardButton';
-import FilterMessage from './components/FilterMessage';
 
 import * as filter from './helper/filter.js';
 import updateCurrentData from './helper/current-data.js';
@@ -16,9 +14,9 @@ import * as actions from 'actions/trello.js';
 
 const renderRefreshButton = (placeholder, data) => {
   ReactDOM.render(
-    <TrelloRefreshButton
-      onClick={() => actions.refreshCards()}
-      isLoading={data.isLoading} ></TrelloRefreshButton>, placeholder);
+    <TrelloRefreshButton onClick={() => actions.refreshCards()} isLoading={data.isLoading}></TrelloRefreshButton>,
+    placeholder
+  );
 };
 
 const renderFilterButton = (placeholder, data) => {
@@ -27,26 +25,29 @@ const renderFilterButton = (placeholder, data) => {
       currentLabels={data.currentLabels}
       currentLocations={data.currentLocations}
       filter={data.filter}
-      hasFilter={ !filter.isFilterEmpty(data.filter) }
-      onFilterChange={(type, checked, key) => actions.updateFilter(type, checked, key)}></TrelloFilterButton>, placeholder);
+      hasFilter={!filter.isFilterEmpty(data.filter)}
+      onFilterChange={(type, checked, key) => actions.updateFilter(type, checked, key)}
+    ></TrelloFilterButton>,
+    placeholder
+  );
 };
 
 const renderTrelloCard = (placeholder, card, hasAnotherCard, originalAnchor) => {
-
   const fullWidth = placeholder.hasAttribute('data-full-width');
 
   ReactDOM.render(
     <TrelloCard
       {...card}
-      refreshCard={(cardID) => actions.refreshCardData(cardID) }
-      deleteCard={(cardID) => actions.deleteCard(cardID) }
-      onChangeName={(cardID, newName) => actions.updateCardData(cardID, {name: newName}) }
-      onChangeDescription={(cardID, newDescription) => actions.updateCardData(cardID, { description: newDescription }) }
-      onChangeLocation={(cardID, type, newLocation) => actions.updateCardData(cardID, { [type]: newLocation }) }
-      onChangeDue={(cardID, due, dueComplete) => actions.updateCardData(cardID, { due: due, dueComplete: dueComplete }) }
+      refreshCard={(cardID) => actions.refreshCardData(cardID)}
+      deleteCard={(cardID) => actions.deleteCard(cardID)}
+      onChangeName={(cardID, newName) => actions.updateCardData(cardID, { name: newName })}
+      onChangeDescription={(cardID, newDescription) => actions.updateCardData(cardID, { description: newDescription })}
+      onChangeLocation={(cardID, type, newLocation) => actions.updateCardData(cardID, { [type]: newLocation })}
+      onChangeDue={(cardID, due, dueComplete) => actions.updateCardData(cardID, { due: due, dueComplete: dueComplete })}
       hasAnotherCard={hasAnotherCard}
       fullWidth={fullWidth}
-      originalAnchor={originalAnchor} ></TrelloCard>,
+      originalAnchor={originalAnchor}
+    ></TrelloCard>,
     placeholder
   );
 };
@@ -56,12 +57,13 @@ const renderCreateTrelloCardButton = (placeholder, processNumber, data, newCardD
     <CreateTrelloCardButton
       isAdding={data.isAddingCardFor && processNumber === data.isAddingCardFor}
       processNumber={processNumber}
-      onClick={(processNumber) => actions.addCardFor(processNumber, newCardData) }></CreateTrelloCardButton>
-    , placeholder);
+      onClick={(processNumber) => actions.addCardFor(processNumber, newCardData)}
+    ></CreateTrelloCardButton>,
+    placeholder
+  );
 };
 
 const renderTrelloBox = (box, data) => {
-
   const processNumber = box.getAttribute('data-trello-process-number');
   const processAnchor = box.querySelector('[data-trello-process-anchor]');
   const cardPlaceholder = box.querySelector('.trello-card');
@@ -69,10 +71,9 @@ const renderTrelloBox = (box, data) => {
 
   if (!processNumber || !cardPlaceholder || !createCardPlaceholder) return;
 
-  const cardsForThisProcess = data.cards
-    .filter((card) => card.processNumber === processNumber);
+  const cardsForThisProcess = data.cards.filter((card) => card.processNumber === processNumber);
 
-  const hasTrelloCard = (cardsForThisProcess.length > 0);
+  const hasTrelloCard = cardsForThisProcess.length > 0;
 
   const cardToConsider = hasTrelloCard ? cardsForThisProcess[0] : null;
 
@@ -85,21 +86,19 @@ const renderTrelloBox = (box, data) => {
   }
 
   if (hasTrelloCard) {
-
     /* render trello card */
     if (processAnchor) processAnchor.classList.add('hide');
     cardPlaceholder.classList.remove('hide');
-    renderTrelloCard(cardPlaceholder, cardToConsider, (cardsForThisProcess.length > 1), processAnchor);
+    renderTrelloCard(cardPlaceholder, cardToConsider, cardsForThisProcess.length > 1, processAnchor);
 
     /* remove create card button */
     createCardPlaceholder.classList.add('hide');
     ReactDOM.unmountComponentAtNode(createCardPlaceholder);
-
   } else {
-
     let newCardData = {};
     if (box.hasAttribute('data-trello-default-name')) newCardData.name = box.getAttribute('data-trello-default-name');
-    if (box.hasAttribute('data-trello-default-description')) newCardData.description = box.getAttribute('data-trello-default-description');
+    if (box.hasAttribute('data-trello-default-description'))
+      newCardData.description = box.getAttribute('data-trello-default-description');
 
     /* render create card button */
     renderCreateTrelloCardButton(createCardPlaceholder, processNumber, data, newCardData);
@@ -109,17 +108,10 @@ const renderTrelloBox = (box, data) => {
     cardPlaceholder.classList.add('hide');
     if (processAnchor) processAnchor.classList.remove('hide');
     ReactDOM.unmountComponentAtNode(cardPlaceholder);
-
   }
-
-};
-
-const renderFilterMessage = (placeholder, data) => {
-  ReactDOM.render(<FilterMessage show={ !filter.isFilterEmpty(data.filter) }></FilterMessage>, placeholder);
 };
 
 export const render = () => {
-
   const data = store.getData();
 
   const targets = {
@@ -147,5 +139,4 @@ export const render = () => {
   }
 
   updateCurrentData(data, targets['process-box'].elements);
-
 };

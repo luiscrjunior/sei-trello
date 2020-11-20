@@ -11,8 +11,7 @@ import CardLocationSelector from 'view/components/CardLocationSelector';
 import * as alert from 'view/alert.js';
 
 class TrelloCard extends React.Component {
-
-  constructor (props) {
+  constructor(props) {
     super(props);
     this.state = {
       showOptions: false,
@@ -27,7 +26,7 @@ class TrelloCard extends React.Component {
     };
   }
 
-  showTooltip (e) {
+  showTooltip(e) {
     this.setState({
       processTooltip: {
         show: true,
@@ -38,7 +37,7 @@ class TrelloCard extends React.Component {
     e.preventDefault();
   }
 
-  hideTooltip (e) {
+  hideTooltip(e) {
     this.setState({
       processTooltip: {
         show: false,
@@ -49,26 +48,25 @@ class TrelloCard extends React.Component {
     e.preventDefault();
   }
 
-  refreshCard (e) {
+  refreshCard(e) {
     if (!this.props.refreshCard) return;
     if (this.props.isLoading) return;
     this.props.refreshCard(this.props.cardID);
     e.preventDefault();
   }
 
-  deleteCard (e) {
+  deleteCard() {
     if (!this.props.deleteCard) return;
-    alert.confirm('Você deseja mesmo remover este cartão?')
-      .then((willDelete) => {
-        if (willDelete) this.props.deleteCard(this.props.cardID);
-      });
+    alert.confirm('Você deseja mesmo remover este cartão?').then((willDelete) => {
+      if (willDelete) this.props.deleteCard(this.props.cardID);
+    });
   }
 
-  extractProcessInfo () {
+  extractProcessInfo() {
     const defaultInfo = { type: '', specification: '' };
     const info = this.props.originalAnchor.getAttribute('onmouseover');
     if (!info) return defaultInfo;
-    const infosSplited = info.split('\'');
+    const infosSplited = info.split("'");
     if (infosSplited.length !== 5) return defaultInfo;
     return {
       type: infosSplited[3],
@@ -76,70 +74,71 @@ class TrelloCard extends React.Component {
     };
   }
 
-  onChangeName (newName) {
+  onChangeName(newName) {
     if (this.props.onChangeName) this.props.onChangeName(this.props.cardID, newName);
   }
 
-  onChangeDescription (newDescription) {
+  onChangeDescription(newDescription) {
     if (this.props.onChangeDescription) this.props.onChangeDescription(this.props.cardID, newDescription);
-  };
+  }
 
-  onChangeLocation (type, newLocation) {
+  onChangeLocation(type, newLocation) {
     if (this.props.onChangeLocation) this.props.onChangeLocation(this.props.cardID, type, newLocation);
   }
 
-  onChangeDue (due, dueComplete) {
-    this.setState({isEditingDue: false});
+  onChangeDue(due, dueComplete) {
+    this.setState({ isEditingDue: false });
     if (this.props.onChangeDue) this.props.onChangeDue(this.props.cardID, due, dueComplete);
   }
 
-  onMouseEnter (e) {
+  onMouseEnter() {
     this.setState({ isHovering: true });
   }
 
-  onMouseLeave (e) {
+  onMouseLeave() {
     this.setState({
       isHovering: false,
-      isEditingDue: false, /* close due panel on hover out */
+      isEditingDue: false /* close due panel on hover out */,
     });
   }
 
-  openDuePanel (e) {
+  openDuePanel(e) {
     this.setState({ isEditingDue: true });
     e.preventDefault();
   }
 
-  closeDuePanel () {
+  closeDuePanel() {
     this.setState({ isEditingDue: false });
   }
 
-  renderLabels () {
+  renderLabels() {
     if (this.props.labels.length === 0) return null;
     let uiLabels = [];
     this.props.labels.forEach((label, idx) => {
       uiLabels.push(
-        <span
-          key={idx}
-          className={classNames(styles.label, (styles['label-' + label.color] || styles.default))}
-        >{label.label}</span>
+        <span key={idx} className={classNames(styles.label, styles['label-' + label.color] || styles.default)}>
+          {label.label}
+        </span>
       );
     });
     return <div className={styles.labels}>{uiLabels}</div>;
   }
 
-  renderDue () {
+  renderDue() {
     if (!this.props.due) return null;
     const due = dueFormatter(this.props.due, this.props.dueComplete);
     return (
       <li>
         <i className={classNames(styles['ic-footer'], 'far', 'fa-clock')}></i>
-        <span>{due.date} <span className={classNames(styles['due-message'], styles['due-' + due.class])}>{due.message}</span></span>
+        <span>
+          {due.date}{' '}
+          <span className={classNames(styles['due-message'], styles['due-' + due.class])}>{due.message}</span>
+        </span>
       </li>
     );
-  };
+  }
 
-  renderProcessTooltip () {
-
+  renderProcessTooltip() {
     const processInfo = this.extractProcessInfo();
 
     const elementStyle = {
@@ -148,15 +147,17 @@ class TrelloCard extends React.Component {
     };
 
     return (
-      <div className={classNames(styles.processTooltip, { hide: !this.state.processTooltip.show })} style={elementStyle}>
+      <div
+        className={classNames(styles.processTooltip, { hide: !this.state.processTooltip.show })}
+        style={elementStyle}
+      >
         <h3>{processInfo.specification}</h3>
         <p>{processInfo.type}</p>
       </div>
     );
-
   }
 
-  renderLoadingOverlay () {
+  renderLoadingOverlay() {
     if (!this.props.isLoading) return null;
     return (
       <div className={styles.loadingOverlay}>
@@ -165,7 +166,7 @@ class TrelloCard extends React.Component {
     );
   }
 
-  renderProcessAnchor () {
+  renderProcessAnchor() {
     if (!this.props.originalAnchor) return null;
 
     const relevantClasses = this.props.originalAnchor
@@ -180,70 +181,104 @@ class TrelloCard extends React.Component {
           className={classNames(relevantClasses)}
           onMouseOver={this.showTooltip.bind(this)}
           onMouseOut={this.hideTooltip.bind(this)}
-          href={this.props.originalAnchor.getAttribute('href')}>{this.props.originalAnchor.textContent.trim()}​</a>
+          href={this.props.originalAnchor.getAttribute('href')}
+        >
+          {this.props.originalAnchor.textContent.trim()}
+        </a>
         {this.renderProcessTooltip()}
       </li>
     );
   }
 
-  render () {
-
+  render() {
     const isDescriptionEmpty = !(typeof this.props.description === 'string' && this.props.description.length > 0);
 
-    const highlightCard = this.props.originalAnchor && this.props.originalAnchor.classList.contains('processoNaoVisualizado');
+    const highlightCard =
+      this.props.originalAnchor && this.props.originalAnchor.classList.contains('processoNaoVisualizado');
 
     return (
       <div
-        className={classNames(styles.card, { [styles['full-width']]: this.props.fullWidth, [styles['highlight']]: highlightCard }) }
+        className={classNames(styles.card, {
+          [styles['full-width']]: this.props.fullWidth,
+          [styles['highlight']]: highlightCard,
+        })}
         onMouseEnter={this.onMouseEnter.bind(this)}
-        onMouseLeave={this.onMouseLeave.bind(this)}>
-
+        onMouseLeave={this.onMouseLeave.bind(this)}
+      >
         {this.renderLoadingOverlay()}
 
-        {this.state.isEditingDue &&
+        {this.state.isEditingDue && (
           <DuePanel
             due={this.props.due}
             dueComplete={this.props.dueComplete}
             onClose={this.closeDuePanel.bind(this)}
             onChangeDue={this.onChangeDue.bind(this)}
           />
-        }
+        )}
 
         <div className={styles.options}>
-          <a data-tooltip="Especificar data de entrega" target='#' onClick={this.openDuePanel.bind(this)}><i className="far fa-clock"></i></a>
-          <a data-tooltip="Remover Cartão" target='#' onClick={this.deleteCard.bind(this)}><i className="far fa-trash-alt"></i></a>
-          <a data-tooltip="Atualizar Cartão" target='#' onClick={this.refreshCard.bind(this)}><i className='fas fa-sync-alt'></i></a>
-          <a data-tooltip="Abrir no Trello" target='_blank' href={this.props.url}><i className='fas fa-external-link-alt'></i></a>
+          <a data-tooltip="Especificar data de entrega" target="#" onClick={this.openDuePanel.bind(this)}>
+            <i className="far fa-clock"></i>
+          </a>
+          <a data-tooltip="Remover Cartão" target="#" onClick={this.deleteCard.bind(this)}>
+            <i className="far fa-trash-alt"></i>
+          </a>
+          <a data-tooltip="Atualizar Cartão" target="#" onClick={this.refreshCard.bind(this)}>
+            <i className="fas fa-sync-alt"></i>
+          </a>
+          <a data-tooltip="Abrir no Trello" target="_blank" rel="noreferrer" href={this.props.url}>
+            <i className="fas fa-external-link-alt"></i>
+          </a>
         </div>
 
-        <i data-tooltip="Processo com mais de um cartão. Mostrando o primeiro." className={classNames('fas', 'fa-exclamation-triangle', styles.hasAnotherCard, { hide: !this.props.hasAnotherCard })}></i>
+        <i
+          data-tooltip="Processo com mais de um cartão. Mostrando o primeiro."
+          className={classNames('fas', 'fa-exclamation-triangle', styles.hasAnotherCard, {
+            hide: !this.props.hasAnotherCard,
+          })}
+        ></i>
 
         <EditableParagraph
           paragraphClass={styles.name}
           value={this.props.name}
-          onChange={(value) => { this.onChangeName(value); }} ></EditableParagraph>
+          onChange={(value) => {
+            this.onChangeName(value);
+          }}
+        ></EditableParagraph>
 
         {this.renderLabels()}
 
-        <div className={styles.location}>em <CardLocationSelector
-          type="board"
-          showSelector={this.state.isHovering}
-          onChange={this.onChangeLocation.bind(this)}
-          selected={this.props.location.board}
-        ></CardLocationSelector> / <CardLocationSelector
-          type="list"
-          showSelector={this.state.isHovering}
-          onChange={this.onChangeLocation.bind(this)}
-          selected={this.props.location.list}
-          currentBoard={this.props.location.board}
-        ></CardLocationSelector></div>
+        <div className={styles.location}>
+          em{' '}
+          <CardLocationSelector
+            type="board"
+            showSelector={this.state.isHovering}
+            onChange={this.onChangeLocation.bind(this)}
+            selected={this.props.location.board}
+          ></CardLocationSelector>{' '}
+          /{' '}
+          <CardLocationSelector
+            type="list"
+            showSelector={this.state.isHovering}
+            onChange={this.onChangeLocation.bind(this)}
+            selected={this.props.location.list}
+            currentBoard={this.props.location.board}
+          ></CardLocationSelector>
+        </div>
 
         <EditableParagraph
-          wrapperClass={classNames(styles['descr-wrapper'], { [styles['hide']]: isDescriptionEmpty && !this.state.isEditingDescription })}
+          wrapperClass={classNames(styles['descr-wrapper'], {
+            [styles['hide']]: isDescriptionEmpty && !this.state.isEditingDescription,
+          })}
           paragraphClass={styles.descr}
           value={this.props.description}
-          onChangeState={(status) => { this.setState({isEditingDescription: (status === 'edit')}); } }
-          onChange={(value) => { this.onChangeDescription(value); }} ></EditableParagraph>
+          onChangeState={(status) => {
+            this.setState({ isEditingDescription: status === 'edit' });
+          }}
+          onChange={(value) => {
+            this.onChangeDescription(value);
+          }}
+        ></EditableParagraph>
 
         <div className={styles.footer}>
           <ul>
@@ -254,6 +289,6 @@ class TrelloCard extends React.Component {
       </div>
     );
   }
-};
+}
 
 export default TrelloCard;

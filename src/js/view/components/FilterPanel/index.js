@@ -1,6 +1,4 @@
 import React from 'react';
-import styles from './styles.scss';
-import classNames from 'classnames';
 import FloatingPanel from 'view/components/FloatingPanel';
 import CheckboxList from 'view/components/CheckboxList';
 
@@ -41,25 +39,26 @@ const defaultFilter = {
 };
 
 class FilterPanel extends React.Component {
-
-  constructor (props) {
+  constructor(props) {
     super(props);
     this.state = { options: Object.assign({}, defaultOptions) };
     this.state.options.labels = this.updateLabels(props.currentLabels);
     this.state.options.locations = this.updateLocations(props.currentLocations);
   }
 
-  updateLabels (currentLabels) {
+  updateLabels(currentLabels) {
     if (!currentLabels) currentLabels = [];
-    return defaultOptions.labels.concat(currentLabels.map((newLabel) => {
-      return {
-        key: newLabel,
-        label: newLabel.label,
-      };
-    }));
+    return defaultOptions.labels.concat(
+      currentLabels.map((newLabel) => {
+        return {
+          key: newLabel,
+          label: newLabel.label,
+        };
+      })
+    );
   }
 
-  updateLocations (updateLocations) {
+  updateLocations(updateLocations) {
     if (!updateLocations) updateLocations = [];
     let newLocations = updateLocations.map((newLocation) => {
       return {
@@ -70,60 +69,60 @@ class FilterPanel extends React.Component {
     newLocations.sort((a, b) => {
       const label1 = a.label.toUpperCase();
       const label2 = b.label.toUpperCase();
-      return (label1 < label2) ? -1 : (label1 > label2) ? 1 : 0;
+      return label1 < label2 ? -1 : label1 > label2 ? 1 : 0;
     });
     return newLocations;
-  };
+  }
 
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps(nextProps) {
     let currentOptions = Object.assign({}, this.state.options);
     currentOptions.labels = this.updateLabels(nextProps.currentLabels);
     currentOptions.locations = this.updateLocations(nextProps.currentLocations);
     this.setState({ options: currentOptions });
   }
 
-  onFilterChange (type, checked, key) {
+  onFilterChange(type, checked, key) {
     if (!this.props.onFilterChange) return;
     this.props.onFilterChange(type, checked, key);
   }
 
-  onClose () {
+  onClose() {
     if (!this.props.onClose) return;
     this.props.onClose();
   }
 
-  render () {
-
+  render() {
     const filter = this.props.filter || defaultFilter;
 
     return (
-      <FloatingPanel
-        title="Filtros"
-        className={this.props.className}
-        onClose={this.onClose.bind(this)}>
+      <FloatingPanel title="Filtros" className={this.props.className} onClose={this.onClose.bind(this)}>
         <CheckboxList
           selected={filter.locations}
           options={this.state.options.locations}
-          onClick={(checked, key) => this.onFilterChange('locations', checked, key)} />
+          onClick={(checked, key) => this.onFilterChange('locations', checked, key)}
+        />
         <hr />
         <CheckboxList
           color={true}
           selected={filter.labels}
           options={this.state.options.labels}
-          onClick={(checked, key) => this.onFilterChange('labels', checked, key)} />
+          onClick={(checked, key) => this.onFilterChange('labels', checked, key)}
+        />
         <hr />
         <CheckboxList
           selected={filter.due}
           options={this.state.options.due}
-          onClick={(checked, key) => this.onFilterChange('due', checked, key)} />
+          onClick={(checked, key) => this.onFilterChange('due', checked, key)}
+        />
         <hr />
         <CheckboxList
           selected={filter.processes}
           options={this.state.options.processes}
-          onClick={(checked, key) => this.onFilterChange('processes', checked, key)} />
+          onClick={(checked, key) => this.onFilterChange('processes', checked, key)}
+        />
       </FloatingPanel>
     );
   }
-};
+}
 
 export default FilterPanel;

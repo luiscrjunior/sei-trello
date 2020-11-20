@@ -4,19 +4,18 @@ import styles from './styles.scss';
 import classNames from 'classnames';
 
 class FloatingPanel extends React.Component {
-
-  constructor (props) {
+  constructor(props) {
     super(props);
     this.onBGClick = this.onBGClick.bind(this);
   }
 
-  onClose (e) {
+  onClose(e) {
     e.preventDefault();
     if (!this.props.onClose) return;
     this.props.onClose();
   }
 
-  onBGClick (e) {
+  onBGClick(e) {
     const clickedElement = e.target;
     const panel = ReactDOM.findDOMNode(this.panel);
     const wrapper = panel.closest('.btn-panel-trigger') || panel;
@@ -24,29 +23,31 @@ class FloatingPanel extends React.Component {
     if (!elementInsideWrapper && this.props.onClose) this.props.onClose();
   }
 
-  componentDidMount () {
+  componentDidMount() {
     document.querySelector('body').addEventListener('click', this.onBGClick);
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     document.querySelector('body').removeEventListener('click', this.onBGClick);
   }
 
-  render () {
+  render() {
     return (
       <div
         className={classNames(styles.panel, this.props.className)}
-        ref={(el) => { this.panel = el; }}>
+        ref={(el) => {
+          this.panel = el;
+        }}
+      >
+        {this.props.title && <span className={styles.title}>{this.props.title}</span>}
 
-        { this.props.title &&
-          <span className={styles.title}>{this.props.title}</span>
-        }
-
-        <a href="#" className={styles['btn-close']} onClick={this.onClose.bind(this)}>&times;</a>
+        <a href="#" className={styles['btn-close']} onClick={this.onClose.bind(this)}>
+          &times;
+        </a>
         <div className={styles.content}>{this.props.children}</div>
       </div>
     );
   }
-};
+}
 
 export default FloatingPanel;

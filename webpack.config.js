@@ -8,7 +8,6 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const outputPath = path.resolve(__dirname, 'dist/expanded');
 
 module.exports = {
-
   mode: 'development',
 
   entry: {
@@ -28,7 +27,6 @@ module.exports = {
     'css/common.css': './src/css/common.scss',
     'css/process_list.css': './src/css/process_list.scss',
     'css/process_content.css': './src/css/process_content.scss',
-
   },
   output: {
     path: outputPath,
@@ -36,23 +34,20 @@ module.exports = {
   },
   resolve: {
     alias: {
-      'model': path.resolve(__dirname, 'src/js/model'),
-      'view': path.resolve(__dirname, 'src/js/view'),
-      'controller': path.resolve(__dirname, 'src/js/controller'),
-      'api': path.resolve(__dirname, 'src/js/api'),
-      'actions': path.resolve(__dirname, 'src/js/actions'),
-      'utils': path.resolve(__dirname, 'src/js/utils'),
+      model: path.resolve(__dirname, 'src/js/model'),
+      view: path.resolve(__dirname, 'src/js/view'),
+      controller: path.resolve(__dirname, 'src/js/controller'),
+      api: path.resolve(__dirname, 'src/js/api'),
+      actions: path.resolve(__dirname, 'src/js/actions'),
+      utils: path.resolve(__dirname, 'src/js/utils'),
     },
   },
   module: {
     rules: [
-
       /* estilos neste path serão exportados para um .css */
       {
         test: /\.scss$/,
-        include: [
-          path.resolve(__dirname, 'src/css'),
-        ],
+        include: [path.resolve(__dirname, 'src/css')],
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: ['css-loader', 'postcss-loader', 'sass-loader'],
@@ -62,18 +57,14 @@ module.exports = {
       /* estilos dos componentes não serão exportados para arquivo */
       {
         test: /\.scss$/,
-        include: [
-          path.resolve(__dirname, 'src/js'),
-        ],
+        include: [path.resolve(__dirname, 'src/js')],
         use: ['style-loader', 'css-loader?modules&importLoaders=1', 'postcss-loader', 'sass-loader'],
       },
 
       /* estilos dos componentes importados do node_modules */
       {
         test: /\.(scss|css)$/,
-        include: [
-          path.resolve(__dirname, 'node_modules'),
-        ],
+        include: [path.resolve(__dirname, 'node_modules')],
         use: ['style-loader', 'css-loader?importLoaders=1', 'sass-loader'],
       },
 
@@ -100,7 +91,6 @@ module.exports = {
           },
         ],
       },
-
     ],
   },
   plugins: [

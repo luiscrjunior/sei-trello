@@ -42,7 +42,6 @@ export const setCards = (cards) => {
 };
 
 export const updateCardsWithID = (cardID, updatedCards) => {
-
   /* remove all cards that matches cardID */
   data.cards = data.cards.filter((card) => card.cardID !== cardID);
 
@@ -66,7 +65,9 @@ export const onDataChanged = (fn) => {
 
 export const setIsLoading = (isLoading) => {
   data.isLoading = isLoading;
-  data.cards.forEach((card) => { card.isLoading = isLoading; });
+  data.cards.forEach((card) => {
+    card.isLoading = isLoading;
+  });
   triggerEvent('onDataChanged');
 };
 
@@ -82,34 +83,33 @@ export const setIsAddingFor = (processNumber) => {
 };
 
 export const getAllProcesssFromCardID = (cardID) => {
-  return data.cards
-    .filter((card) => card.cardID === cardID)
-    .map((card) => card.processNumber);
+  return data.cards.filter((card) => card.cardID === cardID).map((card) => card.processNumber);
 };
 
 export const updateCardsData = (cardID, newData) => {
-  data.cards
-    .filter((card) => card.cardID === cardID)
-    .map((card) => merge(card, newData));
+  data.cards.filter((card) => card.cardID === cardID).map((card) => merge(card, newData));
   triggerEvent('onDataChanged');
 };
 
 export const setCurrentLabels = (labels) => {
-  if (!isEqual(labels, data.currentLabels)) { /* prevent infinite loop */
+  if (!isEqual(labels, data.currentLabels)) {
+    /* prevent infinite loop */
     data.currentLabels = labels;
     triggerEvent('onDataChanged');
   }
 };
 
 export const setCurrentLocations = (locations) => {
-  if (!isEqual(locations, data.currentLocations)) { /* prevent infinite loop */
+  if (!isEqual(locations, data.currentLocations)) {
+    /* prevent infinite loop */
     data.currentLocations = locations;
     triggerEvent('onDataChanged');
   }
 };
 
 export const updateFilter = (newFilter) => {
-  if (!isEqual(newFilter, data.filter)) { /* prevent infinite loop */
+  if (!isEqual(newFilter, data.filter)) {
+    /* prevent infinite loop */
     data.filter = newFilter;
     triggerEvent('onDataChanged');
   }

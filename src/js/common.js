@@ -1,4 +1,3 @@
-
 /* show page action icon */
 
 chrome.runtime.sendMessage(null, {

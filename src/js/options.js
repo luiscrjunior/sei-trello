@@ -1,7 +1,7 @@
-
 let ui = {};
 
-const defaultTokenUrl = 'https://trello.com/1/authorize?expiration=never&scope=read,write,account&response_type=token&name=SEITrello';
+const defaultTokenUrl =
+  'https://trello.com/1/authorize?expiration=never&scope=read,write,account&response_type=token&name=SEITrello';
 
 const mapUI = () => {
   ui.appKey = document.getElementById('txt-app-key');
@@ -15,14 +15,13 @@ const mapUI = () => {
 
   ui.btnSave.addEventListener('click', save);
 
-  ui.appKey.addEventListener('input', (e) => {
+  ui.appKey.addEventListener('input', () => {
     updateTokenUrl();
   });
 
-  document.addEventListener('DOMContentLoaded', (e) => {
+  document.addEventListener('DOMContentLoaded', () => {
     updateTokenUrl();
   });
-
 };
 
 const updateTokenUrl = () => {
@@ -50,18 +49,21 @@ const save = () => {
 };
 
 const restore = () => {
-  chrome.storage.sync.get({
-    appKey: '',
-    appToken: '',
-    defaultBoard: '',
-    defaultList: '',
-  }, (items) => {
-    ui.appKey.value = items.appKey;
-    ui.appToken.value = items.appToken;
-    ui.defaultBoard.value = items.defaultBoard;
-    ui.defaultList.value = items.defaultList;
-    updateTokenUrl();
-  });
+  chrome.storage.sync.get(
+    {
+      appKey: '',
+      appToken: '',
+      defaultBoard: '',
+      defaultList: '',
+    },
+    (items) => {
+      ui.appKey.value = items.appKey;
+      ui.appToken.value = items.appToken;
+      ui.defaultBoard.value = items.defaultBoard;
+      ui.defaultList.value = items.defaultList;
+      updateTokenUrl();
+    }
+  );
 };
 
 document.addEventListener('DOMContentLoaded', () => {
