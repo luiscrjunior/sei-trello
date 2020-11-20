@@ -46,6 +46,7 @@ const save = () => {
     defaultBoard: ui.defaultBoard.value,
     defaultList: ui.defaultList.value,
   });
+  alert('As configurações foram salvas com sucesso.');
 };
 
 const restore = () => {
