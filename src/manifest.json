@@ -3,7 +3,7 @@
   "name": "SEI+Trello",
   "short_name": "SEI+Trello",
   "description": "Permite a integração entre o Sistema Eletrônico de Informações (SEI) e o Trello.",
-  "version": "1.3.9",
+  "version": "1.3.10",
   "author": "Luís Carlos Reischak Júnior",
   "homepage_url": "https://luiscrjunior.github.io/sei-trello/",
 
@@ -13,12 +13,10 @@
 
   "icons": {
     "128": "icons/icon.png"
-  },  
+  },
 
   "background": {
-    "scripts": [
-      "js/background.js"
-    ],
+    "scripts": ["js/background.js"],
     "persistent": false
   },
 
@@ -29,46 +27,25 @@
       "matches": ["*://*.br/sei/*"],
       "all_frames": true,
       "run_at": "document_start",
-      "js": [
-        "js/common.js"
-      ],
-      "css": [
-        "css/common.css"
-      ]
-    },    
+      "js": ["js/common.js"],
+      "css": ["css/common.css"]
+    },
     {
       "matches": ["*://*.br/sei/*controlador.php?acao=procedimento_controlar*"],
       "run_at": "document_end",
-      "css": [
-        "css/process_list.css",
-        "vendor/css/fontawesome-all.css"
-      ],
-      "js": [
-        "js/process_list.js"
-      ]
+      "css": ["css/process_list.css", "vendor/css/fontawesome-all.css"],
+      "js": ["js/process_list.js"]
     },
     {
       "matches": ["*://*.br/sei/*controlador.php?acao=procedimento_visualizar*"],
       "run_at": "document_end",
       "all_frames": true,
-      "css": [
-        "css/process_content.css",
-        "vendor/css/fontawesome-all.css"
-      ],
-      "js": [
-        "js/process_content.js"
-      ]
+      "css": ["css/process_content.css", "vendor/css/fontawesome-all.css"],
+      "js": ["js/process_content.js"]
     }
   ],
 
-  "permissions": [
-    "<all_urls>",
-    "tabs",
-    "storage",
-    "webNavigation"
-  ],
-  "web_accessible_resources": [
-    "vendor/webfonts/*"
-  ],
+  "permissions": ["<all_urls>", "tabs", "storage", "webNavigation"],
+  "web_accessible_resources": ["vendor/webfonts/*"],
   "content_security_policy": "script-src 'self' 'unsafe-eval' https://www.google-analytics.com; object-src 'self'"
 }
