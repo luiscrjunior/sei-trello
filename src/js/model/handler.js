@@ -5,7 +5,7 @@ const removeSubstrFromStr = (startIndex, endIndex, text) => {
 };
 
 export const getCards = (cardList) => {
-  const extractSEIInfoRegex = /^SEI\s+((?:\d+[./-]?)+)/gm;
+  const extractSEIInfoRegex = /^SEI\s+([0-9./-]+)$/gm;
   let cards = [];
   cardList.forEach((cardFromTrello) => {
     let match = null;
