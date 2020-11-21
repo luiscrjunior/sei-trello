@@ -1,7 +1,11 @@
 import React from 'react';
-import DatePicker from 'react-datepicker';
+
+import DatePicker, { registerLocale, setDefaultLocale } from 'react-datepicker';
+import ptBR from 'date-fns/locale/pt-BR';
+import { parseISO } from 'date-fns';
+
 import Switch from 'react-toggle-switch';
-import moment from 'moment';
+
 import classNames from 'classnames';
 
 import Button from 'view/components/Button';
@@ -11,11 +15,14 @@ import 'react-datepicker/dist/react-datepicker.css';
 import 'react-toggle-switch/dist/css/switch.min.css';
 import styles from './styles.scss';
 
+registerLocale('ptBR', ptBR);
+setDefaultLocale('ptBR');
+
 class DuePanel extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedDue: this.props.due ? moment(this.props.due) : null,
+      selectedDue: this.props.due ? parseISO(this.props.due) : null,
       selectedDueComplete: this.props.dueComplete || false,
     };
   }
@@ -47,7 +54,7 @@ class DuePanel extends React.Component {
     return (
       <FloatingPanel className={styles.panel} title="Data de entrega" onClose={this.props.onClose}>
         <div className={styles.wrapper}>
-          <DatePicker selected={this.state.selectedDue} inline locale="pt-BR" onChange={this.onDateChange.bind(this)} />
+          <DatePicker selected={this.state.selectedDue} inline onChange={this.onDateChange.bind(this)} />
         </div>
         <div className={classNames([styles.wrapper, styles['due-complete-wrapper']])}>
           <Switch onClick={this.onDueCompleteChange.bind(this)} on={this.state.selectedDueComplete} />

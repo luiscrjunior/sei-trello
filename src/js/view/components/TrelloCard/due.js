@@ -1,10 +1,10 @@
-import moment from 'moment';
+import { parseISO, set, differenceInDays, format } from 'date-fns';
 
 export default (due, dueComplete) => {
-  let dueDate = moment(due);
-  dueDate.set({ hour: 0, minute: 0, second: 0, millisecond: 0 });
-  const today = moment().set({ hour: 0, minute: 0, second: 0, millisecond: 0 });
-  const diffDays = dueDate.diff(today, 'days');
+  let dueDate = parseISO(due);
+  dueDate = set(dueDate, { hours: 0, minutes: 0, seconds: 0, milliseconds: 0 });
+  const today = set(new Date(), { hours: 0, minutes: 0, seconds: 0, milliseconds: 0 });
+  const diffDays = differenceInDays(dueDate, today);
 
   let className = 'normal';
   if (!dueComplete) {
@@ -29,7 +29,7 @@ export default (due, dueComplete) => {
   }
 
   return {
-    date: dueDate.format('DD/MM'),
+    date: format(dueDate, 'dd/MM'),
     class: className,
     message: message,
   };
