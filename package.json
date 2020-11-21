@@ -4,8 +4,8 @@
   "description": "Integração SEI e Trello",
   "main": "index.js",
   "scripts": {
-    "webpack:dev": "NODE_ENV=development node_modules/webpack/bin/webpack.js --config webpack.config.dev.js",
-    "webpack:dev:watch": "NODE_ENV=development node_modules/webpack/bin/webpack.js --config webpack.config.dev.js --watch",
+    "webpack:dev": "NODE_ENV=development node_modules/webpack/bin/webpack.js --config webpack.config.js",
+    "webpack:dev:watch": "NODE_ENV=development node_modules/webpack/bin/webpack.js --config webpack.config.dev.watch.js --watch",
     "webpack:prod": "NODE_ENV=production node_modules/webpack/bin/webpack.js --config webpack.config.prod.js",
     "lint": "node_modules/eslint/bin/eslint.js ./src/js",
     "build": "./build.js",
