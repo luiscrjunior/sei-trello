@@ -1,14 +1,14 @@
 const merge = require('webpack-merge');
-const ChromeExtensionReloader = require('webpack-chrome-extension-reloader');
+const ExtensionReloader = require('webpack-extension-reloader');
 const common = require('./webpack.config.js');
 
 module.exports = merge(common, {
   plugins: [
-    new ChromeExtensionReloader({
+    new ExtensionReloader({
       port: 9090,
       reloadPage: false,
       entries: {
-        contentScript: 'js/process_list.js',
+        contentScript: ['js/process_list.js', 'js/process_content.js'],
         background: 'js/background.js',
       },
     }),
