@@ -11,9 +11,6 @@ module.exports = {
   mode: 'development',
 
   entry: {
-    /* importante para compatibilidade com as promises */
-    'vendor/js/babel-polyfill.js': 'babel-polyfill',
-
     /* entry points da app */
     'js/process_list.js': './src/js/entries/process_list',
     'js/process_content.js': './src/js/entries/process_content',
@@ -74,10 +71,6 @@ module.exports = {
         exclude: /(node_modules)/,
         use: {
           loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-env', '@babel/preset-react'],
-            plugins: ['transform-object-rest-spread'],
-          },
         },
       },
 

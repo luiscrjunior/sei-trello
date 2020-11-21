@@ -13,25 +13,27 @@
   },
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "@babel/core": "^7.1.2",
-    "@babel/preset-env": "^7.1.0",
-    "@babel/preset-react": "^7.0.0",
+  "dependencies": {
+    "@babel/cli": "^7.12.7",
+    "@babel/core": "^7.12.7",
+    "@babel/preset-env": "^7.12.7",
+    "@babel/preset-react": "^7.12.7",
     "autosize": "^4.0.0",
     "axios": "^0.18.1",
-    "babel-loader": "^8.0.4",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-polyfill": "^6.26.0",
+    "babel-loader": "^8.2.1",
     "classnames": "^2.2.6",
     "clean-webpack-plugin": "^0.1.18",
     "copy-webpack-plugin": "^4.5.3",
+    "core-js": "^3.7.0",
     "css-loader": "^0.28.9",
     "eslint": "^7.12.1",
+    "eslint-plugin-react": "^7.21.5",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "lodash": "^4.17.20",
     "moment": "^2.22.2",
     "node-sass": "^4.14.1",
     "postcss-loader": "^2.1.6",
+    "prettier": "^2.1.2",
     "raw-loader": "^0.5.1",
     "react": "^16.5.2",
     "react-datepicker": "^1.6.0",
@@ -47,9 +49,5 @@
     "webpack-cli": "^3.1.2",
     "webpack-dev-server": "^3.11.0",
     "webpack-merge": "^4.1.4"
-  },
-  "dependencies": {
-    "eslint-plugin-react": "^7.21.5",
-    "prettier": "^2.1.2"
   }
 }
