@@ -74,7 +74,7 @@ class FilterPanel extends React.Component {
     return newLocations;
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     let currentOptions = Object.assign({}, this.state.options);
     currentOptions.labels = this.updateLabels(nextProps.currentLabels);
     currentOptions.locations = this.updateLocations(nextProps.currentLocations);

@@ -70,7 +70,7 @@ class CardLocationSelector extends React.Component {
       });
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (this.props.showSelector === true && nextProps.showSelector === false) {
       this.setState({ menuOpen: false }); /* turn off menu when user hover out card */
     }
