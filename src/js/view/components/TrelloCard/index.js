@@ -104,6 +104,7 @@ class TrelloCard extends React.Component {
 
   openDuePanel(e) {
     this.setState({ isEditingDue: true });
+    e.stopPropagation();
     e.preventDefault();
   }
 
