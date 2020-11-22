@@ -9,6 +9,7 @@ common.entry = {
   'filter-panel.js': './playground/filter-panel.js',
   'trello-card.js': './playground/trello-card.js',
   'due-panel.js': './playground/due-panel.js',
+  'checklist-panel.js': './playground/checklist-panel.js',
   'common.css': './src/css/common.scss',
 };
 
