@@ -17,14 +17,12 @@ const ChecklistItems = styled.ul`
   padding: 0;
 `;
 
-const ChecklistPanel = ({ isLoading, tasks, onChange }) => {
-  const [checked, setChecked] = useState(false);
-
+const ChecklistPanel = ({ tasks, onChange, onRemove }) => {
   return (
     <Panel title="Checklist">
       <ChecklistItems>
         {tasks.map((task) => (
-          <ChecklistItem key={task.id} onClick={() => setChecked(!checked)} task={task} onChange={onChange} />
+          <ChecklistItem key={task.id} task={task} onChange={onChange} onRemove={onRemove} />
         ))}
       </ChecklistItems>
       <Buttons>

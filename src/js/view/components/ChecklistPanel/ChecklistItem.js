@@ -20,7 +20,7 @@ const Description = styled.div`
   width: auto;
 `;
 
-const ChecklistItem = ({ task, onChange }) => {
+const ChecklistItem = ({ task, onChange, onRemove }) => {
   const [editing, setEditing] = useState(false);
 
   const onChangeParagraphState = (paragraphState) => {
@@ -38,7 +38,14 @@ const ChecklistItem = ({ task, onChange }) => {
         />
         {editing && (
           <Buttons>
-            <Button type="danger">Remover</Button>
+            <Button
+              type="danger"
+              onClick={() => {
+                onRemove(task.id);
+              }}
+            >
+              Remover
+            </Button>
           </Buttons>
         )}
       </Description>

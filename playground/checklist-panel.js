@@ -16,17 +16,23 @@ class Flow {
     this.data = initialData;
   }
 
+  removeTask(taskId) {
+    this.data.tasks = this.data.tasks.filter((task) => {
+      return task.id === taskId ? false : true;
+    });
+    this.render();
+  }
+
   updateTask(updatedTask) {
-    const updatedTasks = this.data.tasks.map((task) => {
+    this.data.tasks = this.data.tasks.map((task) => {
       return task.id === updatedTask.id ? updatedTask : task;
     });
-    this.data.tasks = updatedTasks;
     this.render();
   }
 
   render() {
     ReactDOM.render(
-      <ChecklistPanel {...this.data} onChange={(updatedTask) => this.updateTask(updatedTask)} />,
+      <ChecklistPanel {...this.data} onRemove={this.removeTask.bind(this)} onChange={this.updateTask.bind(this)} />,
       placeholder
     );
   }
