@@ -7,7 +7,7 @@ class EditableParagraph extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isEditing: false,
+      isEditing: props.state && props.state === 'edit',
       paragraphHeight: 0,
     };
     this.onOutsideClick = this.onOutsideClick.bind(this);
@@ -45,7 +45,10 @@ class EditableParagraph extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.onChangeState) this.props.onChangeState('show');
+    if (this.state.isEditing) {
+      this.textarea.click();
+    }
+    if (this.props.onChangeState) this.props.onChangeState(this.state.isEditing ? 'edit' : 'show');
     document.querySelector('body').addEventListener('click', this.onOutsideClick);
   }
 

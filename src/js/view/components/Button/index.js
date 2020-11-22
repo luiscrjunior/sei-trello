@@ -6,7 +6,7 @@ import styles from './styles.scss';
 class Button extends React.Component {
   onClick(e) {
     if (!this.props.onClick) return;
-    this.props.onClick();
+    this.props.onClick(e);
     e.preventDefault();
   }
 

@@ -18,6 +18,7 @@ class FloatingPanel extends React.Component {
   onBGClick(e) {
     const clickedElement = e.target;
     const panel = ReactDOM.findDOMNode(this.panel);
+    if (!panel) return;
     const wrapper = panel.closest('.btn-panel-trigger') || panel;
     const elementInsideWrapper = wrapper.contains(clickedElement);
     if (!elementInsideWrapper && this.props.onClose) this.props.onClose();

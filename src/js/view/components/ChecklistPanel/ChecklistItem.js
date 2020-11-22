@@ -20,11 +20,14 @@ const Description = styled.div`
   width: auto;
 `;
 
-const ChecklistItem = ({ task, onChange, onRemove }) => {
+const ChecklistItem = ({ task, isNew, onChange, onRemove, onChangeState }) => {
   const [editing, setEditing] = useState(false);
+
+  if (isNew) task = { description: '', completed: false };
 
   const onChangeParagraphState = (paragraphState) => {
     setEditing(paragraphState === 'edit');
+    if (onChangeState) onChangeState(paragraphState);
   };
 
   return (
@@ -34,17 +37,19 @@ const ChecklistItem = ({ task, onChange, onRemove }) => {
         <EditableParagraph
           onChangeState={onChangeParagraphState}
           value={task.description}
+          state={isNew ? 'edit' : 'show'}
           onChange={(value) => onChange({ ...task, description: value })}
         />
         {editing && (
           <Buttons>
             <Button
               type="danger"
-              onClick={() => {
+              onClick={(e) => {
                 onRemove(task.id);
+                e.stopPropagation();
               }}
             >
-              Remover
+              {isNew ? 'Cancelar' : 'Remover'}
             </Button>
           </Buttons>
         )}

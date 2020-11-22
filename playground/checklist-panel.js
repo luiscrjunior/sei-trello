@@ -17,6 +17,7 @@ class Flow {
   }
 
   removeTask(taskId) {
+    console.log(`remove task ${taskId}.`);
     this.data.tasks = this.data.tasks.filter((task) => {
       return task.id === taskId ? false : true;
     });
@@ -24,15 +25,27 @@ class Flow {
   }
 
   updateTask(updatedTask) {
+    console.log(`update task ${updatedTask.id}.`);
     this.data.tasks = this.data.tasks.map((task) => {
       return task.id === updatedTask.id ? updatedTask : task;
     });
     this.render();
   }
 
+  createTask(updatedTask) {
+    console.log(`create task ${updatedTask.description}.`);
+    this.data.tasks = [...this.data.tasks, { ...updatedTask, id: new Date().getUTCMilliseconds() }];
+    this.render();
+  }
+
   render() {
     ReactDOM.render(
-      <ChecklistPanel {...this.data} onRemove={this.removeTask.bind(this)} onChange={this.updateTask.bind(this)} />,
+      <ChecklistPanel
+        {...this.data}
+        onRemove={this.removeTask.bind(this)}
+        onAdd={this.createTask.bind(this)}
+        onChange={this.updateTask.bind(this)}
+      />,
       placeholder
     );
   }
