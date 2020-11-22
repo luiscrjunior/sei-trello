@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Checkbox from './Checkbox.js';
 import EditableParagraph from 'view/components/EditableParagraph';
 import styled from 'styled-components';
+import { Buttons, Button } from './Buttons';
 
 const Item = styled.li`
   display: flex;
@@ -19,12 +20,27 @@ const Description = styled.div`
   width: auto;
 `;
 
-const ChecklistItem = ({ checked, value, onClick, onChange }) => {
+const ChecklistItem = ({ task, onChange }) => {
+  const [editing, setEditing] = useState(false);
+
+  const onChangeParagraphState = (paragraphState) => {
+    setEditing(paragraphState === 'edit');
+  };
+
   return (
     <Item>
-      <Checkbox checked={checked} onClick={onClick} />
+      <Checkbox checked={task.completed} onClick={() => onChange({ ...task, completed: !task.completed })} />
       <Description>
-        <EditableParagraph value={value} onChange={onChange} />
+        <EditableParagraph
+          onChangeState={onChangeParagraphState}
+          value={task.description}
+          onChange={(value) => onChange({ ...task, description: value })}
+        />
+        {editing && (
+          <Buttons>
+            <Button type="danger">Remover</Button>
+          </Buttons>
+        )}
       </Description>
     </Item>
   );

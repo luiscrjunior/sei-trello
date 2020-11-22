@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import FloatingPanel from 'view/components/FloatingPanel';
 import ChecklistItem from './ChecklistItem';
-
+import { Buttons, Button } from './Buttons';
 import styled from 'styled-components';
 
 const Panel = styled(FloatingPanel)`
@@ -17,14 +17,19 @@ const ChecklistItems = styled.ul`
   padding: 0;
 `;
 
-const ChecklistPanel = () => {
+const ChecklistPanel = ({ isLoading, tasks, onChange }) => {
   const [checked, setChecked] = useState(false);
 
   return (
     <Panel title="Checklist">
       <ChecklistItems>
-        <ChecklistItem onClick={() => setChecked(!checked)} checked={checked} />
+        {tasks.map((task) => (
+          <ChecklistItem key={task.id} onClick={() => setChecked(!checked)} task={task} onChange={onChange} />
+        ))}
       </ChecklistItems>
+      <Buttons>
+        <Button>Adicionar</Button>
+      </Buttons>
     </Panel>
   );
 };
