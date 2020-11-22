@@ -70,7 +70,7 @@ class EditableParagraph extends React.Component {
             ref={(el) => {
               this.textarea = el;
             }}
-            className={classNames(this.props.paragraphClass, styles.textarea)}
+            className={classNames(styles.textarea, this.props.paragraphClass)}
             autoFocus={true}
             onKeyDown={this.onType.bind(this)}
             onBlur={this.onEditLooseFocus.bind(this)}
