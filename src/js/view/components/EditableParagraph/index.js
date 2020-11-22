@@ -10,16 +10,21 @@ class EditableParagraph extends React.Component {
       isEditing: false,
       paragraphHeight: 0,
     };
+    this.onOutsideClick = this.onOutsideClick.bind(this);
   }
 
   setNewParagraph() {
     if (!this.textarea) return;
+    if (this.textarea.value !== this.props.value && this.props.onChange) this.props.onChange(this.textarea.value);
     this.setState({ isEditing: false });
-    if (this.textarea.value === this.props.value) return;
-    if (this.props.onChange) this.props.onChange(this.textarea.value);
   }
 
-  onEditLooseFocus() {
+  onOutsideClick(e) {
+    if (!this.textarea) return;
+    const clickedElement = e.target;
+    const parentNode = this.textarea.parentNode;
+    const elementInsideContainer = parentNode.contains(clickedElement);
+    if (elementInsideContainer) return;
     this.setNewParagraph();
   }
 
@@ -36,16 +41,23 @@ class EditableParagraph extends React.Component {
       paragraphHeight: e.target.offsetHeight,
     });
     e.preventDefault();
+    e.stopPropagation();
   }
 
   componentDidMount() {
     if (this.props.onChangeState) this.props.onChangeState('show');
+    document.querySelector('body').addEventListener('click', this.onOutsideClick);
+  }
+
+  ComponentWillUnmount() {
+    document.querySelector('body').removeEventListener('click', this.onOutsideClick);
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (!prevState.isEditing && this.state.isEditing) {
       autosize(this.textarea);
       if (this.props.onChangeState) this.props.onChangeState('edit');
+      this.textarea.click();
     }
     if (prevState.isEditing && !this.state.isEditing) {
       if (this.props.onChangeState) this.props.onChangeState('show');
@@ -73,7 +85,6 @@ class EditableParagraph extends React.Component {
             className={classNames(styles.textarea, this.props.paragraphClass)}
             autoFocus={true}
             onKeyDown={this.onType.bind(this)}
-            onBlur={this.onEditLooseFocus.bind(this)}
             rows="1"
             tabIndex="0"
             defaultValue={this.props.value}
