@@ -80,7 +80,7 @@ module.exports = {
         use: [
           {
             loader: 'url-loader',
-            options: { limit: 8192 },
+            options: { limit: 8192, fallback: 'file-loader' },
           },
         ],
       },
