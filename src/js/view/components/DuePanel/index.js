@@ -54,7 +54,12 @@ class DuePanel extends React.Component {
     return (
       <FloatingPanel className={styles.panel} title="Data de entrega" onClose={this.props.onClose}>
         <div className={styles.wrapper}>
-          <DatePicker selected={this.state.selectedDue} inline onChange={this.onDateChange.bind(this)} />
+          <DatePicker
+            selected={this.state.selectedDue}
+            inline
+            onChange={this.onDateChange.bind(this)}
+            disabledKeyboardNavigation
+          />
         </div>
         <div className={classNames([styles.wrapper, styles['due-complete-wrapper']])}>
           <Switch onClick={this.onDueCompleteChange.bind(this)} on={this.state.selectedDueComplete} />
