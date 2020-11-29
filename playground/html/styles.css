@@ -1,0 +1,18 @@
+html,
+body,
+#app {
+  height: 100vh;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-size: 40px 40px;
+  background-image: linear-gradient(to right, #f2f2f2 1px, transparent 1px),
+    linear-gradient(to bottom, #f2f2f2 1px, transparent 1px);
+}
+
+a {
+  text-decoration: none;
+}

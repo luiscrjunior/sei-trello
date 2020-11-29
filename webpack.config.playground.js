@@ -3,12 +3,10 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const path = require('path');
 const common = require('./webpack.config.js');
 
-const outputPath = path.resolve(__dirname, 'playground/output');
+const outputPath = path.resolve(__dirname, 'playground/html');
 
 common.entry = {
-  'filter-panel.js': './playground/filter-panel.js',
-  'trello-card.js': './playground/trello-card.js',
-  'due-panel.js': './playground/due-panel.js',
+  'script.js': './playground/playground.js',
   'common.css': './src/css/common.scss',
 };
 
