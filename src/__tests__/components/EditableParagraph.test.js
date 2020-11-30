@@ -1,6 +1,6 @@
 import React from 'react';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
-import EditableParagraph from 'view/components/EditableParagraph';
+import EditableParagraph from 'view/components/EditableParagraphV2';
 import 'jest-styled-components';
 
 test('render empty', () => {
@@ -40,8 +40,8 @@ test('edit clicking outside', () => {
   fireEvent.change(getByDisplayValue(''), { target: { value: 'minha descrição' } });
   fireEvent.click(container);
 
-  expect(onChangeState).toHaveBeenNthCalledWith(3, 'show');
   expect(onChange).toHaveBeenNthCalledWith(1, 'minha descrição');
+  expect(onChangeState).toHaveBeenNthCalledWith(3, 'show');
 });
 
 test('edit with enter (without shift)', () => {
@@ -78,4 +78,90 @@ test('edit with enter (without shift)', () => {
   expect(onChangeState).toHaveBeenCalledTimes(3); /* não conta quando shift foi pressionado */
   expect(onChangeState).toHaveBeenNthCalledWith(3, 'show');
   expect(onChange).toHaveBeenNthCalledWith(1, 'minha descrição');
+});
+
+test('cancel edit with ESC', () => {
+  const onChange = jest.fn();
+  const onCancel = jest.fn();
+  const onChangeState = jest.fn();
+  const { queryByText, getByDisplayValue } = render(
+    <EditableParagraph onChangeState={onChangeState} onChange={onChange} onCancel={onCancel} value="minha descrição" />
+  );
+
+  expect(onChangeState).toHaveBeenNthCalledWith(1, 'show');
+  expect(queryByText('minha descrição')).toBeTruthy();
+
+  fireEvent.click(queryByText('minha descrição'));
+  expect(onChangeState).toHaveBeenNthCalledWith(2, 'edit');
+  expect(getByDisplayValue('minha descrição')).toBeTruthy();
+
+  fireEvent.change(getByDisplayValue('minha descrição'), { target: { value: 'minha outra descrição' } });
+  expect(getByDisplayValue('minha outra descrição')).toBeTruthy();
+  fireEvent.keyDown(getByDisplayValue('minha outra descrição'), {
+    key: 'Esc',
+    code: 'Esc',
+    keyCode: 27,
+  });
+
+  expect(onChangeState).toHaveBeenNthCalledWith(3, 'show');
+  expect(queryByText('minha descrição')).toBeTruthy();
+  expect(onCancel).toHaveBeenCalledTimes(1);
+  expect(onChange).toHaveBeenCalledTimes(0);
+});
+
+test('edit with buttons', () => {
+  const onChange = jest.fn();
+  const onCancel = jest.fn();
+  const onRemove = jest.fn();
+  const onChangeState = jest.fn();
+  const { queryByText, getByDisplayValue } = render(
+    <EditableParagraph
+      onChangeState={onChangeState}
+      onChange={onChange}
+      onCancel={onCancel}
+      onRemove={onRemove}
+      value="minha descrição"
+      buttons={['add', 'save', 'cancel', 'remove']}
+    />
+  );
+
+  expect(onChangeState).toHaveBeenNthCalledWith(1, 'show');
+  expect(queryByText('minha descrição')).toBeTruthy();
+
+  fireEvent.click(queryByText('minha descrição'));
+  expect(onChangeState).toHaveBeenNthCalledWith(2, 'edit');
+  expect(getByDisplayValue('minha descrição')).toBeTruthy();
+
+  expect(queryByText('Adicionar')).toBeTruthy();
+  expect(queryByText('Salvar')).toBeTruthy();
+  expect(queryByText('Remover')).toBeTruthy();
+  expect(queryByText('Cancelar')).toBeTruthy();
+
+  /* botão salvar */
+  fireEvent.change(getByDisplayValue('minha descrição'), { target: { value: 'minha nova descrição' } });
+  expect(getByDisplayValue('minha nova descrição')).toBeTruthy();
+  fireEvent.click(queryByText('Salvar'));
+  expect(onChange).toHaveBeenNthCalledWith(1, 'minha nova descrição');
+  expect(queryByText('minha descrição')).toBeTruthy();
+
+  /* botão adicionar */
+  fireEvent.click(queryByText('minha descrição'));
+  expect(getByDisplayValue('minha descrição')).toBeTruthy();
+  fireEvent.change(getByDisplayValue('minha descrição'), { target: { value: 'minha nova descrição' } });
+  fireEvent.click(queryByText('Adicionar'));
+  expect(onChange).toHaveBeenNthCalledWith(2, 'minha nova descrição');
+
+  /* botão remover */
+  fireEvent.click(queryByText('minha descrição'));
+  expect(getByDisplayValue('minha descrição')).toBeTruthy();
+  fireEvent.click(queryByText('Remover'));
+  expect(onRemove).toHaveBeenCalledTimes(1);
+
+  /* botão cancelar */
+  fireEvent.click(queryByText('minha descrição'));
+  expect(getByDisplayValue('minha descrição')).toBeTruthy();
+  fireEvent.change(getByDisplayValue('minha descrição'), { target: { value: 'minha nova descrição' } });
+  fireEvent.click(queryByText('Cancelar'));
+  expect(onCancel).toHaveBeenCalledTimes(1);
+  expect(queryByText('minha descrição')).toBeTruthy();
 });
