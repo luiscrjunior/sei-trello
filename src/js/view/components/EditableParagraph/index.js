@@ -8,7 +8,7 @@ class EditableParagraph extends React.Component {
     super(props);
     this.state = {
       isEditing: props.state && props.state === 'edit',
-      paragraphHeight: 0,
+      paragraphWidth: 0,
     };
     this.onOutsideClick = this.onOutsideClick.bind(this);
   }
@@ -38,7 +38,7 @@ class EditableParagraph extends React.Component {
   onParagraphClick(e) {
     this.setState({
       isEditing: true,
-      paragraphHeight: e.target.offsetHeight,
+      paragraphWidth: e.target.offsetWidth,
     });
     e.preventDefault();
     e.stopPropagation();
@@ -91,6 +91,7 @@ class EditableParagraph extends React.Component {
             rows="1"
             tabIndex="0"
             defaultValue={this.props.value}
+            style={{ width: this.state.paragraphWidth }}
           ></textarea>
         )}
       </div>
