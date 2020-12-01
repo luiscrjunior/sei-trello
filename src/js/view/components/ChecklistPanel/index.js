@@ -17,6 +17,9 @@ const Panel = styled(FloatingPanel)`
 const ChecklistItems = styled.ul`
   margin: 15px 0 15px 0;
   padding: 0;
+  max-height: 200px;
+  overflow-x: hidden;
+  overflow-y: auto;
 `;
 
 const ChecklistPanel = ({ tasks, loading, onChange, onRemove, onAdd }) => {
