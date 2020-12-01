@@ -32,7 +32,6 @@ const ChecklistPanelPlayground = () => {
   const createTask = (updatedTask) => {
     console.log(`create task ${updatedTask.description}.`);
     setTasks([...tasks, { ...updatedTask, id: new Date().getUTCMilliseconds() }]);
-    this.render();
   };
 
   return (

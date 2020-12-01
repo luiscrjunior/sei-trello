@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Checkbox from './Checkbox.js';
-import EditableParagraph from 'view/components/EditableParagraph';
+import EditableParagraph from 'view/components/EditableParagraphV2';
 import styled from 'styled-components';
-import { Buttons, Button } from './Buttons';
 
 const Item = styled.li`
   display: flex;
@@ -20,39 +19,24 @@ const Description = styled.div`
   width: auto;
 `;
 
-const ChecklistItem = ({ task, isNew, onChange, onRemove, onChangeState }) => {
-  const [editing, setEditing] = useState(false);
-
+const ChecklistItem = ({ task, isNew, onChange, onRemove, onCancel }) => {
   if (isNew) task = { description: '', completed: false };
-
-  const onChangeParagraphState = (paragraphState) => {
-    setEditing(paragraphState === 'edit');
-    if (onChangeState) onChangeState(paragraphState);
-  };
 
   return (
     <Item>
-      <Checkbox checked={task.completed} onClick={() => onChange({ ...task, completed: !task.completed })} />
+      <Checkbox
+        checked={isNew ? false : task.completed}
+        onClick={() => onChange({ ...task, completed: !task.completed })}
+      />
       <Description>
         <EditableParagraph
-          onChangeState={onChangeParagraphState}
-          value={task.description}
-          state={isNew ? 'edit' : 'show'}
+          value={isNew ? '' : task.description}
+          editing={isNew}
           onChange={(value) => onChange({ ...task, description: value })}
+          onRemove={() => onRemove(task.id)}
+          onCancel={onCancel}
+          buttons={isNew ? ['add', 'cancel'] : ['save', 'cancel', 'remove']}
         />
-        {editing && (
-          <Buttons>
-            <Button
-              type="danger"
-              onClick={(e) => {
-                onRemove(task.id);
-                e.stopPropagation();
-              }}
-            >
-              {isNew ? 'Cancelar' : 'Remover'}
-            </Button>
-          </Buttons>
-        )}
       </Description>
     </Item>
   );

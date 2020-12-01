@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import FloatingPanel from 'view/components/FloatingPanel';
 import ChecklistItem from './ChecklistItem';
-import { Buttons, Button } from './Buttons';
 import styled from 'styled-components';
+
+import { Buttons, Button } from 'view/components/EditableParagraphV2/styles';
 
 const Panel = styled(FloatingPanel)`
   position: absolute;
@@ -20,11 +21,6 @@ const ChecklistItems = styled.ul`
 const ChecklistPanel = ({ tasks, onChange, onRemove, onAdd }) => {
   const [adding, setAdding] = useState(false);
 
-  /* toda vez que atualizar a lista de tarefas, cancela adicionar nova tarefa */
-  useEffect(() => {
-    setAdding(false);
-  }, [tasks]);
-
   const onCancelAdd = () => {
     setAdding(false);
   };
@@ -37,27 +33,19 @@ const ChecklistPanel = ({ tasks, onChange, onRemove, onAdd }) => {
         ))}
         {adding && (
           <ChecklistItem
-            key={-1}
             isNew={true}
             onChange={(task) => {
-              if (task.description) {
-                onAdd(task);
-              } else {
-                onCancelAdd();
-              }
+              onAdd(task);
+              onCancelAdd();
             }}
-            onRemove={onCancelAdd}
-            onChangeState={(state) => {
-              if (state === 'show') onCancelAdd();
-            }}
+            onCancel={onCancelAdd}
           />
         )}
       </ChecklistItems>
       <Buttons>
         <Button
-          onClick={(e) => {
+          onClick={() => {
             setAdding(true);
-            e.stopPropagation();
           }}
         >
           Adicionar
