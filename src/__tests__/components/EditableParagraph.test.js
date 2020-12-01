@@ -48,7 +48,7 @@ test('edit clicking outside', () => {
   expect(getByDisplayValue('')).toBeTruthy();
 
   fireEvent.change(getByDisplayValue(''), { target: { value: 'minha descrição' } });
-  fireEvent.click(container);
+  fireEvent.mouseDown(container);
 
   expect(onChange).toHaveBeenNthCalledWith(1, 'minha descrição');
   expect(onChangeState).toHaveBeenNthCalledWith(3, 'show');
@@ -73,7 +73,7 @@ test('edit clicking next to buttons', () => {
   fireEvent.change(getByDisplayValue('minha descrição'), { target: { value: 'minha outra descrição' } });
 
   const buttonPanel = container.querySelector('button').parentNode;
-  fireEvent.click(buttonPanel);
+  fireEvent.mouseDown(buttonPanel);
 
   expect(onChange).toHaveBeenNthCalledWith(1, 'minha outra descrição');
   expect(onChangeState).toHaveBeenNthCalledWith(2, 'show');
