@@ -13,9 +13,12 @@ module.exports = {
       jsx: true,
     },
   },
+  plugins: ['react-hooks'],
   rules: {
     'react/prop-types': 0,
     'react/no-find-dom-node': 0,
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'warn',
   },
   settings: {
     react: {
