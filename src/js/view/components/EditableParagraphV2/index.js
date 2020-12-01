@@ -42,7 +42,11 @@ const EditableParagraph = (props) => {
 
   const updateValue = useCallback(() => {
     if (!textarea.current) return;
-    if (textarea.current.value !== props.value && props.onChange) props.onChange(textarea.current.value);
+    if (textarea.current.value !== props.value) {
+      if (props.onChange) props.onChange(textarea.current.value);
+    } else {
+      if (props.onCancel) props.onCancel();
+    }
     setEditing(false);
   }, [props]);
 
