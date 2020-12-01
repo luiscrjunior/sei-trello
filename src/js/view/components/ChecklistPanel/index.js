@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import FloatingPanel from 'view/components/FloatingPanel';
 import ChecklistItem from './ChecklistItem';
 import styled from 'styled-components';
 
 import { Buttons, Button } from 'view/components/EditableParagraphV2/styles';
+import LoadingOverlay from './LoadingOverlay';
 
 const Panel = styled(FloatingPanel)`
   position: absolute;
@@ -18,7 +19,7 @@ const ChecklistItems = styled.ul`
   padding: 0;
 `;
 
-const ChecklistPanel = ({ tasks, onChange, onRemove, onAdd }) => {
+const ChecklistPanel = ({ tasks, loading, onChange, onRemove, onAdd }) => {
   const [adding, setAdding] = useState(false);
 
   const onCancelAdd = () => {
@@ -27,6 +28,7 @@ const ChecklistPanel = ({ tasks, onChange, onRemove, onAdd }) => {
 
   return (
     <Panel title="Checklist">
+      {loading && <LoadingOverlay />}
       <ChecklistItems>
         {tasks.map((task) => (
           <ChecklistItem key={task.id} task={task} onChange={onChange} onRemove={onRemove} />
@@ -53,6 +55,10 @@ const ChecklistPanel = ({ tasks, onChange, onRemove, onAdd }) => {
       </Buttons>
     </Panel>
   );
+};
+
+ChecklistPanel.defaultProps = {
+  loading: false,
 };
 
 export default ChecklistPanel;

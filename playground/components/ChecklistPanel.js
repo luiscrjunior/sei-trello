@@ -2,41 +2,64 @@ import React, { useState } from 'react';
 import ChecklistPanel from 'view/components/ChecklistPanel';
 import { TrelloCardBG } from '../styles';
 
-const initialTasks = [
-  { id: 1, completed: false, description: 'Minha primeira tarefa' },
+const tasks = [
+  { id: 1, completed: true, description: 'Minha primeira tarefa' },
   { id: 2, completed: true, description: 'Minha segunda tarefa' },
   { id: 3, completed: false, description: 'Minha terceira tarefa' },
+  { id: 4, completed: false, description: 'Minha quarta tarefa' },
+  { id: 5, completed: false, description: 'Minha quinta tarefa' },
+  { id: 6, completed: false, description: 'Minha sexta tarefa' },
 ];
 
 const ChecklistPanelPlayground = () => {
-  const [tasks, setTasks] = useState(initialTasks);
+  const [data, setData] = useState({ isLoading: false, tasks: tasks });
 
   const removeTask = (taskId) => {
     console.log(`remove task ${taskId}.`);
-    setTasks(
-      tasks.filter((task) => {
-        return task.id === taskId ? false : true;
-      })
-    );
+    setData({ ...data, isLoading: true });
+    setTimeout(() => {
+      setData({
+        isLoading: false,
+        tasks: data.tasks.filter((task) => {
+          return task.id === taskId ? false : true;
+        }),
+      });
+    }, 500);
   };
 
   const updateTask = (updatedTask) => {
     console.log(`update task ${updatedTask.id}.`);
-    setTasks(
-      tasks.map((task) => {
-        return task.id === updatedTask.id ? updatedTask : task;
-      })
-    );
+    setData({ ...data, isLoading: true });
+    setTimeout(() => {
+      setData({
+        isLoading: false,
+        tasks: data.tasks.map((task) => {
+          return task.id === updatedTask.id ? updatedTask : task;
+        }),
+      });
+    }, 500);
   };
 
   const createTask = (updatedTask) => {
     console.log(`create task ${updatedTask.description}.`);
-    setTasks([...tasks, { ...updatedTask, id: new Date().getUTCMilliseconds() }]);
+    setData({ ...data, isLoading: true });
+    setTimeout(() => {
+      setData({
+        isLoading: false,
+        tasks: [...data.tasks, { ...updatedTask, id: new Date().getUTCMilliseconds() }],
+      });
+    }, 500);
   };
 
   return (
     <TrelloCardBG>
-      <ChecklistPanel tasks={tasks} onRemove={removeTask} onAdd={createTask} onChange={updateTask} />
+      <ChecklistPanel
+        loading={data.isLoading}
+        tasks={data.tasks}
+        onRemove={removeTask}
+        onAdd={createTask}
+        onChange={updateTask}
+      />
     </TrelloCardBG>
   );
 };
