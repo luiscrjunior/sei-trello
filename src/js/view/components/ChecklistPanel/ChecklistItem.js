@@ -30,6 +30,10 @@ const ChecklistItem = ({ task, isNew, onChange, onRemove, onCancel }) => {
       />
       <Description>
         <EditableParagraph
+          completed={isNew ? false : task.completed}
+          paragraphStyle={{
+            textDecoration: task.completed ? 'line-through' : 'initial',
+          }}
           value={isNew ? '' : task.description}
           editing={isNew}
           onChange={(value) => onChange({ ...task, description: value })}

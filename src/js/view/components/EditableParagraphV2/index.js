@@ -95,7 +95,12 @@ const EditableParagraph = (props) => {
           tabIndex="0"
         ></Textarea>
       ) : (
-        <Paragraph className={props.className} onClick={onParagraphClick} empty={isParagraphEmpty}>
+        <Paragraph
+          className={props.className}
+          onClick={onParagraphClick}
+          empty={isParagraphEmpty}
+          style={props.paragraphStyle}
+        >
           {paragraphContent}
         </Paragraph>
       )}
