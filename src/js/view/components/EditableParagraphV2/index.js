@@ -7,12 +7,11 @@ const EditableParagraph = (props) => {
   const [editing, setEditing] = useState(props.editing);
   const [width, setWidth] = useState('100%');
   const textarea = useRef(null);
-  const buttons = useRef(null);
 
   useEffect(() => {
-    document.querySelector('body').addEventListener('click', onOutsideClick);
+    document.querySelector('body').addEventListener('mousedown', onOutsideClick);
     return () => {
-      document.querySelector('body').removeEventListener('click', onOutsideClick);
+      document.querySelector('body').removeEventListener('mousedown', onOutsideClick);
     };
   }, [onOutsideClick]);
 
@@ -31,7 +30,10 @@ const EditableParagraph = (props) => {
     (e) => {
       const clickedElement = e.target;
       const isTextArea = !!textarea.current && clickedElement.isSameNode(textarea.current);
-      const isButton = clickedElement.tagName.toLowerCase() === 'button';
+      const isButton =
+        !!textarea.current &&
+        textarea.current.parentNode.contains(clickedElement) &&
+        clickedElement.tagName.toLowerCase() === 'button';
       if (isTextArea || isButton) return;
       updateValue();
     },
@@ -94,7 +96,7 @@ const EditableParagraph = (props) => {
         </Paragraph>
       )}
       {editing && props.buttons.length > 0 && (
-        <Buttons ref={buttons}>
+        <Buttons>
           {props.buttons.map((button) => {
             if (button === 'save')
               return (
