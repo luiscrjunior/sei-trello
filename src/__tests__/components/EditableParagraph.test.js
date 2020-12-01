@@ -23,6 +23,16 @@ test('render with value', () => {
   expect(screen.queryByText('teste...')).toBeTruthy();
 });
 
+test('render with edit mode', () => {
+  const onChangeState = jest.fn();
+  const { getByDisplayValue, queryByText } = render(
+    <EditableParagraph onChangeState={onChangeState} value="teste..." editing buttons={['save']} />
+  );
+  expect(getByDisplayValue('teste...')).toBeTruthy();
+  expect(queryByText('Salvar')).toBeTruthy();
+  expect(onChangeState).toHaveBeenNthCalledWith(1, 'edit');
+});
+
 test('edit clicking outside', () => {
   const onChange = jest.fn();
   const onChangeState = jest.fn();
@@ -42,6 +52,31 @@ test('edit clicking outside', () => {
 
   expect(onChange).toHaveBeenNthCalledWith(1, 'minha descrição');
   expect(onChangeState).toHaveBeenNthCalledWith(3, 'show');
+});
+
+test('edit clicking next to buttons', () => {
+  const onChange = jest.fn();
+  const onChangeState = jest.fn();
+  const { container, getByDisplayValue } = render(
+    <EditableParagraph
+      onChangeState={onChangeState}
+      onChange={onChange}
+      editing
+      value="minha descrição"
+      buttons={['save', 'cancel']}
+    />
+  );
+
+  expect(onChangeState).toHaveBeenNthCalledWith(1, 'edit');
+  expect(getByDisplayValue('minha descrição')).toBeTruthy();
+
+  fireEvent.change(getByDisplayValue('minha descrição'), { target: { value: 'minha outra descrição' } });
+
+  const buttonPanel = container.querySelector('button').parentNode;
+  fireEvent.click(buttonPanel);
+
+  expect(onChange).toHaveBeenNthCalledWith(1, 'minha outra descrição');
+  expect(onChangeState).toHaveBeenNthCalledWith(2, 'show');
 });
 
 test('edit with enter (without shift)', () => {

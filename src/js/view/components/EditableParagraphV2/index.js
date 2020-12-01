@@ -14,7 +14,7 @@ const EditableParagraph = (props) => {
     return () => {
       document.querySelector('body').removeEventListener('click', onOutsideClick);
     };
-  }, []);
+  }, [onOutsideClick]);
 
   useLayoutEffect(() => {
     if (editing && textarea.current) {
@@ -25,24 +25,24 @@ const EditableParagraph = (props) => {
     if (!editing && !textarea.current) {
       if (props.onChangeState) props.onChangeState('show');
     }
-  }, [editing]);
+  }, [editing, props]);
 
-  const onOutsideClick = useCallback((e) => {
-    if (!textarea.current) return;
-    const clickedElement = e.target;
-    const parentNode = textarea.current.parentNode;
-    const elementInsideContainer = parentNode.contains(clickedElement);
-    if (!clickedElement.isSameNode(buttons.current) && elementInsideContainer) {
-      return;
-    }
-    updateValue();
-  });
+  const onOutsideClick = useCallback(
+    (e) => {
+      const clickedElement = e.target;
+      const isTextArea = !!textarea.current && clickedElement.isSameNode(textarea.current);
+      const isButton = clickedElement.tagName.toLowerCase() === 'button';
+      if (isTextArea || isButton) return;
+      updateValue();
+    },
+    [updateValue]
+  );
 
-  const updateValue = () => {
+  const updateValue = useCallback(() => {
     if (!textarea.current) return;
     if (textarea.current.value !== props.value && props.onChange) props.onChange(textarea.current.value);
     setEditing(false);
-  };
+  }, [props]);
 
   const cancelEdit = () => {
     if (props.onCancel) props.onCancel();
