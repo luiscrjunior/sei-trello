@@ -3,6 +3,8 @@ import { fireEvent, render } from '@testing-library/react';
 import ChecklistPanel from 'view/components/ChecklistPanel';
 import 'jest-styled-components';
 
+window.HTMLElement.prototype.scrollIntoView = jest.fn();
+
 test('render', () => {
   const onChange = jest.fn();
   const onRemove = jest.fn();
