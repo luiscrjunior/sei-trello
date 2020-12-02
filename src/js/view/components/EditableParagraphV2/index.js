@@ -3,28 +3,30 @@ import autosize from 'autosize';
 
 import { Container, Textarea, Paragraph, Buttons, Button } from './styles';
 
-const EditableParagraph = (props) => {
-  const [editing, setEditing] = useState(props.editing);
+const EditableParagraph = ({
+  className,
+  paragraphStyle,
+  value,
+  editing,
+  onChangeState,
+  onChange,
+  onCancel,
+  onRemove,
+  buttons,
+}) => {
+  const [isEditing, setIsEditing] = useState(editing);
   const [width, setWidth] = useState('100%');
   const textarea = useRef(null);
 
-  useEffect(() => {
-    document.querySelector('body').addEventListener('mousedown', onOutsideClick);
-    return () => {
-      document.querySelector('body').removeEventListener('mousedown', onOutsideClick);
-    };
-  }, [onOutsideClick]);
-
-  useLayoutEffect(() => {
-    if (editing && textarea.current) {
-      autosize(textarea.current);
-      if (props.onChangeState) props.onChangeState('edit');
-      textarea.current.click();
+  const updateValue = useCallback(() => {
+    if (!textarea.current) return;
+    if (textarea.current.value !== value) {
+      if (onChange) onChange(textarea.current.value);
+    } else {
+      if (onCancel) onCancel();
     }
-    if (!editing && !textarea.current) {
-      if (props.onChangeState) props.onChangeState('show');
-    }
-  }, [editing, props]);
+    setIsEditing(false);
+  }, [value, onChange, onCancel]);
 
   const onOutsideClick = useCallback(
     (e) => {
@@ -40,28 +42,36 @@ const EditableParagraph = (props) => {
     [updateValue]
   );
 
-  const updateValue = useCallback(() => {
-    if (!textarea.current) return;
-    if (textarea.current.value !== props.value) {
-      if (props.onChange) props.onChange(textarea.current.value);
-    } else {
-      if (props.onCancel) props.onCancel();
+  useEffect(() => {
+    document.addEventListener('mousedown', onOutsideClick);
+    return () => {
+      document.removeEventListener('mousedown', onOutsideClick);
+    };
+  }, [onOutsideClick]);
+
+  useLayoutEffect(() => {
+    if (isEditing && textarea.current) {
+      autosize(textarea.current);
+      if (onChangeState) onChangeState('edit');
+      textarea.current.click();
     }
-    setEditing(false);
-  }, [props]);
+    if (!isEditing && !textarea.current) {
+      if (onChangeState) onChangeState('show');
+    }
+  }, [isEditing, onChangeState]);
 
   const cancelEdit = () => {
-    if (props.onCancel) props.onCancel();
-    setEditing(false);
+    if (onCancel) onCancel();
+    setIsEditing(false);
   };
 
   const removeItem = () => {
-    if (props.onRemove) props.onRemove();
-    setEditing(false);
+    if (onRemove) onRemove();
+    setIsEditing(false);
   };
 
   const onParagraphClick = (e) => {
-    setEditing(true);
+    setIsEditing(true);
     setWidth(`${e.target.offsetWidth}px`);
     e.preventDefault();
     e.stopPropagation();
@@ -78,35 +88,30 @@ const EditableParagraph = (props) => {
     }
   };
 
-  const isParagraphEmpty = !(typeof props.value === 'string' && props.value.length > 0);
-  const paragraphContent = isParagraphEmpty ? 'Clique para editar...' : props.value;
+  const isParagraphEmpty = !(typeof value === 'string' && value.length > 0);
+  const paragraphContent = isParagraphEmpty ? 'Clique para editar...' : value;
 
   return (
     <Container>
-      {editing ? (
+      {isEditing ? (
         <Textarea
           ref={textarea}
-          className={props.className}
+          className={className}
           width={width}
           autoFocus={true}
           onKeyDown={onKeyDown}
-          defaultValue={props.value}
+          defaultValue={value}
           rows="1"
           tabIndex="0"
         ></Textarea>
       ) : (
-        <Paragraph
-          className={props.className}
-          onClick={onParagraphClick}
-          empty={isParagraphEmpty}
-          style={props.paragraphStyle}
-        >
+        <Paragraph className={className} onClick={onParagraphClick} empty={isParagraphEmpty} style={paragraphStyle}>
           {paragraphContent}
         </Paragraph>
       )}
-      {editing && props.buttons.length > 0 && (
+      {isEditing && buttons.length > 0 && (
         <Buttons>
-          {props.buttons.map((button) => {
+          {buttons.map((button) => {
             if (button === 'save')
               return (
                 <Button key={button} type="success" onClick={() => updateValue()}>
