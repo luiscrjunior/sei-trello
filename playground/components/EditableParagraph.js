@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import EditableParagraph from 'view/components/EditableParagraphV2';
 import styled from 'styled-components';
 
@@ -30,12 +30,10 @@ const StyledEditableParagraph = styled(EditableParagraph)`
 `;
 
 const EditableParagraphPlayground = () => {
-  const [texts, setTexts] = useState([null, null, null]);
+  const [texts, setTexts] = useState([null, null, null, null]);
 
-  const onChange = (idx, value) => {
-    const newTexts = [...texts];
-    newTexts[idx] = value;
-    setTexts(newTexts);
+  const onChange = (id, value) => {
+    setTexts(texts.map((text, idx) => (idx === id ? value : text)));
   };
 
   return (
