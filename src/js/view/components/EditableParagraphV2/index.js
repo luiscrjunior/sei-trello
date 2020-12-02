@@ -15,7 +15,6 @@ const EditableParagraph = ({
   buttons,
 }) => {
   const [isEditing, setIsEditing] = useState(editing);
-  const [width, setWidth] = useState('100%');
   const textarea = useRef(null);
 
   const updateValue = useCallback(() => {
@@ -72,7 +71,6 @@ const EditableParagraph = ({
 
   const onParagraphClick = (e) => {
     setIsEditing(true);
-    setWidth(`${e.target.offsetWidth}px`);
     e.preventDefault();
     e.stopPropagation();
   };
@@ -97,7 +95,6 @@ const EditableParagraph = ({
         <Textarea
           ref={textarea}
           className={className}
-          width={width}
           autoFocus={true}
           onKeyDown={onKeyDown}
           defaultValue={value}

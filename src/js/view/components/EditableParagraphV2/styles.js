@@ -23,7 +23,7 @@ export const Paragraph = styled.p`
 export const Textarea = styled.textarea`
   display: block;
   overflow: hidden;
-  width: ${(props) => props.width};
+  width: 100%;
   box-sizing: border-box;
   margin: 0;
   padding: 5px;
