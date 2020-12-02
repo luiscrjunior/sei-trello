@@ -11,7 +11,7 @@ const Panel = styled(FloatingPanel)`
   top: 20px;
   right: 42px;
   min-width: auto;
-  width: 240px;
+  width: 250px;
 `;
 
 const ChecklistItems = styled.ul`
