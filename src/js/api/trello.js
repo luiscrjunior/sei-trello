@@ -75,7 +75,7 @@ export const getCardData = (cardID) => {
   const url = 'https://api.trello.com/1/cards/' + cardID;
 
   let params = Object.assign({}, genAuthData(), {
-    fields: 'name,desc,labels,id,due,dueComplete,shortUrl',
+    fields: 'name,desc,labels,id,due,dueComplete,shortUrl,idChecklists',
     board: 'true',
     list: 'true',
   });
@@ -150,4 +150,11 @@ export const createCardChecklist = (cardID, checklistName) => {
   const url = `https://api.trello.com/1/checklists`;
   let params = Object.assign({}, genAuthData(), { idCard: cardID, name: checklistName });
   return axios.post(url, params);
+};
+
+/* remover uma checklist */
+export const deleteCardChecklist = (checklistID) => {
+  const url = `https://api.trello.com/1/checklists/${checklistID}`;
+  let params = Object.assign({}, genAuthData());
+  return axios.delete(url, { params: params });
 };

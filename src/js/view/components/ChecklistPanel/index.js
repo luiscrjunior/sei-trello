@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import ChecklistPanel from './ChecklistPanel';
 
 import * as api from 'api/trello.js';
+import * as store from 'model/store.js';
 import * as alert from 'view/alert.js';
 
 const ChecklistPanelContainer = ({ cardID, onClose }) => {
@@ -22,6 +23,8 @@ const ChecklistPanelContainer = ({ cardID, onClose }) => {
       }));
       items.sort((a, b) => a.pos - b.pos);
       setTasks(items);
+    } else {
+      setTasks([]);
     }
   }, [cardID]);
 
@@ -46,7 +49,13 @@ const ChecklistPanelContainer = ({ cardID, onClose }) => {
 
   const deleteChecklistItem = async (checklistItemID) => {
     try {
-      await api.deleteCardChecklistItem(checklistID, checklistItemID);
+      if (tasks.length === 1 && tasks[0].id === checklistItemID) {
+        /* se for o último task a ser deletado, remover toda a checklist */
+        await api.deleteCardChecklist(checklistID);
+      } else {
+        /* remover o item da checklist */
+        await api.deleteCardChecklistItem(checklistID, checklistItemID);
+      }
     } catch (e) {
       alert.error('Não foi possível remover o item do checklist.');
     }
@@ -74,6 +83,7 @@ const ChecklistPanelContainer = ({ cardID, onClose }) => {
     }
   };
 
+  /* fetch inicial */
   useEffect(() => {
     (async () => {
       setLoading(true);
@@ -87,6 +97,11 @@ const ChecklistPanelContainer = ({ cardID, onClose }) => {
       }
     })();
   }, [fetchChecklistItems, onClose]);
+
+  /* toda vez que atualiza a tasks, atualiza a informação se o cartão possui ou não checklists */
+  useEffect(() => {
+    store.updateCardsData(cardID, { hasChecklist: tasks.length > 0 });
+  }, [tasks, cardID]);
 
   const onChange = async (data) => {
     setLoading(true);

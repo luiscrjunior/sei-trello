@@ -296,8 +296,6 @@ class TrelloCard extends React.Component {
           ></CardLocationSelector>
         </div>
 
-        {this.props.hasChecklist && <p>tem checklist</p>}
-
         <EditableParagraph
           wrapperClass={classNames(styles['descr-wrapper'], {
             [styles['hide']]: isDescriptionEmpty && !this.state.isEditingDescription,
