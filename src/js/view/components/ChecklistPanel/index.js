@@ -47,7 +47,7 @@ const ChecklistPanel = ({ tasks, loading, onChange, onChangeOrder, onRemove, onA
       });
     }
     return () => {
-      drake.current.destroy();
+      if (drake.current) drake.current.destroy();
     };
   }, [onChangeOrder]);
 
