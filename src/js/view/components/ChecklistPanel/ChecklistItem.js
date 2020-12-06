@@ -13,7 +13,7 @@ const Item = styled.li`
 `;
 
 const Description = styled.div`
-  maegin: 0;
+  margin: 0;
   padding: 0;
   flex-grow: 1;
   width: auto;
