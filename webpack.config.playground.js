@@ -1,4 +1,5 @@
 const webpack = require('webpack');
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const path = require('path');
 const common = require('./webpack.config.js');
@@ -22,6 +23,7 @@ common.plugins = [
   }),
   new webpack.NamedModulesPlugin(),
   new webpack.HotModuleReplacementPlugin(),
+  new ReactRefreshWebpackPlugin(),
 ];
 common.output.path = outputPath;
 
