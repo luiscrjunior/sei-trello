@@ -24,6 +24,7 @@ const ChecklistPanelContainer = ({ cardID, onClose }) => {
       items.sort((a, b) => a.pos - b.pos);
       setTasks(items);
     } else {
+      setChecklistID(null);
       setTasks([]);
     }
   }, [cardID]);
