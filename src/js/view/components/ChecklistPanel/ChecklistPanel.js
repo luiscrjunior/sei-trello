@@ -25,6 +25,15 @@ const ChecklistItems = styled.ul`
   overflow-y: auto;
 `;
 
+const NoItemMessage = styled.li`
+  margin: 0;
+  padding: 0;
+  font-size: 12px;
+  font-style: italic;
+  text-align: center;
+  color: #424242;
+`;
+
 const ChecklistPanel = ({ tasks, loading, onChange, onChangeOrder, onRemove, onAdd, onClose }) => {
   const [adding, setAdding] = useState(false);
   const list = useRef(null);
@@ -71,6 +80,7 @@ const ChecklistPanel = ({ tasks, loading, onChange, onChangeOrder, onRemove, onA
   return (
     <Panel title="Checklist" onClose={onClose}>
       {loading && <LoadingOverlay />}
+
       <ChecklistItems ref={list} onClick={onListClick}>
         {tasks.map((task) => (
           <ChecklistItem key={task.id} task={task} onChange={onChange} onRemove={onRemove} />
@@ -85,6 +95,7 @@ const ChecklistPanel = ({ tasks, loading, onChange, onChangeOrder, onRemove, onA
             onCancel={onCancelAdd}
           />
         )}
+        {tasks.length === 0 && !adding && <NoItemMessage>Você não possui itens no checklist.</NoItemMessage>}
       </ChecklistItems>
       <Buttons>
         <Button
