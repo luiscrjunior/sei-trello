@@ -54,7 +54,17 @@ const ChecklistPanelContainer = ({ cardID, onClose }) => {
 
   const createChecklistItem = async (data) => {
     try {
-      await api.createCardChecklistItem(checklistID, {
+      let checklistIDToSave;
+      /* se não tiver checklist vinculado ao cartão, cria um automaticamente */
+      if (!checklistID) {
+        const response = await api.createCardChecklist(cardID, 'Checklist (SEI)');
+        const newChecklistID = response.data.id;
+        setChecklistID(newChecklistID);
+        checklistIDToSave = newChecklistID;
+      } else {
+        checklistIDToSave = checklistID;
+      }
+      await api.createCardChecklistItem(checklistIDToSave, {
         name: data.description,
         state: data.completed ? 'complete' : 'incomplete',
         position: 'bottom',

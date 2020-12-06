@@ -144,3 +144,10 @@ export const createCardChecklistItem = (checklistID, opts) => {
   let params = Object.assign({}, genAuthData(), opts);
   return axios.post(url, params);
 };
+
+/* cria uma checklist */
+export const createCardChecklist = (cardID, checklistName) => {
+  const url = `https://api.trello.com/1/checklists`;
+  let params = Object.assign({}, genAuthData(), { idCard: cardID, name: checklistName });
+  return axios.post(url, params);
+};
