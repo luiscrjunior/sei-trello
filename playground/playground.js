@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import ReactDOM from 'react-dom';
 
 import components from './components';
@@ -10,7 +10,11 @@ import { App, Header, Content, Button } from './styles';
 const Playground = () => {
   const [componentName, setComponentName] = useState(null);
 
-  const Component = componentName ? components[componentName] : null;
+  const renderComponent = useCallback(() => {
+    if (!componentName) return null;
+    const Component = components[componentName];
+    return <Component />;
+  }, [componentName]);
 
   return (
     <App>
@@ -29,7 +33,7 @@ const Playground = () => {
           </Button>
         ))}
       </Header>
-      <Content>{Component && <Component />}</Content>
+      <Content>{renderComponent()}</Content>
     </App>
   );
 };
