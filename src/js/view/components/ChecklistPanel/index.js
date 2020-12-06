@@ -31,7 +31,9 @@ const ChecklistPanel = ({ tasks, loading, onChange, onChangeOrder, onRemove, onA
 
   useEffect(() => {
     if (list.current && onChangeOrder) {
-      drake.current = dragula([list.current]);
+      drake.current = dragula([list.current], {
+        moves: (el, source, handle) => handle.tagName.toLowerCase() === 'p',
+      });
       drake.current.on('drop', (el) => {
         if (list.current) {
           const listItems = Array.from(list.current.children);
