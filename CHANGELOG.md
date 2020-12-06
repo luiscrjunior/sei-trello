@@ -2,6 +2,11 @@
 
 Todas mudanças do projeto estão documentadas neste arquivo.
 
+## [1.4] - 06/12/2020
+
+- Possibilidade de editar checklist (primeira versão da funcionalidade).
+- Outras pequenas melhorias e correções de bugs.
+
 ## [1.3.10] - 20/11/2020
 
 - Corrigido o bug de posicionamento do painel de especificação da data de entrega (estava por baixo dos elementos do SEI).
