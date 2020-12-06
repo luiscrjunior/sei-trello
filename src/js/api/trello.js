@@ -62,7 +62,7 @@ export const searchCards = (processNumber) => {
   let params = Object.assign({}, genAuthData(), {
     query: `description:${description} is:open`,
     modelTypes: 'cards',
-    card_fields: 'name,desc,labels,id,due,dueComplete,shortUrl',
+    card_fields: 'name,desc,labels,id,due,dueComplete,shortUrl,idChecklists',
     cards_limit: '1000',
     card_board: 'true',
     card_list: 'true',

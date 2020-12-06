@@ -41,11 +41,17 @@
 }
 
 .card.highlight > .options {
-  top: 4px;
-  right: 4px;
+  top: 6px;
+  right: 7px;
 }
 
 .card:hover > .options {
+  margin: 0;
+  display: flex;
+  height: auto;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
   opacity: 1;
 }
 
@@ -60,7 +66,11 @@
 
 .card > .options > a > i {
   color: #aaa;
-  font-size: 11px;
+  font-size: 12px;
+
+  &.checklist-has-item {
+    color: #61bd4f;
+  }
 }
 
 .loadingOverlay {

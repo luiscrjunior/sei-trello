@@ -45,6 +45,7 @@ export const getCards = (cardList) => {
             : null,
         },
         url: cardFromTrello.shortUrl,
+        hasChecklist: 'idChecklists' in cardFromTrello && cardFromTrello.idChecklists.length > 0,
       });
     });
   });

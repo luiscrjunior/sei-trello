@@ -241,7 +241,11 @@ class TrelloCard extends React.Component {
 
         <div className={styles.options}>
           <a data-tooltip="Checklist" target="#" onClick={this.openChecklistPanel.bind(this)}>
-            <i className="fas fa-tasks"></i>
+            <i
+              className={classNames('fas', 'fa-check-square', {
+                [styles['checklist-has-item']]: this.props.hasChecklist,
+              })}
+            ></i>
           </a>
           <a data-tooltip="Especificar data de entrega" target="#" onClick={this.openDuePanel.bind(this)}>
             <i className="far fa-clock"></i>
@@ -291,6 +295,8 @@ class TrelloCard extends React.Component {
             currentBoard={this.props.location.board}
           ></CardLocationSelector>
         </div>
+
+        {this.props.hasChecklist && <p>tem checklist</p>}
 
         <EditableParagraph
           wrapperClass={classNames(styles['descr-wrapper'], {
