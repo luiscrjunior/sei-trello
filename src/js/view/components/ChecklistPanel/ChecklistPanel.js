@@ -73,7 +73,7 @@ const ChecklistPanel = ({ tasks, loading, onChange, onChangeOrder, onRemove, onA
       document.activeElement.tagName.toLowerCase() === 'textarea'
     ) {
       const panel = document.activeElement.parentNode;
-      panel.scrollIntoView({ block: 'end', behavior: 'smooth' });
+      panel.scrollIntoView({ block: 'nearest', inline: 'start', behavior: 'smooth' });
     }
   };
 
