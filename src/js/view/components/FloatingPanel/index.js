@@ -25,11 +25,11 @@ class FloatingPanel extends React.Component {
   }
 
   componentDidMount() {
-    document.querySelector('body').addEventListener('click', this.onBGClick);
+    document.querySelector('body').addEventListener('mousedown', this.onBGClick);
   }
 
   componentWillUnmount() {
-    document.querySelector('body').removeEventListener('click', this.onBGClick);
+    document.querySelector('body').removeEventListener('mousedown', this.onBGClick);
   }
 
   render() {

@@ -26,6 +26,7 @@ class TrelloCard extends React.Component {
       },
       isHovering: false,
     };
+    this.closeChecklistPanel = this.closeChecklistPanel.bind(this);
   }
 
   showTooltip(e) {
@@ -97,7 +98,8 @@ class TrelloCard extends React.Component {
     this.setState({ isHovering: true });
   }
 
-  onMouseLeave() {
+  onMouseLeave(e) {
+    if (e.buttons > 0) return; /* se tiver pressionando algum botão, não considera (ex.: dragging...) */
     this.setState({
       isHovering: false,
       isEditingDue: false /* close due panel on hover out */,
@@ -233,7 +235,9 @@ class TrelloCard extends React.Component {
           />
         )}
 
-        {this.state.isEditingChecklist && <ChecklistPanel onClose={this.closeChecklistPanel.bind(this)} />}
+        {this.state.isEditingChecklist && (
+          <ChecklistPanel cardID={this.props.cardID} onClose={this.closeChecklistPanel} />
+        )}
 
         <div className={styles.options}>
           <a data-tooltip="Checklist" target="#" onClick={this.openChecklistPanel.bind(this)}>

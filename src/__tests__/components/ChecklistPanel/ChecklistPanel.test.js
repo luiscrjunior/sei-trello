@@ -1,12 +1,11 @@
 import React from 'react';
-import { fireEvent, render, createEvent } from '@testing-library/react';
-import ChecklistPanel from 'view/components/ChecklistPanel';
+import { fireEvent, render } from '@testing-library/react';
+import ChecklistPanel from 'view/components/ChecklistPanel/ChecklistPanel';
 import 'jest-styled-components';
 
 window.HTMLElement.prototype.scrollIntoView = jest.fn();
 
 const onChange = jest.fn();
-const onChangeOrder = jest.fn();
 const onRemove = jest.fn();
 const onAdd = jest.fn();
 

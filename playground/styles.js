@@ -75,8 +75,6 @@ export const Button = styled.button`
   box-shadow: ${(props) => (props.selected ? '0px -2px 4px 0px #1A237E inset' : 'none')};
 `;
 
-console.log(bgCard);
-
 export const TrelloCardBG = styled.div`
   position: relative;
   padding: 0;

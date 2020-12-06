@@ -1,106 +1,131 @@
-import React, { useState, useRef, useEffect } from 'react';
-import FloatingPanel from 'view/components/FloatingPanel';
-import ChecklistItem from './ChecklistItem';
-import styled from 'styled-components';
+import React, { useState, useEffect, useCallback } from 'react';
+import ChecklistPanel from './ChecklistPanel';
 
-import { Buttons, Button } from 'view/components/EditableParagraphV2/styles';
-import LoadingOverlay from './LoadingOverlay';
+import * as api from 'api/trello.js';
+import * as alert from 'view/alert.js';
 
-import dragula from 'dragula';
+const ChecklistPanelContainer = ({ cardID, onClose }) => {
+  const [tasks, setTasks] = useState([]);
+  const [checklistID, setChecklistID] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-const Panel = styled(FloatingPanel)`
-  position: absolute;
-  top: 20px;
-  right: 42px;
-  min-width: auto;
-  width: 260px;
-`;
-
-const ChecklistItems = styled.ul`
-  margin: 15px 0 15px 0;
-  padding: 0 10px 0 0;
-  max-height: 200px;
-  overflow-x: hidden;
-  overflow-y: auto;
-`;
-
-const ChecklistPanel = ({ tasks, loading, onChange, onChangeOrder, onRemove, onAdd, onClose }) => {
-  const [adding, setAdding] = useState(false);
-  const list = useRef(null);
-  const drake = useRef(null);
-
-  useEffect(() => {
-    if (list.current && onChangeOrder) {
-      drake.current = dragula([list.current], {
-        moves: (el, source, handle) => handle.tagName.toLowerCase() === 'p',
-      });
-      drake.current.on('drop', (el) => {
-        if (list.current) {
-          const listItems = Array.from(list.current.children);
-          const idx = listItems.indexOf(el);
-          if (idx > -1) {
-            const taskId = el.getAttribute('data-id');
-            onChangeOrder(taskId, idx);
-          }
-        }
-        drake.current.cancel(true);
-      });
+  const fetchChecklistItems = useCallback(async () => {
+    const response = await api.getCardChecklistData(cardID);
+    if ('data' in response && response.data.length > 0) {
+      const checklist = response.data[0]; /* seleciona o primeiro checklist da lista */
+      setChecklistID(checklist.id);
+      const items = checklist.checkItems.map((checkItem) => ({
+        id: checkItem.id,
+        description: checkItem.name,
+        completed: checkItem.state === 'complete',
+        pos: checkItem.pos,
+      }));
+      items.sort((a, b) => a.pos - b.pos);
+      setTasks(items);
     }
-    return () => {
-      if (drake.current) drake.current.destroy();
-    };
-  }, [onChangeOrder]);
+  }, [cardID]);
 
-  const onCancelAdd = () => {
-    setAdding(false);
+  const udpateChecklistItem = async (data) => {
+    try {
+      await api.updateCardChecklistItem(cardID, data.id, {
+        name: data.description,
+        state: data.completed ? 'complete' : 'incomplete',
+      });
+    } catch (e) {
+      alert.error('Não foi possível salvar o item do checklist.');
+    }
   };
 
-  const onListClick = () => {
-    if (
-      list.current &&
-      document.activeElement &&
-      list.current.contains(document.activeElement) &&
-      document.activeElement.tagName.toLowerCase() === 'textarea'
-    ) {
-      const panel = document.activeElement.parentNode;
-      panel.scrollIntoView({ block: 'end', behavior: 'smooth' });
+  const udpateChecklistItemPosition = async (checklistItemID, position) => {
+    try {
+      await api.updateCardChecklistItem(cardID, checklistItemID, { pos: position });
+    } catch (e) {
+      alert.error('Não foi possível alterar a ordem do item do checklist.');
     }
+  };
+
+  const deleteChecklistItem = async (checklistItemID) => {
+    try {
+      await api.deleteCardChecklistItem(checklistID, checklistItemID);
+    } catch (e) {
+      alert.error('Não foi possível remover o item do checklist.');
+    }
+  };
+
+  const createChecklistItem = async (data) => {
+    try {
+      await api.createCardChecklistItem(checklistID, {
+        name: data.description,
+        state: data.completed ? 'complete' : 'incomplete',
+        position: 'bottom',
+      });
+    } catch (e) {
+      alert.error('Não foi possível criar item no checklist.');
+    }
+  };
+
+  useEffect(() => {
+    (async () => {
+      setLoading(true);
+      try {
+        await fetchChecklistItems();
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
+        alert.error('Não foi possível obter informações sobre o checklist deste cartão.');
+        onClose();
+      }
+    })();
+  }, [fetchChecklistItems, onClose]);
+
+  const onChange = async (data) => {
+    setLoading(true);
+    await udpateChecklistItem(data);
+    await fetchChecklistItems();
+    setLoading(false);
+  };
+
+  const onChangeOrder = async (checklistItemID, newPosition) => {
+    setLoading(true);
+    let position = 0;
+    if (newPosition === 0) {
+      position = 'top';
+    } else if (newPosition === tasks.length - 1) {
+      position = 'bottom';
+    } else {
+      const difference = (tasks[newPosition].pos - tasks[newPosition - 1].pos) / 2;
+      position = tasks[newPosition - 1].pos + difference;
+    }
+    await udpateChecklistItemPosition(checklistItemID, position);
+    await fetchChecklistItems();
+    setLoading(false);
+  };
+
+  const onRemove = async (checklistItemID) => {
+    setLoading(true);
+    await deleteChecklistItem(checklistItemID);
+    await fetchChecklistItems();
+    setLoading(false);
+  };
+
+  const onAdd = async (data) => {
+    setLoading(true);
+    await createChecklistItem(data);
+    await fetchChecklistItems();
+    setLoading(false);
   };
 
   return (
-    <Panel title="Checklist" onClose={onClose}>
-      {loading && <LoadingOverlay />}
-      <ChecklistItems ref={list} onClick={onListClick}>
-        {tasks.map((task) => (
-          <ChecklistItem key={task.id} task={task} onChange={onChange} onRemove={onRemove} />
-        ))}
-        {adding && (
-          <ChecklistItem
-            isNew={true}
-            onChange={(task) => {
-              onAdd(task);
-              onCancelAdd();
-            }}
-            onCancel={onCancelAdd}
-          />
-        )}
-      </ChecklistItems>
-      <Buttons>
-        <Button
-          onClick={() => {
-            setAdding(true);
-          }}
-        >
-          Adicionar
-        </Button>
-      </Buttons>
-    </Panel>
+    <ChecklistPanel
+      tasks={tasks}
+      loading={loading}
+      onChange={onChange}
+      onChangeOrder={onChangeOrder}
+      onRemove={onRemove}
+      onAdd={onAdd}
+      onClose={onClose}
+    />
   );
 };
 
-ChecklistPanel.defaultProps = {
-  loading: false,
-  tasks: [],
-};
-
-export default ChecklistPanel;
+export default ChecklistPanelContainer;

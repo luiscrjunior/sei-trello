@@ -111,3 +111,36 @@ export const deleteCard = (cardID) => {
 
   return axios.delete(url, { params: params });
 };
+
+/* obter checklists */
+export const getCardChecklistData = (cardID) => {
+  const url = `https://api.trello.com/1/cards/${cardID}/checklists`;
+
+  let params = Object.assign({}, genAuthData(), {
+    checkItems: 'all',
+    checkItem_fields: 'name,pos,state',
+  });
+
+  return axios.get(url, { params: params });
+};
+
+/* atualizar item do checklist */
+export const updateCardChecklistItem = (cardID, checkItemID, opts) => {
+  const url = `https://api.trello.com/1/cards/${cardID}/checkItem/${checkItemID}`;
+  let params = Object.assign({}, genAuthData(), opts);
+  return axios.put(url, params);
+};
+
+/* remover item do checklist */
+export const deleteCardChecklistItem = (checklistID, checkItemID) => {
+  const url = `https://api.trello.com/1/checklists/${checklistID}/checkItems/${checkItemID}`;
+  let params = Object.assign({}, genAuthData());
+  return axios.delete(url, { params: params });
+};
+
+/* adicionar item ao checklist */
+export const createCardChecklistItem = (checklistID, opts) => {
+  const url = `https://api.trello.com/1/checklists/${checklistID}/checkItems`;
+  let params = Object.assign({}, genAuthData(), opts);
+  return axios.post(url, params);
+};

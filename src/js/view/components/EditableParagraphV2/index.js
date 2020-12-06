@@ -111,25 +111,57 @@ const EditableParagraph = ({
           {buttons.map((button) => {
             if (button === 'save')
               return (
-                <Button key={button} type="success" onClick={() => updateValue()}>
+                <Button
+                  key={button}
+                  type="success"
+                  onClick={(e) => {
+                    updateValue();
+                    e.preventDefault();
+                    e.stopPropagation();
+                  }}
+                >
                   Salvar
                 </Button>
               );
             if (button === 'remove')
               return (
-                <Button key={button} type="danger" onClick={() => removeItem()}>
+                <Button
+                  key={button}
+                  type="danger"
+                  onClick={(e) => {
+                    removeItem();
+                    e.preventDefault();
+                    e.stopPropagation();
+                  }}
+                >
                   Remover
                 </Button>
               );
             if (button === 'add')
               return (
-                <Button key={button} type="success" onClick={() => updateValue()}>
+                <Button
+                  key={button}
+                  type="success"
+                  onClick={(e) => {
+                    updateValue();
+                    e.preventDefault();
+                    e.stopPropagation();
+                  }}
+                >
                   Adicionar
                 </Button>
               );
             if (button === 'cancel')
               return (
-                <Button key={button} type="default" onClick={() => cancelEdit()}>
+                <Button
+                  key={button}
+                  type="default"
+                  onClick={(e) => {
+                    cancelEdit();
+                    e.preventDefault();
+                    e.stopPropagation();
+                  }}
+                >
                   Cancelar
                 </Button>
               );

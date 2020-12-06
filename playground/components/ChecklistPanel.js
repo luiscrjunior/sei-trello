@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ChecklistPanel from 'view/components/ChecklistPanel';
+import ChecklistPanel from 'view/components/ChecklistPanel/ChecklistPanel';
 import { TrelloCardBG } from '../styles';
 
 const tasks = [
