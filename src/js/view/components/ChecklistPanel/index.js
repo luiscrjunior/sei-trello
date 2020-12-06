@@ -24,7 +24,7 @@ const ChecklistItems = styled.ul`
   overflow-y: auto;
 `;
 
-const ChecklistPanel = ({ tasks, loading, onChange, onChangeOrder, onRemove, onAdd }) => {
+const ChecklistPanel = ({ tasks, loading, onChange, onChangeOrder, onRemove, onAdd, onClose }) => {
   const [adding, setAdding] = useState(false);
   const list = useRef(null);
   const drake = useRef(null);
@@ -68,7 +68,7 @@ const ChecklistPanel = ({ tasks, loading, onChange, onChangeOrder, onRemove, onA
   };
 
   return (
-    <Panel title="Checklist">
+    <Panel title="Checklist" onClose={onClose}>
       {loading && <LoadingOverlay />}
       <ChecklistItems ref={list} onClick={onListClick}>
         {tasks.map((task) => (
@@ -100,6 +100,7 @@ const ChecklistPanel = ({ tasks, loading, onChange, onChangeOrder, onRemove, onA
 
 ChecklistPanel.defaultProps = {
   loading: false,
+  tasks: [],
 };
 
 export default ChecklistPanel;

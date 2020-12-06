@@ -7,6 +7,7 @@ import dueFormatter from './due.js';
 import DuePanel from 'view/components/DuePanel';
 import EditableParagraph from 'view/components/EditableParagraph';
 import CardLocationSelector from 'view/components/CardLocationSelector';
+import ChecklistPanel from 'view/components/ChecklistPanel';
 
 import * as alert from 'view/alert.js';
 
@@ -17,6 +18,7 @@ class TrelloCard extends React.Component {
       showOptions: false,
       isEditingDescription: false,
       isEditingDue: false,
+      isEditingChecklist: false,
       processTooltip: {
         show: false,
         x: 0,
@@ -99,17 +101,31 @@ class TrelloCard extends React.Component {
     this.setState({
       isHovering: false,
       isEditingDue: false /* close due panel on hover out */,
+      isEditingChecklist: false /* close checklist panel on hover out */,
     });
   }
 
   openDuePanel(e) {
-    this.setState({ isEditingDue: true });
+    this.setState({
+      isEditingDue: true,
+      isEditingChecklist: false,
+    });
     e.stopPropagation();
     e.preventDefault();
   }
 
   closeDuePanel() {
     this.setState({ isEditingDue: false });
+  }
+
+  openChecklistPanel(e) {
+    this.setState({ isEditingChecklist: true, isEditingDue: false });
+    e.stopPropagation();
+    e.preventDefault();
+  }
+
+  closeChecklistPanel() {
+    this.setState({ isEditingChecklist: false });
   }
 
   renderLabels() {
@@ -217,7 +233,12 @@ class TrelloCard extends React.Component {
           />
         )}
 
+        {this.state.isEditingChecklist && <ChecklistPanel onClose={this.closeChecklistPanel.bind(this)} />}
+
         <div className={styles.options}>
+          <a data-tooltip="Checklist" target="#" onClick={this.openChecklistPanel.bind(this)}>
+            <i className="fas fa-tasks"></i>
+          </a>
           <a data-tooltip="Especificar data de entrega" target="#" onClick={this.openDuePanel.bind(this)}>
             <i className="far fa-clock"></i>
           </a>
