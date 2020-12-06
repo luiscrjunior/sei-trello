@@ -98,10 +98,10 @@ const ChecklistPanelContainer = ({ cardID, onClose }) => {
     })();
   }, [fetchChecklistItems, onClose]);
 
-  /* toda vez que atualiza a tasks, atualiza a informação se o cartão possui ou não checklists */
+  /* toda vez que atualiza o checklistID, atualiza a informação se o cartão possui ou não checklists */
   useEffect(() => {
-    store.updateCardsData(cardID, { hasChecklist: tasks.length > 0 });
-  }, [tasks, cardID]);
+    store.updateCardsData(cardID, { hasChecklist: !!checklistID });
+  }, [checklistID, cardID]);
 
   const onChange = async (data) => {
     setLoading(true);
