@@ -23,7 +23,7 @@ const ChecklistItem = ({ task, isNew, onChange, onRemove, onCancel }) => {
   if (isNew) task = { description: '', completed: false };
 
   return (
-    <Item>
+    <Item data-id={task.id}>
       <Checkbox
         checked={isNew ? false : task.completed}
         onClick={() => onChange({ ...task, completed: !task.completed })}

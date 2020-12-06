@@ -1,10 +1,12 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import FloatingPanel from 'view/components/FloatingPanel';
 import ChecklistItem from './ChecklistItem';
 import styled from 'styled-components';
 
 import { Buttons, Button } from 'view/components/EditableParagraphV2/styles';
 import LoadingOverlay from './LoadingOverlay';
+
+import dragula from 'dragula';
 
 const Panel = styled(FloatingPanel)`
   position: absolute;
@@ -22,9 +24,30 @@ const ChecklistItems = styled.ul`
   overflow-y: auto;
 `;
 
-const ChecklistPanel = ({ tasks, loading, onChange, onRemove, onAdd }) => {
+const ChecklistPanel = ({ tasks, loading, onChange, onChangeOrder, onRemove, onAdd }) => {
   const [adding, setAdding] = useState(false);
   const list = useRef(null);
+  const drake = useRef(null);
+
+  useEffect(() => {
+    if (list.current && onChangeOrder) {
+      drake.current = dragula([list.current]);
+      drake.current.on('drop', (el) => {
+        if (list.current) {
+          const listItems = Array.from(list.current.children);
+          const idx = listItems.indexOf(el);
+          if (idx > -1) {
+            const taskId = el.getAttribute('data-id');
+            onChangeOrder(taskId, idx);
+          }
+        }
+        drake.current.cancel(true);
+      });
+    }
+    return () => {
+      drake.current.destroy();
+    };
+  }, [onChangeOrder]);
 
   const onCancelAdd = () => {
     setAdding(false);

@@ -3,12 +3,12 @@ import ChecklistPanel from 'view/components/ChecklistPanel';
 import { TrelloCardBG } from '../styles';
 
 const tasks = [
-  { id: 1, completed: true, description: 'Minha primeira tarefa' },
-  { id: 2, completed: true, description: 'Minha segunda tarefa' },
-  { id: 3, completed: false, description: 'Minha terceira tarefa' },
-  { id: 4, completed: false, description: 'Minha quarta tarefa' },
-  { id: 5, completed: false, description: 'Minha quinta tarefa' },
-  { id: 6, completed: false, description: 'Minha sexta tarefa' },
+  { id: '1', completed: true, description: 'Minha primeira tarefa' },
+  { id: '2', completed: true, description: 'Minha segunda tarefa' },
+  { id: '3', completed: false, description: 'Minha terceira tarefa' },
+  { id: '4', completed: false, description: 'Minha quarta tarefa' },
+  { id: '5', completed: false, description: 'Minha quinta tarefa' },
+  { id: '6', completed: false, description: 'Minha sexta tarefa' },
 ];
 
 const ChecklistPanelPlayground = () => {
@@ -40,6 +40,22 @@ const ChecklistPanelPlayground = () => {
     }, 500);
   };
 
+  const updateTaskOrder = (taskId, newPosition) => {
+    console.log(`move task ${taskId} to position ${newPosition}.`);
+    setData({ ...data, isLoading: true });
+    setTimeout(() => {
+      const taskToMove = data.tasks.find((task) => task.id === taskId);
+      const taskIdx = data.tasks.indexOf(taskToMove);
+      const newTasks = [...data.tasks];
+      newTasks.splice(taskIdx, 1);
+      newTasks.splice(newPosition, 0, taskToMove);
+      setData({
+        isLoading: false,
+        tasks: newTasks,
+      });
+    }, 500);
+  };
+
   const createTask = (updatedTask) => {
     console.log(`create task ${updatedTask.description}.`);
     setData({ ...data, isLoading: true });
@@ -59,6 +75,7 @@ const ChecklistPanelPlayground = () => {
         onRemove={removeTask}
         onAdd={createTask}
         onChange={updateTask}
+        onChangeOrder={updateTaskOrder}
       />
     </TrelloCardBG>
   );
