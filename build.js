@@ -14,7 +14,7 @@ const runCommands = (commands) => {
     const step = i + 1;
     try {
       console.log(`\x1b[33m[${step}]\x1b[0m '${command.descr}'...`);
-      const output = execSync(command.cmd, { stdio: 'ignore' });
+      execSync(command.cmd, { stdio: 'ignore' });
     } catch (e) {
       console.log(`\x1b[31m[ERRO]\x1b[0m Erro ao executar '${command.cmd}'...`);
       break;

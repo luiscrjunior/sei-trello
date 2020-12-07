@@ -58,7 +58,7 @@ const TrelloCardPlayground = () => {
   return (
     <TrelloCard
       {...data}
-      refreshCard={(cardID) => updateData({})}
+      refreshCard={() => updateData({})}
       deleteCard={(cardID) => console.log('delete: ', cardID)}
       onChangeName={(cardID, newName) => updateData({ name: newName })}
       onChangeDescription={(cardID, newDescription) => updateData({ description: newDescription })}

@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import EditableParagraph from 'view/components/EditableParagraphV2';
 import styled from 'styled-components';
 
