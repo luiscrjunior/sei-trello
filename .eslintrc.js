@@ -29,5 +29,9 @@ module.exports = {
     chrome: true,
     PRODUCTION: true,
     DEVELOPMENT: true,
+    page: true,
+    browser: true,
+    context: true,
+    jestPuppeteer: true,
   },
 };
