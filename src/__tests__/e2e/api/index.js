@@ -54,9 +54,7 @@ const Api = () => {
     return true;
   };
 
-  const handleRequest = (request) => {
-    console.log(request.url());
-
+  const handleRequests = (request) => {
     let match = null;
 
     /* searchCards */
@@ -103,7 +101,11 @@ const Api = () => {
     }
   };
 
-  return handleRequest;
+  return {
+    handleRequests: handleRequests,
+    clearCards: () => (cards = []),
+    addCard: (card) => (cards = [...cards, card]),
+  };
 };
 
 export default Api();
