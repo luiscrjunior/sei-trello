@@ -272,3 +272,20 @@ test('update card button', async () => {
   await matchTrelloCardDescription(card, 'Minha descrição');
   await expect(card).toMatchElement('div', { text: 'em Quadro 2 / Lista 2' });
 });
+
+test('duplicated process warning', async () => {
+  api.addCard({
+    name: 'Título do cartão',
+    desc: 'SEI 00000.000001/2020-01',
+  });
+  api.addCard({
+    name: 'Outro título do cartão',
+    desc: 'SEI 00000.000001/2020-01',
+  });
+  await clickTrelloRefreshButton();
+  const card = await matchTrelloCard('00000.000001/2020-01');
+
+  await expect(card).toMatchElement('i[data-tooltip="Processo com mais de um cartão. Mostrando o primeiro."]', {
+    visible: true,
+  });
+});
