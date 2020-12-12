@@ -6,6 +6,6 @@ module.exports = async function globalSetup(globalConfig) {
   await setupDevServer({
     command: `node src/__tests__/e2e/server.js`,
     launchTimeout: 50000,
-    port: 8080,
+    port: 3000,
   });
 };

@@ -21,4 +21,4 @@ app.use('/vendor', express.static(path.join(expandedPath, 'vendor')));
 app.use('/css', express.static(path.join(expandedPath, 'css')));
 app.use('/js', express.static(path.join(expandedPath, 'js')));
 
-app.listen(8080);
+app.listen(3000);
