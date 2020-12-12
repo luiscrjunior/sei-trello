@@ -6,7 +6,7 @@ beforeAll(async () => {
   jest.setTimeout(60000);
   await page.setRequestInterception(true);
   page.on('request', api.handleRequests);
-  await page.goto('http://localhost:8080', { waitUntil: 'networkidle2' });
+  await page.goto('http://localhost:3000', { waitUntil: 'networkidle2' });
 });
 
 beforeEach(async () => {
@@ -18,8 +18,8 @@ const clickTrelloRefreshButton = async () => {
   await page.click('div.trello-refresh-button > a');
   await page.waitForTimeout(500);
 };
-const clickCardRefreshButton = async (card) => {
-  const anchor = await expect(card).toMatchElement('a[data-tooltip="Atualizar Cartão"]');
+const clickCardButton = async (card, buttonTitle) => {
+  const anchor = await expect(card).toMatchElement(`a[data-tooltip="${buttonTitle}"]`);
   await anchor.click();
   await page.waitForTimeout(500);
 };
@@ -45,8 +45,14 @@ const matchTrelloCardDescription = async (card, description) => {
   return paragraph;
 };
 
+const matchPanel = async (card, title) => {
+  const span = await expect(card).toMatchElement('div > span', { text: title, visible: true });
+  return await span.evaluateHandle((span) => span.closest('div'));
+};
+
 test('render card', async () => {
   api.addCard({
+    id: 'card1',
     name: 'Título do cartão',
     desc: 'SEI 00000.000001/2020-01',
     board: {
@@ -110,6 +116,11 @@ test('render card', async () => {
 
   /* checar se os botões estão visíveis */
   expect(await buttonsWrapper.evaluate((node) => window.getComputedStyle(node).getPropertyValue('opacity'))).toBe('1');
+
+  /* checar o link do botão Abrir no Trello */
+  expect(
+    await card.evaluate((card) => card.querySelector('a[data-tooltip="Abrir no Trello"]').getAttribute('href'))
+  ).toBe('https://trello.com/c/card1');
 });
 
 test('render card with process not visualized', async () => {
@@ -153,30 +164,111 @@ test('render card with due', async () => {
   /* cartão com prazo para hoje */
   let dueDate = new Date();
   api.updateCard('card1', { due: formatISO(dueDate), dueComplete: false });
-  await clickCardRefreshButton(card);
+  await clickCardButton(card, 'Atualizar Cartão');
   await expect(card).toMatchElement('span', { text: `${format(dueDate, 'dd/MM')} hoje` });
 
   /* cartão com prazo para amanhã */
   dueDate = addDays(new Date(), 1);
   api.updateCard('card1', { due: formatISO(dueDate), dueComplete: false });
-  await clickCardRefreshButton(card);
+  await clickCardButton(card, 'Atualizar Cartão');
   await expect(card).toMatchElement('span', { text: `${format(dueDate, 'dd/MM')} amanhã` });
 
   /* cartão com prazo para daqui a 2 dias */
   dueDate = addDays(new Date(), 2);
   api.updateCard('card1', { due: formatISO(dueDate), dueComplete: false });
-  await clickCardRefreshButton(card);
+  await clickCardButton(card, 'Atualizar Cartão');
   await expect(card).toMatchElement('span', { text: `${format(dueDate, 'dd/MM')} 2 dias` });
 
   /* cartão com prazo para ontem (atrasado) */
   dueDate = subDays(new Date(), 1);
   api.updateCard('card1', { due: formatISO(dueDate), dueComplete: false });
-  await clickCardRefreshButton(card);
+  await clickCardButton(card, 'Atualizar Cartão');
   await expect(card).toMatchElement('span', { text: `${format(dueDate, 'dd/MM')} atrasado` });
 
   /* cartão com prazo para hoje e concluído */
   dueDate = new Date();
   api.updateCard('card1', { due: formatISO(dueDate), dueComplete: true });
-  await clickCardRefreshButton(card);
+  await clickCardButton(card, 'Atualizar Cartão');
   await expect(card).toMatchElement('span', { text: `${format(dueDate, 'dd/MM')} concluído` });
+});
+
+test('open and close panels', async () => {
+  api.addCard({
+    name: 'Título do cartão',
+    desc: 'SEI 00000.000001/2020-01',
+  });
+  await clickTrelloRefreshButton();
+  const card = await matchTrelloCard('00000.000001/2020-01');
+
+  const panels = [
+    { title: 'Data de entrega', button: 'Especificar data de entrega' },
+    { title: 'Checklist', button: 'Checklist' },
+  ];
+
+  for await (let panel of panels) {
+    /*painel fechado inicialmente */
+    await expect(matchPanel(card, panel.title)).rejects.toThrow();
+
+    /* clicar no botão para abrir o painel */
+    await clickCardButton(card, panel.button);
+
+    /* checar se painel abriu */
+    await matchPanel(card, panel.title);
+
+    /* checar se painel fechou quando o mouse se moveu para fora do cartão */
+    await page.hover('div.trello-refresh-button');
+    await expect(matchPanel(card, panel.title)).rejects.toThrow();
+
+    /* abre novamente e clica no X para fechar */
+    await clickCardButton(card, panel.button);
+    await expect(await matchPanel(card, panel.title)).toClick('a', { text: '×' });
+    await expect(matchPanel(card, panel.title)).rejects.toThrow();
+  }
+});
+
+test('delete card', async () => {
+  api.addCard({
+    name: 'Título do cartão',
+    desc: 'SEI 00000.000001/2020-01',
+  });
+  await clickTrelloRefreshButton();
+  const card = await matchTrelloCard('00000.000001/2020-01');
+
+  await clickCardButton(card, 'Remover Cartão');
+  await expect(page).toClick('button', { text: 'Sim, remover!', visible: true });
+  await page.waitForTimeout(500);
+  await expect(matchTrelloCard('00000.000001/2020-01')).rejects.toThrow();
+});
+
+test('update card button', async () => {
+  api.addCard({
+    id: 'card1',
+    name: 'Título do cartão',
+    desc: 'SEI 00000.000001/2020-01',
+  });
+  await clickTrelloRefreshButton();
+  const card = await matchTrelloCard('00000.000001/2020-01');
+
+  await matchTrelloCardTitle(card, 'Título do cartão');
+  await matchTrelloCardDescription(card, 'Clique para editar...');
+  await expect(card).toMatchElement('div', { text: 'em Quadro 1 / Lista 1' });
+
+  api.updateCard('card1', {
+    name: 'Outro título do cartão',
+    desc: 'SEI 00000.000001/2020-01\nMinha descrição',
+    board: {
+      id: 'board2',
+      name: 'Quadro 2',
+    },
+    list: {
+      id: 'list2',
+      name: 'Lista 2',
+    },
+  });
+  await clickCardButton(card, 'Atualizar Cartão');
+  await page.waitForTimeout(500);
+
+  await matchTrelloCardTitle(card, 'Outro título do cartão');
+  await matchTrelloCardDescription(card, 'Minha descrição');
+  await expect(card).toMatchElement('div', { text: 'em Quadro 2 / Lista 2' });
 });
