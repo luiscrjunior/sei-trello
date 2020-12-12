@@ -104,7 +104,24 @@ const Api = () => {
   return {
     handleRequests: handleRequests,
     clearCards: () => (cards = []),
-    addCard: (card) => (cards = [...cards, card]),
+    addCard: (card, cardID = 'card1') =>
+      (cards = [
+        ...cards,
+        {
+          id: cardID,
+          name: '',
+          desc: '',
+          due: null,
+          dueComplete: false,
+          idChecklists: [],
+          labels: [],
+          shortUrl: `https://trello.com/c/${cardID}`,
+          board: boards[0],
+          list: lists[0],
+          ...card,
+        },
+      ]),
+    updateCard: updateCardData,
   };
 };
 
