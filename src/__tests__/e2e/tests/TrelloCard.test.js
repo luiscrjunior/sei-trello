@@ -1,4 +1,3 @@
-import { format, formatISO, addDays, subDays } from 'date-fns';
 import api from './../api';
 
 import {
@@ -102,49 +101,6 @@ test('render card with description', async () => {
   const card = await matchTrelloCard('00000.000001/2020-01');
   await matchTrelloCardTitle(card, 'Cartão com descrição');
   await matchTrelloCardDescription(card, 'Esta é a descrição do cartão.');
-});
-
-test('render card with due', async () => {
-  api.addCard({
-    id: 'card1',
-    name: 'Cartão sem prazo',
-    desc: 'SEI 00000.000001/2020-01',
-    due: null,
-    dueComplete: false,
-  });
-  await clickTrelloRefreshButton();
-  const card = await matchTrelloCard('00000.000001/2020-01');
-  await expect(card).not.toMatchElement('li', { text: 'Hoje' });
-
-  /* cartão com prazo para hoje */
-  let dueDate = new Date();
-  api.updateCard('card1', { due: formatISO(dueDate), dueComplete: false });
-  await clickCardButton(card, 'Atualizar Cartão');
-  await expect(card).toMatchElement('span', { text: `${format(dueDate, 'dd/MM')} hoje` });
-
-  /* cartão com prazo para amanhã */
-  dueDate = addDays(new Date(), 1);
-  api.updateCard('card1', { due: formatISO(dueDate), dueComplete: false });
-  await clickCardButton(card, 'Atualizar Cartão');
-  await expect(card).toMatchElement('span', { text: `${format(dueDate, 'dd/MM')} amanhã` });
-
-  /* cartão com prazo para daqui a 2 dias */
-  dueDate = addDays(new Date(), 2);
-  api.updateCard('card1', { due: formatISO(dueDate), dueComplete: false });
-  await clickCardButton(card, 'Atualizar Cartão');
-  await expect(card).toMatchElement('span', { text: `${format(dueDate, 'dd/MM')} 2 dias` });
-
-  /* cartão com prazo para ontem (atrasado) */
-  dueDate = subDays(new Date(), 1);
-  api.updateCard('card1', { due: formatISO(dueDate), dueComplete: false });
-  await clickCardButton(card, 'Atualizar Cartão');
-  await expect(card).toMatchElement('span', { text: `${format(dueDate, 'dd/MM')} atrasado` });
-
-  /* cartão com prazo para hoje e concluído */
-  dueDate = new Date();
-  api.updateCard('card1', { due: formatISO(dueDate), dueComplete: true });
-  await clickCardButton(card, 'Atualizar Cartão');
-  await expect(card).toMatchElement('span', { text: `${format(dueDate, 'dd/MM')} concluído` });
 });
 
 test('open and close panels', async () => {
