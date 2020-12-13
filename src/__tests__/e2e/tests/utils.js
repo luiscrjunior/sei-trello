@@ -42,3 +42,9 @@ export const matchPanel = async (card, title) => {
   const span = await expect(card).toMatchElement('div > span', { text: title, visible: true });
   return await span.evaluateHandle((span) => span.closest('div'));
 };
+
+export const getCSSProperty = async (elementHandle, propertyName) =>
+  await elementHandle.evaluate(
+    (node, propertyName) => window.getComputedStyle(node).getPropertyValue(propertyName),
+    propertyName
+  );

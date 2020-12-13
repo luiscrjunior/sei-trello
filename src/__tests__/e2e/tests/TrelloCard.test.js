@@ -9,6 +9,7 @@ import {
   matchTrelloCardTitle,
   matchTrelloCardDescription,
   matchPanel,
+  getCSSProperty,
 } from './utils.js';
 
 setupBeforeAll(api);
@@ -41,7 +42,7 @@ test('render card', async () => {
 
   const paragraph = await matchTrelloCardDescription(card, 'Clique para editar...');
 
-  const boardPicker = await expect(card).toMatchElement('div', { text: 'em Quadro 1 / Lista 1' });
+  await expect(card).toMatchElement('div', { text: 'em Quadro 1 / Lista 1' });
 
   const buttonsWrapper = await card.evaluateHandle((card) =>
     card.querySelector('a[data-tooltip="Abrir no Trello"]').closest('div')
@@ -60,13 +61,6 @@ test('render card', async () => {
   /* checar se os botões estão invisíveis */
   expect(await buttonsWrapper.evaluate((node) => window.getComputedStyle(node).getPropertyValue('opacity'))).toBe('0');
 
-  /* checar se os dois ícones / carets estão invisíveis */
-  expect(
-    await boardPicker.$$eval('i.fas.fa-caret-down', (nodes) =>
-      nodes.map((node) => window.getComputedStyle(node).getPropertyValue('opacity'))
-    )
-  ).toEqual(['0', '0']);
-
   /* mouse sobre o cartão */
   await card.hover();
   await page.waitForTimeout(500);
@@ -74,13 +68,6 @@ test('render card', async () => {
   /* checar se o parágrafo apareceu */
   const paragraphHeight = await paragraph.evaluate((paragraph) => paragraph.closest('div').clientHeight);
   expect(paragraphHeight).toBe(28);
-
-  /* checar se os dois ícones / carets estão visíveis */
-  expect(
-    await boardPicker.$$eval('i.fas.fa-caret-down', (nodes) =>
-      nodes.map((node) => window.getComputedStyle(node).getPropertyValue('opacity'))
-    )
-  ).toEqual(['1', '1']);
 
   /* checar se os botões estão visíveis */
   expect(await buttonsWrapper.evaluate((node) => window.getComputedStyle(node).getPropertyValue('opacity'))).toBe('1');
@@ -192,6 +179,97 @@ test('open and close panels', async () => {
     await expect(await matchPanel(card, panel.title)).toClick('a', { text: '×' });
     await expect(matchPanel(card, panel.title)).rejects.toThrow();
   }
+});
+
+test('board and list panels', async () => {
+  api.setBoards([
+    {
+      id: 'board1',
+      name: 'Quadro 1',
+    },
+    {
+      id: 'board2',
+      name: 'Quadro 2',
+    },
+  ]);
+  api.setLists([
+    {
+      id: 'list1',
+      name: 'Lista 1',
+    },
+    {
+      id: 'list2',
+      name: 'Lista 2',
+    },
+  ]);
+  api.addCard({
+    name: 'Título do cartão',
+    desc: 'SEI 00000.000001/2020-01',
+    board: {
+      id: 'board1',
+      name: 'Quadro 1',
+    },
+    list: {
+      id: 'list1',
+      name: 'Lista 1',
+    },
+  });
+  await clickTrelloRefreshButton();
+
+  const card = await matchTrelloCard('00000.000001/2020-01');
+
+  const boardPicker = await expect(card).toMatchElement('div', { text: 'em Quadro 1 / Lista 1' });
+
+  const picker1 = (await boardPicker.$$('i.fas.fa-caret-down'))[0];
+  const picker2 = (await boardPicker.$$('i.fas.fa-caret-down'))[1];
+  const menu1 = (await boardPicker.$$('ul'))[0];
+  const menu2 = (await boardPicker.$$('ul'))[1];
+
+  /* checar se os dois ícones / carets estão invisíveis bem como os menus */
+  expect(await getCSSProperty(picker1, 'opacity')).toBe('0');
+  expect(await getCSSProperty(picker2, 'opacity')).toBe('0');
+  expect(await getCSSProperty(menu1, 'display')).toBe('none');
+  expect(await getCSSProperty(menu2, 'display')).toBe('none');
+
+  /* mouse sobre o cartão */
+  await card.hover();
+  await page.waitForTimeout(500);
+
+  /* o primeiro caret deve aparecer */
+  expect(await getCSSProperty(picker1, 'opacity')).toBe('1');
+
+  /* clica no picker do quadro */
+  await picker1.click();
+  await page.waitForTimeout(500);
+  expect(await getCSSProperty(menu1, 'display')).toBe('block');
+  expect(await menu1.$$eval('li > a', (anchors) => anchors.map((anchor) => anchor.textContent))).toEqual([
+    'Quadro 1',
+    'Quadro 2',
+  ]);
+  await page.hover('div.trello-refresh-button'); /* afasta o mouse pra longe */
+  await page.waitForTimeout(500);
+  expect(await getCSSProperty(menu1, 'display')).toBe('none');
+  expect(await getCSSProperty(picker1, 'opacity')).toBe('0');
+
+  /* mouse sobre o cartão */
+  await card.hover();
+  await page.waitForTimeout(500);
+
+  /* o segundo caret deve aparecer */
+  expect(await getCSSProperty(picker2, 'opacity')).toBe('1');
+
+  /* clica no picker da lista */
+  await picker2.click();
+  await page.waitForTimeout(500);
+  expect(await getCSSProperty(menu2, 'display')).toBe('block');
+  expect(await menu2.$$eval('li > a', (anchors) => anchors.map((anchor) => anchor.textContent))).toEqual([
+    'Lista 1',
+    'Lista 2',
+  ]);
+  await page.hover('div.trello-refresh-button'); /* afasta o mouse pra longe */
+  await page.waitForTimeout(500);
+  expect(await getCSSProperty(menu2, 'display')).toBe('none');
+  expect(await getCSSProperty(picker2, 'opacity')).toBe('0');
 });
 
 test('delete card', async () => {
