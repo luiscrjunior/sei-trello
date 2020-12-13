@@ -79,7 +79,6 @@ const Api = () => {
       const [, cardID] = match;
       // eslint-disable-next-line no-unused-vars
       const { key, token, ...data } = JSON.parse(request.postData());
-      console.log(cardID, data);
       request.respond(jsonResponse({ ...updateCardData(cardID, data) }));
 
       /* createCard */
