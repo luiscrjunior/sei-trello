@@ -6,7 +6,7 @@ const findAllProcessAnchors = () => {
 const extractRelevantDataFromRow = (row) => {
   let data = {};
 
-  const noteAnchor = row.querySelector('a[href^="controlador.php?acao=anotacao_registrar"]');
+  const noteAnchor = row.querySelector('a[href*="controlador.php?acao=anotacao_registrar"]');
   if (noteAnchor !== null) {
     const noteAnchorTooltipInfo = noteAnchor.getAttribute('onmouseover');
     if (noteAnchorTooltipInfo) {
@@ -16,7 +16,7 @@ const extractRelevantDataFromRow = (row) => {
     }
   }
 
-  const processAnchor = row.querySelector('a[href^="controlador.php?acao=procedimento_trabalhar"]');
+  const processAnchor = row.querySelector('a[href*="controlador.php?acao=procedimento_trabalhar"]');
   if (processAnchor !== null) {
     const processAnchorTooltipInfo = processAnchor.getAttribute('onmouseover');
     if (processAnchorTooltipInfo) {
