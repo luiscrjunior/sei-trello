@@ -122,6 +122,8 @@ const Api = () => {
         },
       ]),
     updateCard: updateCardData,
+    setBoards: (newBoards) => (boards = newBoards),
+    setLists: (newLists) => (lists = newLists),
   };
 };
 
