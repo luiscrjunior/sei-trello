@@ -124,6 +124,20 @@ export const getCardChecklistData = (cardID) => {
   return axios.get(url, { params: params });
 };
 
+/* cria uma checklist */
+export const createCardChecklist = (cardID, checklistName) => {
+  const url = `https://api.trello.com/1/checklists`;
+  let params = Object.assign({}, genAuthData(), { idCard: cardID, name: checklistName });
+  return axios.post(url, params);
+};
+
+/* adicionar item ao checklist */
+export const createCardChecklistItem = (checklistID, opts) => {
+  const url = `https://api.trello.com/1/checklists/${checklistID}/checkItems`;
+  let params = Object.assign({}, genAuthData(), opts);
+  return axios.post(url, params);
+};
+
 /* atualizar item do checklist */
 export const updateCardChecklistItem = (cardID, checkItemID, opts) => {
   const url = `https://api.trello.com/1/cards/${cardID}/checkItem/${checkItemID}`;
@@ -136,20 +150,6 @@ export const deleteCardChecklistItem = (checklistID, checkItemID) => {
   const url = `https://api.trello.com/1/checklists/${checklistID}/checkItems/${checkItemID}`;
   let params = Object.assign({}, genAuthData());
   return axios.delete(url, { params: params });
-};
-
-/* adicionar item ao checklist */
-export const createCardChecklistItem = (checklistID, opts) => {
-  const url = `https://api.trello.com/1/checklists/${checklistID}/checkItems`;
-  let params = Object.assign({}, genAuthData(), opts);
-  return axios.post(url, params);
-};
-
-/* cria uma checklist */
-export const createCardChecklist = (cardID, checklistName) => {
-  const url = `https://api.trello.com/1/checklists`;
-  let params = Object.assign({}, genAuthData(), { idCard: cardID, name: checklistName });
-  return axios.post(url, params);
 };
 
 /* remover uma checklist */
