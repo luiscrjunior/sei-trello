@@ -92,7 +92,6 @@ module.exports = {
       { from: 'src/manifest.json', to: outputPath + '/' },
       { from: 'src/icons', to: outputPath + '/icons' },
       { from: 'src/html', to: outputPath + '/html' },
-      { from: 'src/vendor', to: outputPath + '/vendor' },
     ]),
     new ExtractTextPlugin('[name]'),
     new webpack.DefinePlugin({

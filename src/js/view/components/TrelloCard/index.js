@@ -11,6 +11,11 @@ import ChecklistPanel from 'view/components/ChecklistPanel';
 
 import * as alert from 'view/alert.js';
 
+import { OptionIcon, FooterIcon, HasAnotherCardIndicator } from './styles.js';
+
+import { faClock, faTrashAlt } from '@fortawesome/free-regular-svg-icons';
+import { faSyncAlt, faExternalLinkAlt, faCheckSquare, faAlignLeft } from '@fortawesome/free-solid-svg-icons';
+
 class TrelloCard extends React.Component {
   constructor(props) {
     super(props);
@@ -148,7 +153,7 @@ class TrelloCard extends React.Component {
     const due = dueFormatter(this.props.due, this.props.dueComplete);
     return (
       <li>
-        <i className={classNames(styles['ic-footer'], 'far', 'fa-clock')}></i>
+        <FooterIcon icon={faClock} />
         <span>
           {due.date}{' '}
           <span className={classNames(styles['due-message'], styles['due-' + due.class])}>{due.message}</span>
@@ -195,7 +200,7 @@ class TrelloCard extends React.Component {
 
     return (
       <li>
-        <i className={classNames(styles['ic-footer'], 'fas', 'fa-align-left')}></i>
+        <FooterIcon icon={faAlignLeft} />
         <a
           className={classNames(relevantClasses)}
           onMouseOver={this.showTooltip.bind(this)}
@@ -241,32 +246,23 @@ class TrelloCard extends React.Component {
 
         <div className={styles.options}>
           <a data-tooltip="Checklist" target="#" onClick={this.openChecklistPanel.bind(this)}>
-            <i
-              className={classNames('fas', 'fa-check-square', {
-                [styles['checklist-has-item']]: this.props.hasChecklist,
-              })}
-            ></i>
+            <OptionIcon icon={faCheckSquare} $highlight={true} />
           </a>
           <a data-tooltip="Especificar data de entrega" target="#" onClick={this.openDuePanel.bind(this)}>
-            <i className="far fa-clock"></i>
+            <OptionIcon icon={faClock} />
           </a>
           <a data-tooltip="Remover Cartão" target="#" onClick={this.deleteCard.bind(this)}>
-            <i className="far fa-trash-alt"></i>
+            <OptionIcon icon={faTrashAlt} />
           </a>
           <a data-tooltip="Atualizar Cartão" target="#" onClick={this.refreshCard.bind(this)}>
-            <i className="fas fa-sync-alt"></i>
+            <OptionIcon icon={faSyncAlt} />
           </a>
           <a data-tooltip="Abrir no Trello" target="_blank" rel="noreferrer" href={this.props.url}>
-            <i className="fas fa-external-link-alt"></i>
+            <OptionIcon icon={faExternalLinkAlt} />
           </a>
         </div>
 
-        <i
-          data-tooltip="Processo com mais de um cartão. Mostrando o primeiro."
-          className={classNames('fas', 'fa-exclamation-triangle', styles.hasAnotherCard, {
-            hide: !this.props.hasAnotherCard,
-          })}
-        ></i>
+        {this.props.hasAnotherCard && <HasAnotherCardIndicator />}
 
         <EditableParagraph
           paragraphClass={styles.name}

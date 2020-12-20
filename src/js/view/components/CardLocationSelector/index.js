@@ -8,6 +8,8 @@ import ContextMenu from 'view/components/ContextMenu';
 
 import * as api from 'api/trello.js';
 
+import { CaretIcon } from './styles.js';
+
 class CardLocationSelector extends React.Component {
   constructor(props) {
     super(props);
@@ -88,10 +90,7 @@ class CardLocationSelector extends React.Component {
       <div className={classNames(styles.wrapper, 'btn-menu-trigger')}>
         <span className={styles.label}>
           {this.props.selected.name}
-          <i
-            className={classNames('fas fa-caret-down', styles.caret, { [styles.show]: this.props.showSelector })}
-            onClick={this.onCaretClick.bind(this)}
-          ></i>
+          <CaretIcon $show={this.props.showSelector} onClick={this.onCaretClick.bind(this)} />
         </span>
 
         <ContextMenu

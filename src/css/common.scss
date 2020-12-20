@@ -31,3 +31,7 @@
   box-shadow: 0 0 5px #a0a0a0;
   color: #424242;
 }
+
+svg[data-icon] > path {
+  color: inherit;
+}

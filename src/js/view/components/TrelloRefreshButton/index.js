@@ -4,6 +4,8 @@ import loadingImg from './loading.svg';
 import styles from './styles.scss';
 import classNames from 'classnames';
 
+import { faSyncAlt } from '@fortawesome/free-solid-svg-icons';
+
 class TrelloRefreshButton extends React.Component {
   onClick(e) {
     e.preventDefault();
@@ -14,7 +16,7 @@ class TrelloRefreshButton extends React.Component {
 
   render() {
     return (
-      <TrelloButton title="Atualizar cartões do Trello" icon="fas fa-sync-alt" onClick={this.onClick.bind(this)}>
+      <TrelloButton title="Atualizar cartões do Trello" icon={faSyncAlt} onClick={this.onClick.bind(this)}>
         <img src={loadingImg} className={classNames(styles.loadingImg, { hide: !this.props.isLoading })} />
       </TrelloButton>
     );

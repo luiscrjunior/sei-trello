@@ -64,15 +64,6 @@
   padding-right: 0;
 }
 
-.card > .options > a > i {
-  color: #aaa;
-  font-size: 12px;
-
-  &.checklist-has-item {
-    color: #61bd4f;
-  }
-}
-
 .loadingOverlay {
   display: flex;
   align-items: center;
@@ -209,11 +200,6 @@
   }
 }
 
-.ic-footer {
-  margin-right: 6px;
-  color: #838c91;
-}
-
 .processInfo {
   margin: 5px 0 0 15px;
   padding: 0;
@@ -265,12 +251,4 @@
     padding: 0;
     word-break: break-word;
   }
-}
-
-.hasAnotherCard {
-  position: absolute;
-  bottom: 5px;
-  right: 5px;
-  color: #ef6c00;
-  z-index: 5;
 }

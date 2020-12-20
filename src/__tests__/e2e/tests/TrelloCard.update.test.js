@@ -86,8 +86,8 @@ test('update board and list', async () => {
   await card.hover();
   await page.waitForTimeout(500);
 
-  const picker1 = (await boardPicker.$$('i.fas.fa-caret-down'))[0];
-  const picker2 = (await boardPicker.$$('i.fas.fa-caret-down'))[1];
+  const picker1 = (await boardPicker.$$('[data-icon="caret-down"]'))[0];
+  const picker2 = (await boardPicker.$$('[data-icon="caret-down"]'))[1];
   const menu1 = (await boardPicker.$$('ul'))[0];
   const menu2 = (await boardPicker.$$('ul'))[1];
 

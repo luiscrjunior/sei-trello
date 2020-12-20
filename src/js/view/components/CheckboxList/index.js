@@ -3,6 +3,8 @@ import styles from './styles.scss';
 import classNames from 'classnames';
 import { isEqual, isArray } from 'lodash';
 
+import { CheckIcon } from './styles.js';
+
 class CheckboxList extends React.Component {
   handleClick(isSelected, item, e) {
     e.preventDefault();
@@ -33,7 +35,7 @@ class CheckboxList extends React.Component {
           <a href="#" className={styles.anchor} onClick={this.handleClick.bind(this, isSelected, item.key)}>
             <span className={classNames(styles['color-block'], styles[colorStyle], { hide: !this.props.color })}></span>
             <span className={styles.label}>{item.label}</span>
-            <i className={classNames('fas fa-check', styles['ic-check'])}></i>
+            <CheckIcon selected={isSelected} className={styles['ic-check']} />
           </a>
         </li>
       );

@@ -88,16 +88,3 @@
 .anchor:hover .ic-check {
   color: #fff;
 }
-
-.ic-check {
-  display: none;
-  position: absolute;
-  top: 8px;
-  right: 5px;
-  color: #999;
-  font-size: 14px;
-}
-
-.item.selected .ic-check {
-  display: inline-block;
-}

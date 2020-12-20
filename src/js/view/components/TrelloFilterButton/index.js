@@ -4,6 +4,8 @@ import FilterPanel from 'view/components/FilterPanel';
 import styles from './styles.scss';
 import classNames from 'classnames';
 
+import { faFilter } from '@fortawesome/free-solid-svg-icons';
+
 class TrelloFilterButton extends React.Component {
   constructor(props) {
     super(props);
@@ -29,7 +31,7 @@ class TrelloFilterButton extends React.Component {
   render() {
     return (
       <div className={classNames(styles.wrapper, 'btn-panel-trigger')}>
-        <TrelloButton title="Filtrar" icon="fas fa-filter" onClick={this.onClick.bind(this)}></TrelloButton>
+        <TrelloButton title="Filtrar" icon={faFilter} onClick={this.onClick.bind(this)}></TrelloButton>
 
         {this.props.hasFilter && <span className={styles['filter-message']}>ligado</span>}
 

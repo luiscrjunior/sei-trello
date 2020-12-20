@@ -176,8 +176,8 @@ test('board and list panels', async () => {
 
   const boardPicker = await expect(card).toMatchElement('div', { text: 'em Quadro 1 / Lista 1' });
 
-  const picker1 = (await boardPicker.$$('i.fas.fa-caret-down'))[0];
-  const picker2 = (await boardPicker.$$('i.fas.fa-caret-down'))[1];
+  const picker1 = (await boardPicker.$$('[data-icon="caret-down"]'))[0];
+  const picker2 = (await boardPicker.$$('[data-icon="caret-down"]'))[1];
   const menu1 = (await boardPicker.$$('ul'))[0];
   const menu2 = (await boardPicker.$$('ul'))[1];
 
@@ -287,7 +287,7 @@ test('duplicated process warning', async () => {
   await clickTrelloRefreshButton();
   const card = await matchTrelloCard('00000.000001/2020-01');
 
-  await expect(card).toMatchElement('i[data-tooltip="Processo com mais de um cartão. Mostrando o primeiro."]', {
+  await expect(card).toMatchElement('[data-tooltip="Processo com mais de um cartão. Mostrando o primeiro."]', {
     visible: true,
   });
 });
