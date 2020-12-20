@@ -17,6 +17,7 @@ const Panel = styled(FloatingPanel)`
 `;
 
 const ChecklistItems = styled.ul`
+  list-style: none;
   margin: 15px 0 15px 0;
   padding: 0 10px 0 0;
   min-height: 60px;
