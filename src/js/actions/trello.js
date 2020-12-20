@@ -5,8 +5,7 @@ import * as store from 'model/store.js';
 import * as handler from 'model/handler.js';
 import * as alert from 'view/alert.js';
 
-const DEFAULT_SYNC_ERROR_MSG =
-  'Erro ao sincronizar com o Trello. Verifique se as credenciais informadas nas opções estão corretas. Caso positivo, tente novamente mais tarde, pois os servidores podem estar fora do ar. Se o problema persistir, entre em contato com o administrador da extensão.';
+const DEFAULT_SYNC_ERROR_MSG = `Erro ao sincronizar com o Trello. Verifique se as credenciais informadas nas <a href="#" class="btn-open-extension-option">opções</a> estão corretas. Caso positivo, tente novamente mais tarde, pois os servidores podem estar fora do ar. Se o problema persistir, entre em contato com o administrador da extensão.`;
 
 const doRefreshCards = (processNumber) => {
   return new Promise((resolve, reject) => {
@@ -194,7 +193,7 @@ export const addCardFor = (processNumber, newCardData) => {
       store.setIsAddingFor(null);
       console.log(error);
       alert.error(
-        'Ocorreu um erro ao adicionar o cartão. Verifique se você preencheu corretamente os dados do quadro e da lista padrão nas opções.\n\nImportante: certifique-se de que o quadro e a lista especificados existem na sua conta, pois a extensão não os cria automaticamente.'
+        'Ocorreu um erro ao adicionar o cartão. Verifique se você preencheu corretamente os dados do quadro e da lista padrão nas <a href="#" class="btn-open-extension-option">opções</a>.<br /><br /><u>Importante:</u> certifique-se de que o quadro e a lista especificados existem na sua conta, pois a extensão não os cria automaticamente.'
       );
     });
 };

@@ -1,21 +1,22 @@
-import swal from 'sweetalert';
+import Swal from 'sweetalert2';
 
 const alert = (type, text) => {
   const manifestInfo = chrome.runtime.getManifest();
-  swal({
+  Swal.fire({
     title: manifestInfo.name,
     icon: type,
-    text: text,
+    html: text,
   });
 };
 
 export const confirm = (text) => {
-  return swal({
+  return Swal.fire({
     title: 'Tem certeza?',
     text: text,
     icon: 'warning',
-    buttons: ['Não', 'Sim, remover!'],
-    dangerMode: true,
+    showCancelButton: true,
+    confirmButtonText: `Sim, remover!`,
+    cancelButtonText: `Não`,
   });
 };
 

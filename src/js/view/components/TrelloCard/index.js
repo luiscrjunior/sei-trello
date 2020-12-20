@@ -66,7 +66,7 @@ class TrelloCard extends React.Component {
   deleteCard() {
     if (!this.props.deleteCard) return;
     alert.confirm('Você deseja mesmo remover este cartão?').then((willDelete) => {
-      if (willDelete) this.props.deleteCard(this.props.cardID);
+      if (willDelete.isConfirmed) this.props.deleteCard(this.props.cardID);
     });
   }
 
