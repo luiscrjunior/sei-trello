@@ -119,8 +119,8 @@ const ChecklistPanelContainer = ({ cardID, onClose }) => {
     } else if (newPosition === tasks.length - 1) {
       position = 'bottom';
     } else {
-      const difference = (tasks[newPosition].pos - tasks[newPosition - 1].pos) / 2;
-      position = tasks[newPosition - 1].pos + difference;
+      const difference = (tasks[newPosition + 1].pos - tasks[newPosition].pos) / 2;
+      position = tasks[newPosition].pos + difference;
     }
     await udpateChecklistItemPosition(checklistItemID, position);
     await fetchChecklistItems();
