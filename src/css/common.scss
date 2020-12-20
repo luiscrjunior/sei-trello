@@ -36,7 +36,11 @@ svg[data-icon] > path {
   color: inherit;
 }
 
-.swal2-content a {
-  font-size: 1.125em;
+.swal2-html-container {
+  font-size: 16px;
+}
+
+.swal2-html-container a {
+  font-size: 16px;
   color: blue;
 }
