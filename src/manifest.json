@@ -27,7 +27,10 @@
     "persistent": false
   },
 
-  "options_page": "html/options.html",
+  "options_ui": {
+    "page": "html/options.html",
+    "open_in_tab": true
+  },
 
   "content_scripts": [
     {
@@ -52,7 +55,7 @@
     }
   ],
 
-  "permissions": ["storage"],
+  "permissions": ["*://api.trello.com/*", "storage"],
   "web_accessible_resources": ["vendor/webfonts/*"],
   "content_security_policy": "script-src 'self' 'unsafe-eval' https://www.google-analytics.com; object-src 'self'"
 }
