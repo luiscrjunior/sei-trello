@@ -2,6 +2,11 @@
 
 Todas mudanças do projeto estão documentadas neste arquivo.
 
+## [1.5] - 20/12/2020
+
+- Primeira versão para Firefox (experimental).
+- Correções de bugs.
+
 ## [1.4] - 06/12/2020
 
 - Possibilidade de editar checklist (primeira versão da funcionalidade).
