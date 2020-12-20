@@ -7,6 +7,13 @@
   "author": "Luís Carlos Reischak Júnior",
   "homepage_url": "https://luiscrjunior.github.io/sei-trello/",
 
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "sei-trello@luiscrjunior",
+      "strict_min_version": "52.0"
+    }
+  },
+
   "page_action": {
     "default_icon": "icons/icon.png"
   },
@@ -33,14 +40,14 @@
     {
       "matches": ["*://*.br/sei/*controlador.php?acao=procedimento_controlar*"],
       "run_at": "document_end",
-      "css": ["css/process_list.css", "vendor/css/fontawesome-all.css"],
+      "css": ["css/process_list.css"],
       "js": ["js/process_list.js"]
     },
     {
       "matches": ["*://*.br/sei/*controlador.php?acao=procedimento_visualizar*"],
       "run_at": "document_end",
       "all_frames": true,
-      "css": ["css/process_content.css", "vendor/css/fontawesome-all.css"],
+      "css": ["css/process_content.css"],
       "js": ["js/process_content.js"]
     }
   ],
