@@ -185,7 +185,6 @@ const Api = () => {
 
       /* createCard */
     } else if (method === 'post' && (match = path.match(/^cards$/))) {
-      console.log('createCard', typeof data);
       const cardData = createCard(data);
       return cardData;
 
