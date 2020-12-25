@@ -1,4 +1,7 @@
-import { parseISO, set, differenceInDays, format } from 'date-fns';
+import parseISO from 'date-fns/parseISO';
+import set from 'date-fns/set';
+import differenceInDays from 'date-fns/differenceInDays';
+import format from 'date-fns/format';
 
 export default (due, dueComplete) => {
   let dueDate = parseISO(due);

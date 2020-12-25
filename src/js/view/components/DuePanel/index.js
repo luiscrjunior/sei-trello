@@ -2,7 +2,7 @@ import React from 'react';
 
 import DatePicker, { registerLocale, setDefaultLocale } from 'react-datepicker';
 import ptBR from 'date-fns/locale/pt-BR';
-import { parseISO } from 'date-fns';
+import parseISO from 'date-fns/parseISO';
 
 import Switch from 'react-toggle-switch';
 

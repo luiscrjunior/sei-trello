@@ -1,5 +1,8 @@
 import due from 'view/components/TrelloCard/due.js';
-import { format, formatISO, addDays, subDays } from 'date-fns';
+import format from 'date-fns/format';
+import formatISO from 'date-fns/formatISO';
+import addDays from 'date-fns/addDays';
+import subDays from 'date-fns/subDays';
 
 test('due complete', () => {
   let dueDate = new Date();
