@@ -37,6 +37,7 @@ module.exports = {
       api: path.resolve(__dirname, 'src/js/api'),
       actions: path.resolve(__dirname, 'src/js/actions'),
       utils: path.resolve(__dirname, 'src/js/utils'),
+      tests: path.resolve(__dirname, 'src/__tests__'),
     },
   },
   module: {

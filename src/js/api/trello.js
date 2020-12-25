@@ -1,4 +1,15 @@
 import axios from 'axios';
+import MockedApi from 'tests/e2e/MockedTrelloApi';
+
+/**
+ * Se estivermos no ambiente teste (e2e ou playground),
+ * as requisições não alcançarão os servidores do Trello,
+ * mas sim serão administradas pelo MockedTrelloApi.
+ */
+if (process.env.NODE_ENV === 'test') {
+  window.MockedTrelloApi = MockedApi;
+  MockedApi.setup();
+}
 
 let APP_KEY = '';
 let APP_TOKEN = '';

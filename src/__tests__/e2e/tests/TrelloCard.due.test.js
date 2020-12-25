@@ -1,12 +1,18 @@
 import { format, formatISO, addDays, subDays } from 'date-fns';
-import api from './../api';
 
-import { setupBeforeAll, clickTrelloRefreshButton, matchTrelloCard, clickCardButton, matchPanel } from './utils.js';
+import {
+  MockedTrelloApi,
+  setupBeforeAll,
+  clickTrelloRefreshButton,
+  matchTrelloCard,
+  clickCardButton,
+  matchPanel,
+} from './utils.js';
 
-setupBeforeAll(api);
+setupBeforeAll();
 
 beforeEach(async () => {
-  api.clearCards();
+  MockedTrelloApi.clearCards();
   await clickTrelloRefreshButton();
 });
 
@@ -68,7 +74,7 @@ const DuePanel = (_card) => {
 };
 
 test('render card with due', async () => {
-  api.addCard({
+  MockedTrelloApi.addCard({
     id: 'card1',
     name: 'Cartão sem prazo',
     desc: 'SEI 00000.000001/2020-01',
@@ -81,37 +87,37 @@ test('render card with due', async () => {
 
   /* cartão com prazo para hoje */
   let dueDate = new Date();
-  api.updateCard('card1', { due: formatISO(dueDate), dueComplete: false });
+  MockedTrelloApi.updateCard('card1', { due: formatISO(dueDate), dueComplete: false });
   await clickCardButton(card, 'Atualizar Cartão');
   await expect(card).toMatchElement('span', { text: `${format(dueDate, 'dd/MM')} hoje` });
 
   /* cartão com prazo para amanhã */
   dueDate = addDays(new Date(), 1);
-  api.updateCard('card1', { due: formatISO(dueDate), dueComplete: false });
+  MockedTrelloApi.updateCard('card1', { due: formatISO(dueDate), dueComplete: false });
   await clickCardButton(card, 'Atualizar Cartão');
   await expect(card).toMatchElement('span', { text: `${format(dueDate, 'dd/MM')} amanhã` });
 
   /* cartão com prazo para daqui a 2 dias */
   dueDate = addDays(new Date(), 2);
-  api.updateCard('card1', { due: formatISO(dueDate), dueComplete: false });
+  MockedTrelloApi.updateCard('card1', { due: formatISO(dueDate), dueComplete: false });
   await clickCardButton(card, 'Atualizar Cartão');
   await expect(card).toMatchElement('span', { text: `${format(dueDate, 'dd/MM')} 2 dias` });
 
   /* cartão com prazo para ontem (atrasado) */
   dueDate = subDays(new Date(), 1);
-  api.updateCard('card1', { due: formatISO(dueDate), dueComplete: false });
+  MockedTrelloApi.updateCard('card1', { due: formatISO(dueDate), dueComplete: false });
   await clickCardButton(card, 'Atualizar Cartão');
   await expect(card).toMatchElement('span', { text: `${format(dueDate, 'dd/MM')} atrasado` });
 
   /* cartão com prazo para hoje e concluído */
   dueDate = new Date();
-  api.updateCard('card1', { due: formatISO(dueDate), dueComplete: true });
+  MockedTrelloApi.updateCard('card1', { due: formatISO(dueDate), dueComplete: true });
   await clickCardButton(card, 'Atualizar Cartão');
   await expect(card).toMatchElement('span', { text: `${format(dueDate, 'dd/MM')} concluído` });
 });
 
 test('render due panel', async () => {
-  api.addCard({
+  MockedTrelloApi.addCard({
     name: 'Cartão',
     desc: 'SEI 00000.000001/2020-01',
     due: null,
@@ -130,7 +136,7 @@ test('render due panel', async () => {
 });
 
 test('modify due date', async () => {
-  api.addCard({
+  MockedTrelloApi.addCard({
     name: 'Cartão',
     desc: 'SEI 00000.000001/2020-01',
     due: null,

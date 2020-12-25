@@ -1,8 +1,6 @@
-export const setupBeforeAll = (api) => {
+export const setupBeforeAll = () => {
   beforeAll(async () => {
     jest.setTimeout(60000);
-    await page.setRequestInterception(true);
-    page.on('request', api.handleRequests);
     await page.goto('http://localhost:3000', { waitUntil: 'networkidle2' });
   });
 };
@@ -48,3 +46,33 @@ export const getCSSProperty = async (elementHandle, propertyName) =>
     (node, propertyName) => window.getComputedStyle(node).getPropertyValue(propertyName),
     propertyName
   );
+
+export const MockedTrelloApi = (() => {
+  const clearCards = () => {
+    page.evaluate(() => window.MockedTrelloApi.clearCards());
+  };
+
+  const addCard = (card, cardID) => {
+    page.evaluate((card, cardID) => window.MockedTrelloApi.addCard(card, cardID), card, cardID);
+  };
+
+  const updateCard = (cardID, cardData) => {
+    page.evaluate((cardID, cardData) => window.MockedTrelloApi.updateCard(cardID, cardData), cardID, cardData);
+  };
+
+  const setBoards = (newBoards) => {
+    page.evaluate((newBoards) => window.MockedTrelloApi.setBoards(newBoards), newBoards);
+  };
+
+  const setLists = (newLists) => {
+    page.evaluate((newLists) => window.MockedTrelloApi.setLists(newLists), newLists);
+  };
+
+  return {
+    clearCards,
+    addCard,
+    updateCard,
+    setBoards,
+    setLists,
+  };
+})();

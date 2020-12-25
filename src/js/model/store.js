@@ -28,6 +28,10 @@ const triggerEvent = (type) => {
   });
 };
 
+export const clearEvents = () => {
+  events = [];
+};
+
 export const getData = () => {
   return data;
 };

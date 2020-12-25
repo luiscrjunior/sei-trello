@@ -1,6 +1,5 @@
-import api from './../api';
-
 import {
+  MockedTrelloApi,
   setupBeforeAll,
   clickTrelloRefreshButton,
   clickCardButton,
@@ -11,15 +10,15 @@ import {
   getCSSProperty,
 } from './utils.js';
 
-setupBeforeAll(api);
+setupBeforeAll();
 
 beforeEach(async () => {
-  api.clearCards();
+  MockedTrelloApi.clearCards();
   await clickTrelloRefreshButton();
 });
 
 test('render card', async () => {
-  api.addCard({
+  MockedTrelloApi.addCard({
     id: 'card1',
     name: 'Título do cartão',
     desc: 'SEI 00000.000001/2020-01',
@@ -78,7 +77,7 @@ test('render card', async () => {
 });
 
 test('render card with process not visualized', async () => {
-  api.addCard({
+  MockedTrelloApi.addCard({
     name: 'Processo não visualizado',
     desc: 'SEI 00000.000002/2020-02',
   });
@@ -93,7 +92,7 @@ test('render card with process not visualized', async () => {
 });
 
 test('render card with description', async () => {
-  api.addCard({
+  MockedTrelloApi.addCard({
     name: 'Cartão com descrição',
     desc: 'SEI 00000.000001/2020-01\nEsta é a descrição do cartão.',
   });
@@ -104,7 +103,7 @@ test('render card with description', async () => {
 });
 
 test('open and close panels', async () => {
-  api.addCard({
+  MockedTrelloApi.addCard({
     name: 'Título do cartão',
     desc: 'SEI 00000.000001/2020-01',
   });
@@ -138,7 +137,7 @@ test('open and close panels', async () => {
 });
 
 test('board and list panels', async () => {
-  api.setBoards([
+  MockedTrelloApi.setBoards([
     {
       id: 'board1',
       name: 'Quadro 1',
@@ -148,7 +147,7 @@ test('board and list panels', async () => {
       name: 'Quadro 2',
     },
   ]);
-  api.setLists([
+  MockedTrelloApi.setLists([
     {
       id: 'list1',
       name: 'Lista 1',
@@ -158,7 +157,7 @@ test('board and list panels', async () => {
       name: 'Lista 2',
     },
   ]);
-  api.addCard({
+  MockedTrelloApi.addCard({
     name: 'Título do cartão',
     desc: 'SEI 00000.000001/2020-01',
     board: {
@@ -229,7 +228,7 @@ test('board and list panels', async () => {
 });
 
 test('delete card', async () => {
-  api.addCard({
+  MockedTrelloApi.addCard({
     name: 'Título do cartão',
     desc: 'SEI 00000.000001/2020-01',
   });
@@ -243,7 +242,7 @@ test('delete card', async () => {
 });
 
 test('update card button', async () => {
-  api.addCard({
+  MockedTrelloApi.addCard({
     id: 'card1',
     name: 'Título do cartão',
     desc: 'SEI 00000.000001/2020-01',
@@ -255,7 +254,7 @@ test('update card button', async () => {
   await matchTrelloCardDescription(card, 'Clique para editar...');
   await expect(card).toMatchElement('div', { text: 'em Quadro 1 / Lista 1' });
 
-  api.updateCard('card1', {
+  MockedTrelloApi.updateCard('card1', {
     name: 'Outro título do cartão',
     desc: 'SEI 00000.000001/2020-01\nMinha descrição',
     board: {
@@ -276,11 +275,11 @@ test('update card button', async () => {
 });
 
 test('duplicated process warning', async () => {
-  api.addCard({
+  MockedTrelloApi.addCard({
     name: 'Título do cartão',
     desc: 'SEI 00000.000001/2020-01',
   });
-  api.addCard({
+  MockedTrelloApi.addCard({
     name: 'Outro título do cartão',
     desc: 'SEI 00000.000001/2020-01',
   });

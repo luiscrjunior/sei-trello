@@ -1,11 +1,16 @@
-import api from './../api';
+import {
+  MockedTrelloApi,
+  setupBeforeAll,
+  clickTrelloRefreshButton,
+  matchTrelloCard,
+  clickCardButton,
+  matchPanel,
+} from './utils.js';
 
-import { setupBeforeAll, clickTrelloRefreshButton, matchTrelloCard, clickCardButton, matchPanel } from './utils.js';
-
-setupBeforeAll(api);
+setupBeforeAll();
 
 beforeEach(async () => {
-  api.clearCards();
+  MockedTrelloApi.clearCards();
   await clickTrelloRefreshButton();
 });
 
@@ -54,7 +59,7 @@ const dragAndDrop = async (origin, destination) => {
 };
 
 test('render card without checklists', async () => {
-  api.addCard({
+  MockedTrelloApi.addCard({
     id: 'card1',
     name: 'Título do cartão',
     desc: 'SEI 00000.000001/2020-01',
@@ -70,7 +75,7 @@ test('render card without checklists', async () => {
 });
 
 test('render card with checklists', async () => {
-  api.addCard({
+  MockedTrelloApi.addCard({
     id: 'card1',
     name: 'Título do cartão',
     desc: 'SEI 00000.000001/2020-01',
@@ -113,7 +118,7 @@ test('render card with checklists', async () => {
 });
 
 test('add checklists', async () => {
-  api.addCard({
+  MockedTrelloApi.addCard({
     id: 'card1',
     name: 'Título do cartão',
     desc: 'SEI 00000.000001/2020-01',
@@ -135,7 +140,7 @@ test('add checklists', async () => {
 });
 
 test('update and remove checklist', async () => {
-  api.addCard({
+  MockedTrelloApi.addCard({
     id: 'card1',
     name: 'Título do cartão',
     desc: 'SEI 00000.000001/2020-01',
@@ -184,7 +189,7 @@ test('update and remove checklist', async () => {
 });
 
 test('change checklists positions', async () => {
-  api.addCard({
+  MockedTrelloApi.addCard({
     id: 'card1',
     name: 'Título do cartão',
     desc: 'SEI 00000.000001/2020-01',

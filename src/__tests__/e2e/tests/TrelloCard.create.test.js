@@ -1,6 +1,5 @@
-import api from './../api';
-
 import {
+  MockedTrelloApi,
   setupBeforeAll,
   clickTrelloRefreshButton,
   matchTrelloCard,
@@ -8,10 +7,10 @@ import {
   matchTrelloCardDescription,
 } from './utils.js';
 
-setupBeforeAll(api);
+setupBeforeAll();
 
 beforeEach(async () => {
-  api.clearCards();
+  MockedTrelloApi.clearCards();
   await clickTrelloRefreshButton();
 });
 

@@ -1,6 +1,5 @@
-import api from './../api';
-
 import {
+  MockedTrelloApi,
   setupBeforeAll,
   clickTrelloRefreshButton,
   matchTrelloCard,
@@ -8,15 +7,15 @@ import {
   matchTrelloCardDescription,
 } from './utils.js';
 
-setupBeforeAll(api);
+setupBeforeAll();
 
 beforeEach(async () => {
-  api.clearCards();
+  MockedTrelloApi.clearCards();
   await clickTrelloRefreshButton();
 });
 
 test('update card title and description', async () => {
-  api.addCard({
+  MockedTrelloApi.addCard({
     name: 'Título do cartão',
     desc: 'SEI 00000.000001/2020-01',
   });
@@ -45,7 +44,7 @@ test('update card title and description', async () => {
 });
 
 test('update board and list', async () => {
-  api.setBoards([
+  MockedTrelloApi.setBoards([
     {
       id: 'board1',
       name: 'Quadro 1',
@@ -55,7 +54,7 @@ test('update board and list', async () => {
       name: 'Quadro 2',
     },
   ]);
-  api.setLists([
+  MockedTrelloApi.setLists([
     {
       id: 'list1',
       name: 'Lista 1',
@@ -65,7 +64,7 @@ test('update board and list', async () => {
       name: 'Lista 2',
     },
   ]);
-  api.addCard({
+  MockedTrelloApi.addCard({
     name: 'Título do cartão',
     desc: 'SEI 00000.000001/2020-01',
     board: {

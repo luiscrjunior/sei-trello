@@ -1,11 +1,9 @@
 import React, { useState, useCallback } from 'react';
 import ReactDOM from 'react-dom';
-
 import components from './components';
+import { App, Header, Content, Button } from './styles';
 
 if (module.hot) module.hot.accept();
-
-import { App, Header, Content, Button } from './styles';
 
 const Playground = () => {
   const [componentName, setComponentName] = useState(null);

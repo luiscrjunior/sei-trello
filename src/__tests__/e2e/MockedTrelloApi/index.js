@@ -1,3 +1,6 @@
+import axios from 'axios';
+import MockAdapter from 'axios-mock-adapter';
+
 import initialCards from './data/cards.js';
 import initialBoards from './data/boards.js';
 import initialLists from './data/lists.js';
@@ -6,12 +9,20 @@ const Api = () => {
   let cards = [...initialCards];
   let boards = [...initialBoards];
   let lists = [...initialLists];
+  let delay = 0;
 
-  const jsonResponse = (data) => ({
-    status: 200,
-    content: 'application/json',
-    body: JSON.stringify(data),
-  });
+  const setup = () => {
+    const mock = new MockAdapter(axios, { onNoMatch: 'passthrough' });
+    const regex = /https:\/\/api.trello.com\/1\/(.*)/;
+    mock.onAny(regex).reply(async (config) => {
+      const { method, url, params, data } = config;
+      const path = url.match(regex)[1];
+      const response = handleRequests(method, path, params, data ? JSON.parse(data) : {});
+      return new Promise((resolve) => setTimeout(() => resolve([200, response]), delay));
+    });
+  };
+
+  const setDelay = (_delay) => (delay = _delay);
 
   const emptyCardData = (cardID) => ({
     id: cardID,
@@ -67,7 +78,7 @@ const Api = () => {
   };
 
   const deleteCard = (cardID) => {
-    cards = cards.filter((card) => card.id === cardID);
+    cards = cards.filter((card) => card.id !== cardID);
     return true;
   };
 
@@ -145,109 +156,94 @@ const Api = () => {
     return null;
   };
 
-  const handleRequests = (request) => {
+  const handleRequests = (method, path, params = {}, data = {}) => {
     let match = null;
 
     /* searchCards */
-    if (/api\.trello\.com\/1\/search\?.*modelTypes=cards/.test(request.url())) {
-      request.respond(jsonResponse({ cards: cards }));
+    if (method === 'get' && path.match(/^search$/) && params.modelTypes === 'cards') {
+      return { cards: cards };
 
       /* searchAllBoards and searchBoardsByName */
-    } else if (/api\.trello\.com\/1\/search\?.*modelTypes=boards/.test(request.url())) {
-      request.respond(jsonResponse({ boards: boards }));
+    } else if (method === 'get' && path.match(/^search$/) && params.modelTypes === 'boards') {
+      return { boards: boards };
 
       /* getListsFromBoard */
-    } else if (/api\.trello\.com\/1\/boards\/.*lists=open/.test(request.url())) {
-      request.respond(jsonResponse({ lists: lists }));
+    } else if (method === 'get' && path.match(/^boards\/[^/]+$/) && params.lists === 'open') {
+      return { lists: lists };
 
       /* getCardData */
-    } else if (request.method() === 'GET' && (match = request.url().match(/api\.trello\.com\/1\/cards\/([^/]+)\?/))) {
+    } else if (method === 'get' && (match = path.match(/^cards\/([^/]+)$/))) {
       const [, cardID] = match;
-      request.respond(jsonResponse({ ...getCardById(cardID) }));
+      return { ...getCardById(cardID) };
 
       /* updateCard */
-    } else if (request.method() === 'PUT' && (match = request.url().match(/api\.trello\.com\/1\/cards\/([^/]+)$/))) {
+    } else if (method === 'put' && (match = path.match(/^cards\/([^/]+)$/))) {
       const [, cardID] = match;
       // eslint-disable-next-line no-unused-vars
-      const { key, token, ...data } = JSON.parse(request.postData());
-      request.respond(jsonResponse({ ...updateCardData(cardID, data) }));
+      const { key, token, ...cardData } = data;
+      return { ...updateCardData(cardID, cardData) };
 
       /* createCard */
-    } else if (request.method() === 'POST' && (match = request.url().match(/api\.trello\.com\/1\/cards/))) {
-      // eslint-disable-next-line no-unused-vars
-      const data = JSON.parse(request.postData());
+    } else if (method === 'post' && (match = path.match(/^cards$/))) {
+      console.log('createCard', typeof data);
       const cardData = createCard(data);
-      request.respond(jsonResponse(cardData));
+      return cardData;
 
       /* deleteCard */
-    } else if (request.method() === 'DELETE' && (match = request.url().match(/api\.trello\.com\/1\/cards\/(.+)/))) {
+    } else if (method === 'delete' && (match = path.match(/^cards\/([^/]+)$/))) {
       const [, cardID] = match;
       deleteCard(cardID);
-      request.respond(jsonResponse({}));
+      return {};
 
       /* getCardChecklistData */
     } else if (
-      request.method() === 'GET' &&
-      (match = request.url().match(/api\.trello\.com\/1\/cards\/(.+)\/checklists\?.*checkItems=all/))
+      method === 'get' &&
+      (match = path.match(/^cards\/([^/]+)\/checklists$/)) &&
+      params.checkItems === 'all'
     ) {
       const [, cardID] = match;
-      request.respond(jsonResponse(getCardById(cardID).checklists));
+      return getCardById(cardID).checklists;
 
       /* createCardChecklist */
-    } else if (request.method() === 'POST' && (match = request.url().match(/api\.trello\.com\/1\/checklists$/))) {
+    } else if (method === 'post' && (match = path.match(/^checklists$/))) {
       // eslint-disable-next-line no-unused-vars
-      const data = JSON.parse(request.postData());
       const checklist = createChecklist(data);
-      request.respond(jsonResponse(checklist));
+      return checklist;
 
       /* createCardChecklistItem */
-    } else if (
-      request.method() === 'POST' &&
-      (match = request.url().match(/api\.trello\.com\/1\/checklists\/(.+)\/checkItems$/))
-    ) {
+    } else if (method === 'post' && (match = path.match(/^checklists\/([^/]+)\/checkItems$/))) {
       const [, checklistID] = match;
-      // eslint-disable-next-line no-unused-vars
-      const data = JSON.parse(request.postData());
       const checkItem = addChecklistItem(checklistID, data);
-      request.respond(jsonResponse(checkItem));
+      return checkItem;
 
       /* updateCardChecklistItem */
-    } else if (
-      request.method() === 'PUT' &&
-      (match = request.url().match(/api\.trello\.com\/1\/cards\/(.+)\/checkItem\/(.+)$/))
-    ) {
+    } else if (method === 'put' && (match = path.match(/^cards\/([^/]+)\/checkItem\/([^/]+)$/))) {
       const [, cardID, checkItemID] = match;
       // eslint-disable-next-line no-unused-vars
-      const data = JSON.parse(request.postData());
       const checkItem = updateChecklistItem(cardID, checkItemID, data);
-      request.respond(jsonResponse(checkItem));
+      return checkItem;
 
       /* deleteCardChecklistItem */
-    } else if (
-      request.method() === 'DELETE' &&
-      (match = request.url().match(/api\.trello\.com\/1\/checklists\/(.+)\/checkItems\/(.+)\?/))
-    ) {
+    } else if (method === 'delete' && (match = path.match(/^checklists\/([^/]+)\/checkItems\/([^/]+)$/))) {
       const [, checklistID, checkItemID] = match;
       deleteChecklistItem(checklistID, checkItemID);
-      request.respond(jsonResponse({}));
+      return {};
 
       /* deleteCardChecklist */
-    } else if (
-      request.method() === 'DELETE' &&
-      (match = request.url().match(/api\.trello\.com\/1\/checklists\/([^/]+)\?/))
-    ) {
+    } else if (method === 'delete' && (match = path.match(/^checklists\/([^/]+)$/))) {
       const [, checklistID] = match;
       deleteCardChecklist(checklistID);
-      request.respond(jsonResponse({}));
+      return {};
 
       /* outros requests */
     } else {
-      request.continue();
+      return null;
     }
   };
 
   return {
-    handleRequests: handleRequests,
+    setup: setup,
+    setDelay: setDelay,
     clearCards: () => (cards = []),
     addCard: (card, cardID = 'card1') =>
       (cards = [
