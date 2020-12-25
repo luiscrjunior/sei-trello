@@ -1,5 +1,4 @@
 import axios from 'axios';
-import MockedApi from 'tests/e2e/MockedTrelloApi';
 
 /**
  * Se estivermos no ambiente teste (e2e ou playground),
@@ -7,6 +6,7 @@ import MockedApi from 'tests/e2e/MockedTrelloApi';
  * mas sim serão administradas pelo MockedTrelloApi.
  */
 if (process.env.NODE_ENV === 'test') {
+  const MockedApi = require('tests/e2e/MockedTrelloApi').default;
   window.MockedTrelloApi = MockedApi;
   MockedApi.setup();
 }
