@@ -10,6 +10,7 @@ module.exports = {
         'view/(.*)': '<rootDir>/src/js/view/$1',
         'api/(.*)': '<rootDir>/src/js/api/$1',
         'model/(.*)': '<rootDir>/src/js/model/$1',
+        'tests/(.*)': '<rootDir>/src/__tests__/$1',
       },
       testMatch: ['**/__tests__/**/*.test.js'],
       testPathIgnorePatterns: ['/node_modules/', 'src/__tests__/e2e'],
