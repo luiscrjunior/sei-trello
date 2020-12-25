@@ -1,4 +1,5 @@
-import { merge, isEqual } from 'lodash';
+import merge from 'lodash/merge';
+import isEqual from 'lodash/isEqual';
 
 import * as api from 'api/trello.js';
 import * as store from 'model/store.js';

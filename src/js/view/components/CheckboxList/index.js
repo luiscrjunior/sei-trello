@@ -1,7 +1,8 @@
 import React from 'react';
 import styles from './styles.scss';
 import classNames from 'classnames';
-import { isEqual, isArray } from 'lodash';
+import isEqual from 'lodash/isEqual';
+import isArray from 'lodash/isArray';
 
 import { CheckIcon } from './styles.js';
 

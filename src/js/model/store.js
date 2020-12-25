@@ -1,4 +1,5 @@
-import { isEqual, merge } from 'lodash';
+import isEqual from 'lodash/isEqual';
+import merge from 'lodash/merge';
 
 let initialData = {
   isLoading: false,

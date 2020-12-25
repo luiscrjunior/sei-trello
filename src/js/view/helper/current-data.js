@@ -1,4 +1,4 @@
-import { isEqual } from 'lodash';
+import isEqual from 'lodash/isEqual';
 import * as store from 'model/store.js';
 import * as actions from 'actions/trello.js';
 

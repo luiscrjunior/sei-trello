@@ -1,4 +1,4 @@
-import { isEqual } from 'lodash';
+import isEqual from 'lodash/isEqual';
 
 const isFilterPassed = (filterChecks) => {
   for (let k in filterChecks) {
