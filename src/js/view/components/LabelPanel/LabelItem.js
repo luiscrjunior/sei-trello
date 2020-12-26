@@ -31,6 +31,7 @@ const SelectableLabel = styled.a`
 
   &:hover {
     box-shadow: -8px 0 ${(props) => colors[props.$color][1]};
+    text-decoration: none !important;
   }
 `;
 
