@@ -35,14 +35,15 @@ class TrelloFilterButton extends React.Component {
 
         {this.props.hasFilter && <span className={styles['filter-message']}>ligado</span>}
 
-        <FilterPanel
-          className={classNames(styles['filter-panel'], { hide: !this.state.isOpen })}
-          currentLabels={this.props.currentLabels}
-          currentLocations={this.props.currentLocations}
-          onClose={this.onPanelClose.bind(this)}
-          filter={this.props.filter}
-          onFilterChange={this.onFilterChange.bind(this)}
-        ></FilterPanel>
+        {this.state.isOpen && (
+          <FilterPanel
+            currentLabels={this.props.currentLabels}
+            currentLocations={this.props.currentLocations}
+            onClose={this.onPanelClose.bind(this)}
+            filter={this.props.filter}
+            onFilterChange={this.onFilterChange.bind(this)}
+          />
+        )}
       </div>
     );
   }

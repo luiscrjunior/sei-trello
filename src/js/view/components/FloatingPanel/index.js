@@ -1,54 +1,45 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import styles from './styles.scss';
-import classNames from 'classnames';
+import React, { useRef, useCallback, useEffect } from 'react';
 
-class FloatingPanel extends React.Component {
-  constructor(props) {
-    super(props);
-    this.onBGClick = this.onBGClick.bind(this);
-  }
+import { Panel, Content, Header, Title, CloseButton, BackButton } from './styles.js';
 
-  onClose(e) {
-    e.preventDefault();
-    if (!this.props.onClose) return;
-    this.props.onClose();
-  }
+const FloatingPanel = ({ title, onClose, onBack, className, showBackButton, children }) => {
+  const panel = useRef(null);
 
-  onBGClick(e) {
-    const clickedElement = e.target;
-    const panel = ReactDOM.findDOMNode(this.panel);
-    if (!panel) return;
-    const wrapper = panel.closest('.btn-panel-trigger') || panel;
-    const elementInsideWrapper = wrapper.contains(clickedElement);
-    if (!elementInsideWrapper && this.props.onClose) this.props.onClose();
-  }
+  const onBGClick = useCallback(
+    (e) => {
+      const clickedElement = e.target;
+      if (!panel.current) return;
+      const wrapper = panel.current.closest('.btn-panel-trigger') || panel.current;
+      const elementInsideWrapper = wrapper.contains(clickedElement);
+      if (!elementInsideWrapper && onClose) onClose();
+    },
+    [onClose]
+  );
 
-  componentDidMount() {
-    document.querySelector('body').addEventListener('mousedown', this.onBGClick);
-  }
+  useEffect(() => {
+    document.querySelector('body').addEventListener('mousedown', onBGClick);
+    return () => {
+      document.querySelector('body').removeEventListener('mousedown', onBGClick);
+    };
+  }, [onBGClick]);
 
-  componentWillUnmount() {
-    document.querySelector('body').removeEventListener('mousedown', this.onBGClick);
-  }
+  return (
+    <Panel ref={panel} className={className}>
+      <Header>
+        <BackButton onClick={onBack} visible={showBackButton} />
+        <Title>{title}</Title>
+        <CloseButton onClick={onClose} visible={true} />
+      </Header>
+      <Content>{children}</Content>
+    </Panel>
+  );
+};
 
-  render() {
-    return (
-      <div
-        className={classNames(styles.panel, this.props.className)}
-        ref={(el) => {
-          this.panel = el;
-        }}
-      >
-        {this.props.title && <span className={styles.title}>{this.props.title}</span>}
-
-        <a href="#" className={styles['btn-close']} onClick={this.onClose.bind(this)}>
-          &times;
-        </a>
-        <div className={styles.content}>{this.props.children}</div>
-      </div>
-    );
-  }
-}
+FloatingPanel.defaultProps = {
+  showBackButton: false,
+  title: '',
+  className: null,
+  onClose: null,
+};
 
 export default FloatingPanel;

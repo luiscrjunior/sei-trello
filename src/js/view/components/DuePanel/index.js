@@ -9,11 +9,12 @@ import Switch from 'react-toggle-switch';
 import classNames from 'classnames';
 
 import Button from 'view/components/Button';
-import FloatingPanel from 'view/components/FloatingPanel';
 
 import 'react-datepicker/dist/react-datepicker.css';
 import 'react-toggle-switch/dist/css/switch.min.css';
 import styles from './styles.scss';
+
+import { Panel } from './styles.js';
 
 registerLocale('ptBR', ptBR);
 setDefaultLocale('ptBR');
@@ -52,7 +53,7 @@ class DuePanel extends React.Component {
 
   render() {
     return (
-      <FloatingPanel className={styles.panel} title="Data de entrega" onClose={this.props.onClose}>
+      <Panel title="Data de entrega" onClose={this.props.onClose}>
         <div className={styles.wrapper}>
           <DatePicker
             selected={this.state.selectedDue}
@@ -73,7 +74,7 @@ class DuePanel extends React.Component {
             Remover
           </Button>
         </div>
-      </FloatingPanel>
+      </Panel>
     );
   }
 }

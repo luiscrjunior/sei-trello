@@ -1,5 +1,12 @@
 import React from 'react';
 import FilterPanel from 'view/components/FilterPanel';
+import styled from 'styled-components';
+
+const Content = styled.div`
+  left: -200px;
+  top: -300px;
+  position: relative;
+`;
 
 const filter = {
   process: 'WITH_TRELLO_CARD',
@@ -18,22 +25,12 @@ const labels = [
   },
 ];
 
-// /*setTimeout(() => {
-//   render([
-//     {
-//       color: 'yellow',
-//       label: 'importante',
-//     },
-//   ], {
-//     'process': null,
-//     'labels': null,
-//     'due': null,
-//   });
-// }, 1000);
-// */
-
 const FilterPanelPlayground = () => {
-  return <FilterPanel currentLabels={labels} filter={filter}></FilterPanel>;
+  return (
+    <Content>
+      <FilterPanel currentLabels={labels} filter={filter}></FilterPanel>
+    </Content>
+  );
 };
 
 export default FilterPanelPlayground;

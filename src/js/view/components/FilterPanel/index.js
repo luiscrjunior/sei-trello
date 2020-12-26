@@ -1,6 +1,7 @@
 import React from 'react';
-import FloatingPanel from 'view/components/FloatingPanel';
 import CheckboxList from 'view/components/CheckboxList';
+
+import { Panel } from './styles.js';
 
 const defaultOptions = {
   location: [],
@@ -95,7 +96,7 @@ class FilterPanel extends React.Component {
     const filter = this.props.filter || defaultFilter;
 
     return (
-      <FloatingPanel title="Filtros" className={this.props.className} onClose={this.onClose.bind(this)}>
+      <Panel title="Filtros" onClose={this.onClose.bind(this)}>
         <CheckboxList
           selected={filter.locations}
           options={this.state.options.locations}
@@ -120,7 +121,7 @@ class FilterPanel extends React.Component {
           options={this.state.options.processes}
           onClick={(checked, key) => this.onFilterChange('processes', checked, key)}
         />
-      </FloatingPanel>
+      </Panel>
     );
   }
 }
