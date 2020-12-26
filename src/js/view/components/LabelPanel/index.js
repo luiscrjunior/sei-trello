@@ -53,7 +53,20 @@ const LabelPanelContainer = ({ boardID, cardID, cardLabels, onClose }) => {
   };
 
   const onEdit = () => {};
-  const onDelete = () => {};
+
+  const onDelete = async (labelID) => {
+    setLoading(true);
+    try {
+      await api.deleteLabel(labelID);
+      await actions.doRefreshCardsWithID(cardID);
+      await fetchLabels();
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      alert.error('Não foi possível criar a etiqueta.');
+      onClose();
+    }
+  };
 
   const fetchLabels = useCallback(async () => {
     setLoading(true);

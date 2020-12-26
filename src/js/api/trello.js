@@ -207,3 +207,10 @@ export const createLabel = (boardID, opts) => {
   });
   return axios.post(url, params);
 };
+
+/* deletar um label */
+export const deleteLabel = (labelID) => {
+  const url = `https://api.trello.com/1/labels/${labelID}`;
+  let params = Object.assign({}, genAuthData());
+  return axios.delete(url, { params: params });
+};

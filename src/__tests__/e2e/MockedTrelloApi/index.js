@@ -172,15 +172,25 @@ const Api = () => {
   };
 
   const createLabel = (labelData) => {
+    const labelID = `label${labels.length + 1}`;
     labels = [
       ...labels,
       {
-        id: `label${labels.length + 1}`,
+        id: labelID,
         name: labelData.name,
         color: labelData.color,
       },
     ];
+    return labelID;
   };
+
+  const deleteLabel = (labelID) => {
+    labels = labels.filter((label) => label.id !== labelID);
+    for (let card of cards) {
+      removeLabelFromCard(card.id, labelID);
+    }
+  };
+
   const handleRequests = (method, path, params = {}, data = {}) => {
     let match = null;
 
@@ -278,7 +288,12 @@ const Api = () => {
 
       /* createLabel */
     } else if (method === 'post' && (match = path.match(/^labels$/))) {
-      createLabel(data);
+      return { id: createLabel(data) };
+
+      /* deleteLabel */
+    } else if (method === 'delete' && (match = path.match(/^labels\/([^/]+)$/))) {
+      const [, labelID] = match;
+      deleteLabel(labelID);
       return {};
 
       /* outros requests */
