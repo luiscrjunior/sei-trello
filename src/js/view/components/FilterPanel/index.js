@@ -53,7 +53,7 @@ class FilterPanel extends React.Component {
       currentLabels.map((newLabel) => {
         return {
           key: newLabel,
-          label: newLabel.label,
+          label: newLabel.name,
         };
       })
     );

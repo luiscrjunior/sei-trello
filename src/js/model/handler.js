@@ -24,12 +24,7 @@ export const getCards = (cardList) => {
         description: description.trim(),
         due: cardFromTrello.due,
         dueComplete: cardFromTrello.dueComplete,
-        labels: cardFromTrello.labels.map((label) => {
-          return {
-            color: label.color,
-            label: label.name,
-          };
-        }),
+        labels: [...cardFromTrello.labels],
         location: {
           board: cardFromTrello.board
             ? {
