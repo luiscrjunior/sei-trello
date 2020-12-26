@@ -2,6 +2,11 @@
 
 Todas mudanças do projeto estão documentadas neste arquivo.
 
+## [1.6] - 26/12/2020
+
+- Possibilidade de selecionar, criar e editar etiquetas de dentro do SEI.
+- Correções de bugs.
+
 ## [1.5] - 20/12/2020
 
 - Primeira versão para Firefox (experimental).
