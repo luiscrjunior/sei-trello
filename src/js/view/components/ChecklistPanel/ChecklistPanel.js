@@ -4,7 +4,6 @@ import ChecklistItem from './ChecklistItem';
 import styled from 'styled-components';
 
 import { Buttons, Button } from 'view/components/EditableParagraphV2/styles';
-import LoadingOverlay from './LoadingOverlay';
 
 import dragula from 'dragula';
 
@@ -79,9 +78,7 @@ const ChecklistPanel = ({ tasks, loading, onChange, onChangeOrder, onRemove, onA
   };
 
   return (
-    <Panel title="Checklist" onClose={onClose}>
-      {loading && <LoadingOverlay />}
-
+    <Panel title="Checklist" onClose={onClose} loading={loading}>
       <ChecklistItems ref={list} onClick={onListClick}>
         {tasks.map((task) => (
           <ChecklistItem key={task.id} task={task} onChange={onChange} onRemove={onRemove} />

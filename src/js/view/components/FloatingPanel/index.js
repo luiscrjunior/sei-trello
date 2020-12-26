@@ -2,7 +2,9 @@ import React, { useRef, useCallback, useEffect } from 'react';
 
 import { Panel, Content, Header, Title, CloseButton, BackButton } from './styles.js';
 
-const FloatingPanel = ({ title, onClose, onBack, className, showBackButton, children }) => {
+import LoadingOverlay from './LoadingOverlay';
+
+const FloatingPanel = ({ loading, title, onClose, onBack, className, showBackButton, children }) => {
   const panel = useRef(null);
 
   const onBGClick = useCallback(
@@ -30,12 +32,16 @@ const FloatingPanel = ({ title, onClose, onBack, className, showBackButton, chil
         <Title>{title}</Title>
         <CloseButton onClick={onClose} visible={true} />
       </Header>
-      <Content>{children}</Content>
+      <Content>
+        {loading && <LoadingOverlay />}
+        {children}
+      </Content>
     </Panel>
   );
 };
 
 FloatingPanel.defaultProps = {
+  loading: false,
   showBackButton: false,
   title: '',
   className: null,
