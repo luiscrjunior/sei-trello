@@ -8,13 +8,14 @@ import DuePanel from 'view/components/DuePanel';
 import EditableParagraph from 'view/components/EditableParagraph';
 import CardLocationSelector from 'view/components/CardLocationSelector';
 import ChecklistPanel from 'view/components/ChecklistPanel';
+import LabelPanel from 'view/components/LabelPanel';
 
 import * as alert from 'view/alert.js';
 
 import { OptionIcon, FooterIcon, HasAnotherCardIndicator } from './styles.js';
 
 import { faClock, faTrashAlt } from '@fortawesome/free-regular-svg-icons';
-import { faSyncAlt, faExternalLinkAlt, faCheckSquare, faAlignLeft } from '@fortawesome/free-solid-svg-icons';
+import { faSyncAlt, faExternalLinkAlt, faCheckSquare, faAlignLeft, faTags } from '@fortawesome/free-solid-svg-icons';
 
 class TrelloCard extends React.Component {
   constructor(props) {
@@ -24,6 +25,7 @@ class TrelloCard extends React.Component {
       isEditingDescription: false,
       isEditingDue: false,
       isEditingChecklist: false,
+      isEditingLabel: false,
       processTooltip: {
         show: false,
         x: 0,
@@ -31,7 +33,9 @@ class TrelloCard extends React.Component {
       },
       isHovering: false,
     };
+    this.refreshCard = this.refreshCard.bind(this);
     this.closeChecklistPanel = this.closeChecklistPanel.bind(this);
+    this.closeLabelPanel = this.closeLabelPanel.bind(this);
   }
 
   showTooltip(e) {
@@ -60,7 +64,7 @@ class TrelloCard extends React.Component {
     if (!this.props.refreshCard) return;
     if (this.props.isLoading) return;
     this.props.refreshCard(this.props.cardID);
-    e.preventDefault();
+    if (e) e.preventDefault();
   }
 
   deleteCard() {
@@ -109,6 +113,7 @@ class TrelloCard extends React.Component {
       isHovering: false,
       isEditingDue: false /* close due panel on hover out */,
       isEditingChecklist: false /* close checklist panel on hover out */,
+      isEditingLabel: false /* close label panel on hover out */,
     });
   }
 
@@ -116,6 +121,7 @@ class TrelloCard extends React.Component {
     this.setState({
       isEditingDue: true,
       isEditingChecklist: false,
+      isEditingLabel: false,
     });
     e.stopPropagation();
     e.preventDefault();
@@ -126,7 +132,7 @@ class TrelloCard extends React.Component {
   }
 
   openChecklistPanel(e) {
-    this.setState({ isEditingChecklist: true, isEditingDue: false });
+    this.setState({ isEditingChecklist: true, isEditingLabel: false, isEditingDue: false });
     e.stopPropagation();
     e.preventDefault();
   }
@@ -135,13 +141,23 @@ class TrelloCard extends React.Component {
     this.setState({ isEditingChecklist: false });
   }
 
+  openLabelPanel(e) {
+    this.setState({ isEditingLabel: true, isEditingChecklist: false, isEditingDue: false });
+    e.stopPropagation();
+    e.preventDefault();
+  }
+
+  closeLabelPanel() {
+    this.setState({ isEditingLabel: false });
+  }
+
   renderLabels() {
     if (this.props.labels.length === 0) return null;
     let uiLabels = [];
     this.props.labels.forEach((label, idx) => {
       uiLabels.push(
         <span key={idx} className={classNames(styles.label, styles['label-' + label.color] || styles.default)}>
-          {label.label}
+          {label.name}
         </span>
       );
     });
@@ -245,7 +261,19 @@ class TrelloCard extends React.Component {
           <ChecklistPanel cardID={this.props.cardID} onClose={this.closeChecklistPanel} />
         )}
 
+        {this.state.isEditingLabel && (
+          <LabelPanel
+            cardID={this.props.cardID}
+            boardID={this.props.location.board.id}
+            cardLabels={this.props.labels}
+            onClose={this.closeLabelPanel}
+          />
+        )}
+
         <div className={styles.options}>
+          <a data-tooltip="Etiquetas" target="#" onClick={this.openLabelPanel.bind(this)}>
+            <OptionIcon icon={faTags} />
+          </a>
           <a data-tooltip="Checklist" target="#" onClick={this.openChecklistPanel.bind(this)}>
             <OptionIcon icon={faCheckSquare} $highlight={this.props.hasChecklist} />
           </a>
@@ -255,7 +283,7 @@ class TrelloCard extends React.Component {
           <a data-tooltip="Remover Cartão" target="#" onClick={this.deleteCard.bind(this)}>
             <OptionIcon icon={faTrashAlt} />
           </a>
-          <a data-tooltip="Atualizar Cartão" target="#" onClick={this.refreshCard.bind(this)}>
+          <a data-tooltip="Atualizar Cartão" target="#" onClick={this.refreshCard}>
             <OptionIcon icon={faSyncAlt} />
           </a>
           <a data-tooltip="Abrir no Trello" target="_blank" rel="noreferrer" href={this.props.url}>

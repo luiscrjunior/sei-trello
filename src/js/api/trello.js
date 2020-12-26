@@ -169,3 +169,30 @@ export const deleteCardChecklist = (checklistID) => {
   let params = Object.assign({}, genAuthData());
   return axios.delete(url, { params: params });
 };
+
+/* obter labels de um quadro */
+export const getBoardLabels = (boardID) => {
+  const url = `https://api.trello.com/1/boards/${boardID}/labels`;
+
+  let params = Object.assign({}, genAuthData(), {
+    limit: 1000,
+  });
+
+  return axios.get(url, { params: params });
+};
+
+/* adicionar label a um cartão  */
+export const addLabelToCard = (cardID, labelID) => {
+  const url = `https://api.trello.com/1/cards/${cardID}/idLabels`;
+  let params = Object.assign({}, genAuthData(), {
+    value: labelID,
+  });
+  return axios.post(url, params);
+};
+
+/* remover um label de um cartão  */
+export const removeLabelFromCard = (cardID, labelID) => {
+  const url = `https://api.trello.com/1/cards/${cardID}/idLabels/${labelID}`;
+  let params = Object.assign({}, genAuthData());
+  return axios.delete(url, { params: params });
+};

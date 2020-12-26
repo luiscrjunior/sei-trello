@@ -22,7 +22,7 @@ const doRefreshCards = (processNumber) => {
   });
 };
 
-const doRefreshCardsWithID = (cardID) => {
+export const doRefreshCardsWithID = (cardID) => {
   return new Promise((resolve, reject) => {
     api
       .getCardData(cardID)

@@ -59,12 +59,6 @@ const TrelloCardPlayground = () => {
     window.MockedTrelloApi.addCard({
       name: 'Nome do cartão',
       desc: 'SEI 00000.000001/2020-01\nDescrição do cartão',
-      labels: [
-        {
-          color: 'red',
-          name: 'urgente',
-        },
-      ],
     });
     actions.refreshCards();
     store.onDataChanged(() => updateCard());

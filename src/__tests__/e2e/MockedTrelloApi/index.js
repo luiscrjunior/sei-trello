@@ -4,11 +4,13 @@ import MockAdapter from 'axios-mock-adapter';
 import initialCards from './data/cards.js';
 import initialBoards from './data/boards.js';
 import initialLists from './data/lists.js';
+import initialLabels from './data/labels.js';
 
 const Api = () => {
   let cards = [...initialCards];
   let boards = [...initialBoards];
   let lists = [...initialLists];
+  let labels = [...initialLabels];
   let delay = 0;
 
   const setup = () => {
@@ -51,6 +53,7 @@ const Api = () => {
   const getBoardById = (boardID) => boards.find((board) => board.id === boardID);
   const getListById = (listID) => lists.find((list) => list.id === listID);
   const getCardById = (cardID) => cards.find((card) => card.id === cardID);
+  const getLabelById = (labelID) => labels.find((label) => label.id === labelID);
 
   const updateCardData = (cardID, data) => {
     if ('idBoard' in data) {
@@ -156,6 +159,18 @@ const Api = () => {
     return null;
   };
 
+  const addLabelToCard = (cardID, labelID) => {
+    removeLabelFromCard(cardID, labelID);
+    const card = getCardById(cardID);
+    const label = getLabelById(labelID);
+    card.labels = [...card.labels, { ...label }];
+  };
+
+  const removeLabelFromCard = (cardID, labelID) => {
+    const card = getCardById(cardID);
+    card.labels = card.labels.filter((label) => label.id !== labelID);
+  };
+
   const handleRequests = (method, path, params = {}, data = {}) => {
     let match = null;
 
@@ -234,6 +249,23 @@ const Api = () => {
       deleteCardChecklist(checklistID);
       return {};
 
+      /* getBoardLabels */
+    } else if (method === 'get' && (match = path.match(/^boards\/[^/]+\/labels$/))) {
+      return labels;
+
+      /* addLabelToCard */
+    } else if (method === 'post' && (match = path.match(/^cards\/([^/]+)\/idLabels$/))) {
+      const [, cardID] = match;
+      const labelID = data.value;
+      addLabelToCard(cardID, labelID);
+      return {};
+
+      /* removeLabelFromCard */
+    } else if (method === 'delete' && (match = path.match(/^cards\/([^/]+)\/idLabels\/([^/]+)/))) {
+      const [, cardID, labelID] = match;
+      removeLabelFromCard(cardID, labelID);
+      return {};
+
       /* outros requests */
     } else {
       return null;
@@ -255,6 +287,7 @@ const Api = () => {
     updateCard: updateCardData,
     setBoards: (newBoards) => (boards = newBoards),
     setLists: (newLists) => (lists = newLists),
+    setLabels: (newLabels) => (labels = newLabels),
   };
 };
 

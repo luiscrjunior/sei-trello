@@ -13,7 +13,17 @@ const Panel = styled(FloatingPanel)`
   width: 260px;
 `;
 
-const LabelPanel = ({ boardLabels, cardLabels, loading, onAddLabel, onRemoveLabel, onCreate, onEdit, onDelete }) => {
+const LabelPanel = ({
+  boardLabels,
+  cardLabels,
+  loading,
+  onClose,
+  onAddLabel,
+  onRemoveLabel,
+  onCreate,
+  onEdit,
+  onDelete,
+}) => {
   const [mode, setMode] = useState('list'); /* modes: list, edit, create */
   const [editingLabel, setEditingLabel] = useState(null);
 
@@ -34,6 +44,7 @@ const LabelPanel = ({ boardLabels, cardLabels, loading, onAddLabel, onRemoveLabe
         setMode('list');
         setEditingLabel(null);
       }}
+      onClose={onClose}
     >
       {mode === 'list' && (
         <LabelList
