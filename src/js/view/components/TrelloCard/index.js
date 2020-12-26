@@ -156,7 +156,10 @@ class TrelloCard extends React.Component {
     let uiLabels = [];
     this.props.labels.forEach((label, idx) => {
       uiLabels.push(
-        <span key={idx} className={classNames(styles.label, styles['label-' + label.color] || styles.default)}>
+        <span
+          key={idx}
+          className={classNames(styles.label, styles['label-' + (label.color || 'default')] || styles.default)}
+        >
           {label.name}
         </span>
       );
