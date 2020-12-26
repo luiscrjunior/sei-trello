@@ -9,5 +9,10 @@
       }
     ],
     "@babel/preset-react"
-  ]
+  ],
+  "env": {
+    "production": {
+      "plugins": [["react-remove-properties", { "properties": ["data-testid"] }]]
+    }
+  }
 }

@@ -33,6 +33,7 @@
     "axios": "^0.18.1",
     "axios-mock-adapter": "^1.19.0",
     "babel-loader": "^8.2.1",
+    "babel-plugin-react-remove-properties": "^0.3.0",
     "classnames": "^2.2.6",
     "clean-webpack-plugin": "^0.1.18",
     "copy-webpack-plugin": "^4.5.3",
