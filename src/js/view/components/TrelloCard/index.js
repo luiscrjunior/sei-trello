@@ -14,7 +14,7 @@ import * as alert from 'view/alert.js';
 
 import { OptionIcon, FooterIcon, HasAnotherCardIndicator } from './styles.js';
 
-import { faClock, faTrashAlt } from '@fortawesome/free-regular-svg-icons';
+import { faCalendarAlt, faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import { faSyncAlt, faExternalLinkAlt, faCheckSquare, faAlignLeft, faTags } from '@fortawesome/free-solid-svg-icons';
 
 class TrelloCard extends React.Component {
@@ -172,7 +172,7 @@ class TrelloCard extends React.Component {
     const due = dueFormatter(this.props.due, this.props.dueComplete);
     return (
       <li>
-        <FooterIcon icon={faClock} />
+        <FooterIcon icon={faCalendarAlt} />
         <span>
           {due.date}{' '}
           <span className={classNames(styles['due-message'], styles['due-' + due.class])}>{due.message}</span>
@@ -275,13 +275,13 @@ class TrelloCard extends React.Component {
 
         <div className={styles.options}>
           <a data-tooltip="Etiquetas" target="#" onClick={this.openLabelPanel.bind(this)}>
-            <OptionIcon icon={faTags} />
+            <OptionIcon icon={faTags} $highlight={this.props.labels.length > 0} />
           </a>
           <a data-tooltip="Checklist" target="#" onClick={this.openChecklistPanel.bind(this)}>
             <OptionIcon icon={faCheckSquare} $highlight={this.props.hasChecklist} />
           </a>
           <a data-tooltip="Especificar data de entrega" target="#" onClick={this.openDuePanel.bind(this)}>
-            <OptionIcon icon={faClock} />
+            <OptionIcon icon={faCalendarAlt} $highlight={!!this.props.due} />
           </a>
           <a data-tooltip="Remover Cartão" target="#" onClick={this.deleteCard.bind(this)}>
             <OptionIcon icon={faTrashAlt} />
