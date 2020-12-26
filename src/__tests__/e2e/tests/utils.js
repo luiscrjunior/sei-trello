@@ -37,8 +37,11 @@ export const matchTrelloCardDescription = async (card, description) => {
 };
 
 export const matchPanel = async (card, title) => {
-  const span = await expect(card).toMatchElement('div > span', { text: title, visible: true });
-  return await span.evaluateHandle((span) => span.closest('div'));
+  const p = await expect(card).toMatchElement('[data-testid="panel"] > div:first-child p', {
+    text: title,
+    visible: true,
+  });
+  return await p.evaluateHandle((p) => p.closest('[data-testid="panel"]'));
 };
 
 export const getCSSProperty = async (elementHandle, propertyName) =>

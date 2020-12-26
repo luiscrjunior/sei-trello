@@ -26,7 +26,7 @@ const FloatingPanel = ({ loading, title, onClose, onBack, className, showBackBut
   }, [onBGClick]);
 
   return (
-    <Panel ref={panel} className={className}>
+    <Panel ref={panel} className={className} data-testid="panel">
       <Header>
         <BackButton onClick={onBack} visible={showBackButton} />
         <Title>{title}</Title>

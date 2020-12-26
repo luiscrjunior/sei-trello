@@ -131,7 +131,7 @@ test('open and close panels', async () => {
 
     /* abre novamente e clica no X para fechar */
     await clickCardButton(card, panel.button);
-    await expect(await matchPanel(card, panel.title)).toClick('a', { text: '×' });
+    await expect(await matchPanel(card, panel.title)).toClick('a[title="Fechar"]');
     await expect(matchPanel(card, panel.title)).rejects.toThrow();
   }
 });

@@ -228,6 +228,7 @@ class TrelloCard extends React.Component {
         })}
         onMouseEnter={this.onMouseEnter.bind(this)}
         onMouseLeave={this.onMouseLeave.bind(this)}
+        data-testid="card"
       >
         {this.renderLoadingOverlay()}
 
