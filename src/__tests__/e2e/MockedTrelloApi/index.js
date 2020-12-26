@@ -172,6 +172,7 @@ const Api = () => {
   };
 
   const createLabel = (labelData) => {
+    if (labelData.color === 'null') labelData.color = null;
     const labelID = `label${labels.length + 1}`;
     labels = [
       ...labels,
@@ -189,6 +190,11 @@ const Api = () => {
     for (let card of cards) {
       removeLabelFromCard(card.id, labelID);
     }
+  };
+
+  const updateLabel = (labelID, labelData) => {
+    if (labelData.color === 'null') labelData.color = null;
+    labels = labels.map((label) => (label.id === labelID ? { ...label, ...labelData } : label));
   };
 
   const handleRequests = (method, path, params = {}, data = {}) => {
@@ -240,7 +246,6 @@ const Api = () => {
 
       /* createCardChecklist */
     } else if (method === 'post' && (match = path.match(/^checklists$/))) {
-      // eslint-disable-next-line no-unused-vars
       const checklist = createChecklist(data);
       return checklist;
 
@@ -253,7 +258,6 @@ const Api = () => {
       /* updateCardChecklistItem */
     } else if (method === 'put' && (match = path.match(/^cards\/([^/]+)\/checkItem\/([^/]+)$/))) {
       const [, cardID, checkItemID] = match;
-      // eslint-disable-next-line no-unused-vars
       const checkItem = updateChecklistItem(cardID, checkItemID, data);
       return checkItem;
 
@@ -289,6 +293,14 @@ const Api = () => {
       /* createLabel */
     } else if (method === 'post' && (match = path.match(/^labels$/))) {
       return { id: createLabel(data) };
+
+      /* updateLabel */
+    } else if (method === 'put' && (match = path.match(/^labels\/([^/]+)$/))) {
+      const [, labelID] = match;
+      // eslint-disable-next-line no-unused-vars
+      const { key, token, ...labelData } = data;
+      updateLabel(labelID, labelData);
+      return {};
 
       /* deleteLabel */
     } else if (method === 'delete' && (match = path.match(/^labels\/([^/]+)$/))) {

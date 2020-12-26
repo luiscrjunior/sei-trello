@@ -52,7 +52,20 @@ const LabelPanelContainer = ({ boardID, cardID, cardLabels, onClose }) => {
     }
   };
 
-  const onEdit = () => {};
+  const onEdit = async (label) => {
+    setLoading(true);
+    try {
+      const { id, ...labelData } = label;
+      await api.updateLabel(id, labelData);
+      await actions.doRefreshCardsWithID(cardID);
+      await fetchLabels();
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      alert.error('Não foi possível criar a etiqueta.');
+      onClose();
+    }
+  };
 
   const onDelete = async (labelID) => {
     setLoading(true);
@@ -63,7 +76,7 @@ const LabelPanelContainer = ({ boardID, cardID, cardLabels, onClose }) => {
       setLoading(false);
     } catch (error) {
       setLoading(false);
-      alert.error('Não foi possível criar a etiqueta.');
+      alert.error('Não foi possível deletar a etiqueta.');
       onClose();
     }
   };

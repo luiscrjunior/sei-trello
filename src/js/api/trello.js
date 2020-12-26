@@ -199,6 +199,7 @@ export const removeLabelFromCard = (cardID, labelID) => {
 
 /* criar um label vinculado a um quadro  */
 export const createLabel = (boardID, opts) => {
+  if (opts.color === null) opts.color = 'null';
   const url = `https://api.trello.com/1/labels`;
   let params = Object.assign({}, genAuthData(), {
     idBoard: boardID,
@@ -206,6 +207,14 @@ export const createLabel = (boardID, opts) => {
     color: opts.color,
   });
   return axios.post(url, params);
+};
+
+/* editar um label */
+export const updateLabel = (labelID, opts) => {
+  if (opts.color === null) opts.color = 'null';
+  const url = `https://api.trello.com/1/labels/${labelID}`;
+  let params = Object.assign({}, genAuthData(), opts);
+  return axios.put(url, params);
 };
 
 /* deletar um label */

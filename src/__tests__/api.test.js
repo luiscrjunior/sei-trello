@@ -174,6 +174,13 @@ test('createLabel', async () => {
   expect(window.MockedTrelloApi.getLabels()).toEqual([{ id: 'label1', color: 'red', name: 'urgente' }]);
 });
 
+test('updateLabel', async () => {
+  window.MockedTrelloApi.setLabels([{ id: 'label1', name: 'urgente', color: 'red' }]);
+  await api.updateLabel('label1', { name: 'não é mais urgente' });
+  await api.updateLabel('label1', { color: 'green' });
+  expect(window.MockedTrelloApi.getLabels()).toEqual([{ id: 'label1', color: 'green', name: 'não é mais urgente' }]);
+});
+
 test('deleteLabel', async () => {
   window.MockedTrelloApi.setLabels([
     { id: 'label1', name: 'urgente', color: 'red' },

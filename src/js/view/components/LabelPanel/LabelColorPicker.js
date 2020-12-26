@@ -70,7 +70,7 @@ const LabelColor = ({ colorName = 'default', selected, onSelectColor }) => {
       href="#"
       $color={colors[colorName]}
       onClick={(e) => {
-        if (onSelectColor) onSelectColor(colorName);
+        if (onSelectColor) onSelectColor(colorName === 'default' ? null : colorName);
         e.preventDefault();
       }}
       data-testid={`color-${colorName}`}
