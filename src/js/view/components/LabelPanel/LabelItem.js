@@ -92,7 +92,7 @@ const LabelItem = ({ label, selected, onSelect, onUnSelect, onEditClick }) => {
         title="Editar"
         onClick={(e) => {
           e.preventDefault();
-          if (onEditClick) onEditClick();
+          if (onEditClick) onEditClick(label);
         }}
       >
         <EditIcon />

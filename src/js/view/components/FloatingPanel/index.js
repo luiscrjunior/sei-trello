@@ -29,7 +29,7 @@ const FloatingPanel = ({ loading, title, onClose, onBack, className, showBackBut
     <Panel ref={panel} className={className} data-testid="panel">
       <Header>
         <BackButton onClick={onBack} visible={showBackButton} />
-        <Title>{title}</Title>
+        <Title data-testid="title">{title}</Title>
         <CloseButton onClick={onClose} visible={true} />
       </Header>
       <Content>
