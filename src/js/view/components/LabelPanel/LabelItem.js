@@ -25,12 +25,12 @@ const SelectableLabel = styled.a`
   margin: 0 0 4px 8px;
   padding: 6px 12px;
   border-radius: 3px;
-  background-color: ${(props) => colors[props.color][0]};
+  background-color: ${(props) => colors[props.$color][0]};
   cursor: pointer;
   font-family: Helvetica Neue, Arial, Helvetica, sans-serif;
 
   &:hover {
-    box-shadow: -8px 0 ${(props) => colors[props.color][1]};
+    box-shadow: -8px 0 ${(props) => colors[props.$color][1]};
   }
 `;
 
@@ -74,11 +74,11 @@ const EditIcon = styled(FontAwesomeIcon).attrs(() => ({
   font-size: 14px;
 `;
 
-const LabelItem = ({ label, selected, onSelect, onUnSelect, onEdit }) => {
+const LabelItem = ({ label, selected, onSelect, onUnSelect, onEditClick }) => {
   return (
     <Item>
       <SelectableLabel
-        color={label.color || 'default'}
+        $color={label.color || 'default'}
         onClick={(e) => {
           e.preventDefault();
           if (selected && onUnSelect) onUnSelect();
@@ -92,7 +92,7 @@ const LabelItem = ({ label, selected, onSelect, onUnSelect, onEdit }) => {
         title="Editar"
         onClick={(e) => {
           e.preventDefault();
-          if (onEdit) onEdit();
+          if (onEditClick) onEditClick();
         }}
       >
         <EditIcon />

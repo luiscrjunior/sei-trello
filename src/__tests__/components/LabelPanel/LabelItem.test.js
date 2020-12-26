@@ -1,12 +1,11 @@
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
 import LabelItem from 'view/components/LabelPanel/LabelItem';
-import 'jest-styled-components';
 
 test('render unselected label', () => {
   const onSelect = jest.fn();
   const onUnSelect = jest.fn();
-  const onEdit = jest.fn();
+  const onEditClick = jest.fn();
   const { container, queryByText, queryByTitle } = render(
     <LabelItem
       label={{
@@ -17,7 +16,7 @@ test('render unselected label', () => {
       selected={false}
       onSelect={onSelect}
       onUnSelect={onUnSelect}
-      onEdit={onEdit}
+      onEditClick={onEditClick}
     />
   );
   const lblName = queryByText('urgente');
@@ -33,7 +32,7 @@ test('render unselected label', () => {
   const btnEdit = queryByTitle('Editar');
   expect(btnEdit).toBeTruthy();
   fireEvent.click(btnEdit);
-  expect(onEdit).toHaveBeenCalledTimes(1);
+  expect(onEditClick).toHaveBeenCalledTimes(1);
 });
 
 test('render selected label', () => {
