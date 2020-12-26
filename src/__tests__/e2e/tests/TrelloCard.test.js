@@ -54,7 +54,14 @@ test('render card', async () => {
   /* checar se os botões foram renderizados */
   expect(
     await buttonsWrapper.$$eval('a[data-tooltip]', (nodes) => nodes.map((node) => node.getAttribute('data-tooltip')))
-  ).toEqual(['Checklist', 'Especificar data de entrega', 'Remover Cartão', 'Atualizar Cartão', 'Abrir no Trello']);
+  ).toEqual([
+    'Etiquetas',
+    'Checklist',
+    'Especificar data de entrega',
+    'Remover Cartão',
+    'Atualizar Cartão',
+    'Abrir no Trello',
+  ]);
 
   /* checar se os botões estão invisíveis */
   expect(await buttonsWrapper.evaluate((node) => window.getComputedStyle(node).getPropertyValue('opacity'))).toBe('0');
