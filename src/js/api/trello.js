@@ -196,3 +196,14 @@ export const removeLabelFromCard = (cardID, labelID) => {
   let params = Object.assign({}, genAuthData());
   return axios.delete(url, { params: params });
 };
+
+/* criar um label vinculado a um quadro  */
+export const createLabel = (boardID, opts) => {
+  const url = `https://api.trello.com/1/labels`;
+  let params = Object.assign({}, genAuthData(), {
+    idBoard: boardID,
+    name: opts.name,
+    color: opts.color,
+  });
+  return axios.post(url, params);
+};

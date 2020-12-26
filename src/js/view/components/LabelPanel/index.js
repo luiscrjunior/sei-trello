@@ -2,7 +2,6 @@ import React, { useState, useEffect, useCallback } from 'react';
 import LabelPanel from './LabelPanel';
 
 import * as api from 'api/trello.js';
-import * as store from 'model/store.js';
 import * as actions from 'actions/trello.js';
 import * as alert from 'view/alert.js';
 
@@ -36,7 +35,23 @@ const LabelPanelContainer = ({ boardID, cardID, cardLabels, onClose }) => {
     }
   };
 
-  const onCreate = () => {};
+  const onCreate = async (label) => {
+    setLoading(true);
+    try {
+      const {
+        data: { id },
+      } = await api.createLabel(boardID, label);
+      await api.addLabelToCard(cardID, id);
+      await actions.doRefreshCardsWithID(cardID);
+      await fetchLabels();
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      alert.error('Não foi possível criar a etiqueta.');
+      onClose();
+    }
+  };
+
   const onEdit = () => {};
   const onDelete = () => {};
 
@@ -46,7 +61,6 @@ const LabelPanelContainer = ({ boardID, cardID, cardLabels, onClose }) => {
       const response = await api.getBoardLabels(boardID);
       if ('data' in response && response.data.length > 0) {
         let updatedBoardLabels = [...response.data];
-        updatedBoardLabels.sort((a, b) => a.id.localeCompare(b.id)); /* sempre manter a mesma ordem */
         setBoardLabels(updatedBoardLabels);
       } else {
         setBoardLabels([]);

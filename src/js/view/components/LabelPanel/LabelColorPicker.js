@@ -104,7 +104,7 @@ const LabelColorPicker = ({ color, onSelectColor }) => {
         ))}
       </Line>
       <Line>
-        <LabelColor colorName="default" selected={color === 'default'} onSelectColor={onSelectColor} />
+        <LabelColor colorName="default" selected={color === null} onSelectColor={onSelectColor} />
         <DefaultColorInfo>
           <DefaultColorTitle>Sem cores.</DefaultColorTitle>
           <DefaultColorSubtitle>Isso não aparecerá na frente dos cartões.</DefaultColorSubtitle>
@@ -115,7 +115,7 @@ const LabelColorPicker = ({ color, onSelectColor }) => {
 };
 
 LabelColorPicker.defaultProps = {
-  color: 'default',
+  color: null,
 };
 
 export default LabelColorPicker;

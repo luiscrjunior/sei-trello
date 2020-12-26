@@ -171,6 +171,16 @@ const Api = () => {
     card.labels = card.labels.filter((label) => label.id !== labelID);
   };
 
+  const createLabel = (labelData) => {
+    labels = [
+      ...labels,
+      {
+        id: `label${labels.length + 1}`,
+        name: labelData.name,
+        color: labelData.color,
+      },
+    ];
+  };
   const handleRequests = (method, path, params = {}, data = {}) => {
     let match = null;
 
@@ -266,6 +276,11 @@ const Api = () => {
       removeLabelFromCard(cardID, labelID);
       return {};
 
+      /* createLabel */
+    } else if (method === 'post' && (match = path.match(/^labels$/))) {
+      createLabel(data);
+      return {};
+
       /* outros requests */
     } else {
       return null;
@@ -276,6 +291,7 @@ const Api = () => {
     setup: setup,
     setDelay: setDelay,
     clearCards: () => (cards = []),
+    getLabels: () => labels,
     addCard: (card, cardID = 'card1') =>
       (cards = [
         ...cards,

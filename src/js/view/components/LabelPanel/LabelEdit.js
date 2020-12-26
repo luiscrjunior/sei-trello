@@ -62,7 +62,7 @@ export const LabelButton = styled(Button)`
 `;
 
 const LabelEdit = ({ mode, currentLabel, onCreate, onEdit, onDelete }) => {
-  const [color, setColor] = useState(currentLabel ? currentLabel.color : 'default');
+  const [color, setColor] = useState(currentLabel ? currentLabel.color : null);
   const [name, setName] = useState(currentLabel ? currentLabel.name : '');
   const nameInput = useRef();
 

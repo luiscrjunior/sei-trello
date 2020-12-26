@@ -164,3 +164,12 @@ test('removeLabelFromCard', async () => {
   const result = await api.getCardData('card1');
   expect(result.data.labels).toEqual([]);
 });
+
+test('createLabel', async () => {
+  window.MockedTrelloApi.setLabels([]);
+  await api.createLabel('board1', {
+    name: 'urgente',
+    color: 'red',
+  });
+  expect(window.MockedTrelloApi.getLabels()).toEqual([{ id: 'label1', color: 'red', name: 'urgente' }]);
+});
