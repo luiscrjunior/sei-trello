@@ -30,7 +30,9 @@ class CheckboxList extends React.Component {
     return this.props.options.map((item, idx) => {
       const isSelected = this.isSelected(item.key);
       const colorStyle =
-        typeof item.key === 'object' && 'color' in item.key ? 'color-block-' + item.key.color.toLowerCase() : null;
+        typeof item.key === 'object' && 'color' in item.key && item.key.color
+          ? 'color-block-' + item.key.color.toLowerCase()
+          : null;
       return (
         <li key={idx} className={classNames(styles.item, { [styles.selected]: isSelected })}>
           <a href="#" className={styles.anchor} onClick={this.handleClick.bind(this, isSelected, item.key)}>
