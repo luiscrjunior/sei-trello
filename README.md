@@ -8,10 +8,11 @@ Extensão disponível para Chrome e Firefox que possibilita a integração entre
 
 ## Quer apenas usar a extensão?
 
-:arrow_right: Está usando o **Chrome**? Acesse a página da extensão na [na Chrome Web Store](https://chrome.google.com/webstore/detail/sei%2Btrello/dnjlkohajpocckjiddppmfhkpfdbkecl?hl=pt-BR). Clique em `Usar no Chrome` (canto superior direito) e, depois de instalada, configure-a na página de opções (credenciais e outras informações, tais como lista e quadro padrão) e pronto! Abra o SEI e seu Trello já estará integrado.
+:arrow_right: Está usando o **Chrome**? Acesse a página da extensão na [na Chrome Web Store](https://chrome.google.com/webstore/detail/sei%2Btrello/dnjlkohajpocckjiddppmfhkpfdbkecl?hl=pt-BR) e clique em `Usar no Chrome` (canto superior direito).
 
-:arrow_right: Está usando o **Firefox**? Acesse a página da extensão [no Firefox Browser Add-Ons](https://addons.mozilla.org/pt-BR/firefox/addon/sei-trello/). Clique em `Adicionar ao Firefox` e, depois de instalada, configure-a na página de opções (credenciais e outras informações, tais como lista e quadro padrão) e pronto! Abra o SEI e seu Trello já estará integrado.
+:arrow_right: Está usando o **Firefox**? Acesse a página da extensão [no Firefox Browser Add-Ons](https://addons.mozilla.org/pt-BR/firefox/addon/sei-trello/) e clique em `Adicionar ao Firefox`.
 
+Depois de instalar a extensão, configure-a na página de opções (credenciais e outras informações, tais como lista e quadro padrão) e pronto! Abra o SEI e seu Trello já estará integrado.
 
 ## Quer contribuir com o desenvolvimento?
 
@@ -62,7 +63,7 @@ _Obs.: não testei esse setup no Windows, apenas no linux. Os comandos provavelm
 
 O projeto conta com testes unitários, de integração e end-to-end (com puppeteer). A cobertura não é total, mas abrangem as principais funcionalidades.
 
-Gere o bundle para testes antes com `npm run webpack:test` (somente necessário para os testes e2e). Depois, para rodar todos os testes, execute `npm run test` para rodá-los. 
+Gere o bundle para testes antes com `npm run webpack:test` (somente necessário para os testes e2e). Depois, para rodar todos os testes, execute `npm run test`. 
 
 Você pode executar somente os testes unitários/integração com `npx jest --selectProjects 'Unit and Integration Tests'` e somente os testes e2e com `npx jest --selectProjects 'E2E Tests'`.
 
