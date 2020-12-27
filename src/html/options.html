@@ -1,54 +1,73 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="UTF-8">
-  <title>SEI+Trello: opções</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>SEI+Trello: opções</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h1>SEI+Trello</h1>
 
-<div class="container">
-  
-  <h1>SEI+Trello</h1>
+      <h3>Opções</h3>
 
-  <h3>Opções</h3>
+      <p>
+        Para ativar a integração desta extensão, você deve necessariamente possuir uma conta no Trello e obter uma chave
+        (key) e um token.
+      </p>
 
-  <p>Para ativar a integração desta extensão, você deve necessariamente possuir uma conta no Trello e obter uma chave (key) e um token.</p>
+      <hr />
 
-  <hr>
+      <form>
+        <div class="form-group">
+          <label for="txt-app-key">Trello APP-KEY:</label>
+          <input type="text" class="form-control" id="txt-app-key" placeholder="APP-KEY..." />
+          <small class="form-text text-muted"
+            >A app-key pode ser obtida <a href="http://trello.com/app-key">neste endereço</a>. Você deve estar logado no
+            Trello quando acessar. A chave é aquele conjunto de caracteres descrito no campo cinza. Apenas copie e cole
+            aqui.</small
+          >
+        </div>
 
-  <form>
+        <div class="form-group">
+          <label for="txt-app-token">Trello APP-TOKEN:</label>
+          <input type="text" class="form-control" id="txt-app-token" placeholder="APP-TOKEN..." />
+          <small class="form-text text-muted"
+            >Já o token pode ser obtido acessando a seguinte url:
+            <a id="anchor-token-url" target="_blank" href="#"><pre id="lbl-token-url"></pre></a
+            ><span id="lbl-no-app-key-info"
+              >Lembre de substituir <strong>&lt;APP KEY&gt;</strong> pela chave acima.</span
+            ></small
+          >
+        </div>
 
-    <div class="form-group">
-      <label for="txt-app-key">Trello APP-KEY:</label>
-      <input type="text" class="form-control" id="txt-app-key" placeholder="APP-KEY...">
-      <small class="form-text text-muted">A app-key pode ser obtida <a href="http://trello.com/app-key">neste endereço</a>. Você deve estar logado no Trello quando acessar. A chave é aquele conjunto de caracteres descrito no campo cinza. Apenas copie e cole aqui.</small>
+        <div class="form-group">
+          <label for="txt-default-board">Quadro padrão:</label>
+          <input type="text" class="form-control" id="txt-default-board" placeholder="Nome do quadro..." />
+          <small class="form-text text-muted"
+            >Os novos cartões criados a partir dessa extensão entrarão nesse quadro que já deve existir na sua conta (a
+            extensão não o cria automaticamente). Cuide para digitar o nome exatamente como ele existe no Trello.</small
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="txt-default-list">Lista padrão:</label>
+          <input type="text" class="form-control" id="txt-default-list" placeholder="Nome da lista..." />
+          <small class="form-text text-muted"
+            >Os novos cartões criados a partir dessa extensão entrarão nessa lista que já deve existir na sua conta e
+            pertencer ao quadro acima (a extensão não a cria automaticamente). Cuide para digitar o nome exatamente como
+            ela existe no Trello.</small
+          >
+        </div>
+
+        <button id="btn-save" type="submit" class="btn btn-primary">Salvar</button>
+      </form>
     </div>
-
-    <div class="form-group">
-      <label for="txt-app-token">Trello APP-TOKEN:</label>
-      <input type="text" class="form-control" id="txt-app-token" placeholder="APP-TOKEN...">
-      <small class="form-text text-muted">Já o token pode ser obtido acessando a seguinte url: <a id="anchor-token-url" target="_blank" href="#"><pre id="lbl-token-url"></pre></a><span id="lbl-no-app-key-info">Lembre de substituir <strong>&lt;APP KEY&gt;</strong> pela chave acima.</span></small>
-    </div>
-
-    <div class="form-group">
-      <label for="txt-default-board">Quadro padrão:</label>
-      <input type="text" class="form-control" id="txt-default-board" placeholder="Nome do quadro...">
-      <small class="form-text text-muted">Um quadro novo será criado a partir da extensão no quadro e na lista aqui definidos.</small>
-    </div>    
-
-    <div class="form-group">
-      <label for="txt-default-list">Lista padrão:</label>
-      <input type="text" class="form-control" id="txt-default-list" placeholder="Nome da lista...">
-      <small class="form-text text-muted">Um quadro novo será criado a partir da extensão no quadro e na lista aqui definidos.</small>
-    </div>    
-
-
-    <button id="btn-save" type="submit" class="btn btn-primary">Salvar</button>
-  </form>
-
-
-</div>
-<script src="../js/options.js"></script>
-</body>
+    <script src="../js/options.js"></script>
+  </body>
 </html>
