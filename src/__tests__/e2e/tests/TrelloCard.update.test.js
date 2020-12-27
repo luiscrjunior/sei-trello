@@ -1,13 +1,10 @@
 import {
   MockedTrelloApi,
-  setupBeforeAll,
   clickTrelloRefreshButton,
   matchTrelloCard,
   matchTrelloCardTitle,
   matchTrelloCardDescription,
 } from './utils.js';
-
-setupBeforeAll();
 
 beforeEach(async () => {
   MockedTrelloApi.clearCards();

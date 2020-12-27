@@ -1,16 +1,13 @@
-export const setupBeforeAll = () => {
-  beforeAll(async () => {
-    jest.setTimeout(60000);
-    await page.goto('http://localhost:3000', { waitUntil: 'networkidle2' });
-  });
-};
-
 export const clickTrelloRefreshButton = async () => {
   await page.click('div.trello-refresh-button > a');
   await page.waitForTimeout(500);
 };
+
+export const matchCardButton = async (card, buttonTitle) =>
+  await expect(card).toMatchElement(`a[data-tooltip="${buttonTitle}"]`);
+
 export const clickCardButton = async (card, buttonTitle) => {
-  const anchor = await expect(card).toMatchElement(`a[data-tooltip="${buttonTitle}"]`);
+  const anchor = await matchCardButton(card, buttonTitle);
   await anchor.click();
   await page.waitForTimeout(500);
 };
@@ -50,6 +47,13 @@ export const getCSSProperty = async (elementHandle, propertyName) =>
     propertyName
   );
 
+export const isCardButtonHighlighted = async (card, buttonName) => {
+  const btn = await matchCardButton(card, buttonName);
+  const icon = await btn.$('svg');
+  const color = await getCSSProperty(icon, 'color');
+  return color === 'rgb(97, 189, 79)';
+};
+
 export const MockedTrelloApi = (() => {
   const clearCards = () => {
     page.evaluate(() => window.MockedTrelloApi.clearCards());
@@ -71,11 +75,16 @@ export const MockedTrelloApi = (() => {
     page.evaluate((newLists) => window.MockedTrelloApi.setLists(newLists), newLists);
   };
 
+  const setLabels = (newLabels) => {
+    page.evaluate((newLabels) => window.MockedTrelloApi.setLabels(newLabels), newLabels);
+  };
+
   return {
     clearCards,
     addCard,
     updateCard,
     setBoards,
     setLists,
+    setLabels,
   };
 })();

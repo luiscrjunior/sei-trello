@@ -164,7 +164,11 @@ class TrelloCard extends React.Component {
         </span>
       );
     });
-    return <div className={styles.labels}>{uiLabels}</div>;
+    return (
+      <div className={styles.labels} data-testid="card-labels">
+        {uiLabels}
+      </div>
+    );
   }
 
   renderDue() {

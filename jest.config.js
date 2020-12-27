@@ -22,7 +22,10 @@ module.exports = {
       preset: 'jest-puppeteer',
       testMatch: ['**/__tests__/e2e/tests/**/*.test.js'],
       globalSetup: '<rootDir>/src/__tests__/e2e/global-setup.js',
-      setupFilesAfterEnv: ['expect-puppeteer'],
+      setupFilesAfterEnv: ['expect-puppeteer', '<rootDir>/src/__tests__/e2e/setup.js'],
+      moduleNameMapper: {
+        'view/(.*)': '<rootDir>/src/js/view/$1',
+      },
     },
   ],
 };

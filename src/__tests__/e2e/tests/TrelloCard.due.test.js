@@ -3,16 +3,7 @@ import formatISO from 'date-fns/formatISO';
 import addDays from 'date-fns/addDays';
 import subDays from 'date-fns/subDays';
 
-import {
-  MockedTrelloApi,
-  setupBeforeAll,
-  clickTrelloRefreshButton,
-  matchTrelloCard,
-  clickCardButton,
-  matchPanel,
-} from './utils.js';
-
-setupBeforeAll();
+import { MockedTrelloApi, clickTrelloRefreshButton, matchTrelloCard, clickCardButton, matchPanel } from './utils.js';
 
 beforeEach(async () => {
   MockedTrelloApi.clearCards();

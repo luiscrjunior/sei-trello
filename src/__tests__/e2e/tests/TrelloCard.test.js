@@ -1,6 +1,5 @@
 import {
   MockedTrelloApi,
-  setupBeforeAll,
   clickTrelloRefreshButton,
   clickCardButton,
   matchTrelloCard,
@@ -9,8 +8,6 @@ import {
   matchPanel,
   getCSSProperty,
 } from './utils.js';
-
-setupBeforeAll();
 
 beforeEach(async () => {
   MockedTrelloApi.clearCards();
@@ -120,6 +117,7 @@ test('open and close panels', async () => {
   const panels = [
     { title: 'Data de entrega', button: 'Especificar data de entrega' },
     { title: 'Checklist', button: 'Checklist' },
+    { title: 'Etiquetas', button: 'Etiquetas' },
   ];
 
   for await (let panel of panels) {
