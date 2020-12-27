@@ -14,6 +14,7 @@ module.exports = {
       },
       testMatch: ['**/__tests__/**/*.test.js'],
       testPathIgnorePatterns: ['/node_modules/', 'src/__tests__/e2e'],
+      setupFilesAfterEnv: ['<rootDir>/src/__tests__/setup.js'],
     },
     {
       displayName: 'E2E Tests',
