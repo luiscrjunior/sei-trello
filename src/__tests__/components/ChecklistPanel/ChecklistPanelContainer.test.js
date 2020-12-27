@@ -3,9 +3,9 @@ import { render } from '@testing-library/react';
 import ChecklistPanel from 'view/components/ChecklistPanel';
 import 'jest-styled-components';
 
-import * as api from 'api/trello.js';
+import * as api from 'api';
 
-jest.mock('api/trello.js');
+jest.mock('api');
 
 const items = {
   data: [

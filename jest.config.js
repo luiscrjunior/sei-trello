@@ -8,7 +8,7 @@ module.exports = {
           '<rootDir>/src/__tests__/fileMock.js',
         '\\.(scss)$': 'identity-obj-proxy',
         'view/(.*)': '<rootDir>/src/js/view/$1',
-        'api/(.*)': '<rootDir>/src/js/api/$1',
+        api: '<rootDir>/src/js/api',
         'model/(.*)': '<rootDir>/src/js/model/$1',
         'tests/(.*)': '<rootDir>/src/__tests__/$1',
       },

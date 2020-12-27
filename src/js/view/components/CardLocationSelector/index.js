@@ -6,7 +6,7 @@ import classNames from 'classnames';
 
 import ContextMenu from 'view/components/ContextMenu';
 
-import * as api from 'api/trello.js';
+import * as api from 'api';
 
 import { CaretIcon } from './styles.js';
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import ChecklistPanel from './ChecklistPanel';
 
-import * as api from 'api/trello.js';
+import * as api from 'api';
 import * as store from 'model/store.js';
 import * as alert from 'view/alert.js';
 

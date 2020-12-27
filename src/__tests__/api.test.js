@@ -1,7 +1,14 @@
-import * as api from 'api/trello';
+import * as api from 'api';
 
 beforeEach(() => {
   window.MockedTrelloApi.clearCards();
+});
+
+test('set and get credentials', async () => {
+  api.setCredentials('key1', 'token1');
+  const { key, token } = api.getCredentials();
+  expect(key).toBe('key1');
+  expect(token).toBe('token1');
 });
 
 test('searchAllBoards', async () => {

@@ -1,6 +1,6 @@
 import * as ui from 'view/ui.js';
 import * as store from 'model/store.js';
-import * as api from 'api/trello.js';
+import * as api from 'api';
 import * as actions from 'actions/trello.js';
 
 export const load = (opts) => {
@@ -10,7 +10,7 @@ export const load = (opts) => {
       appToken: '',
     },
     (items) => {
-      api.setKeys(items.appKey, items.appToken);
+      api.setCredentials(items.appKey, items.appToken);
 
       store.onDataChanged(() => ui.render());
 

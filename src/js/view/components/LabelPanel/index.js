@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import LabelPanel from './LabelPanel';
 
-import * as api from 'api/trello.js';
+import * as api from 'api';
 import * as actions from 'actions/trello.js';
 import * as alert from 'view/alert.js';
 

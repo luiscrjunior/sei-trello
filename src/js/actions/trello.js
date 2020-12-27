@@ -1,7 +1,7 @@
 import merge from 'lodash/merge';
 import isEqual from 'lodash/isEqual';
 
-import * as api from 'api/trello.js';
+import * as api from 'api';
 import * as store from 'model/store.js';
 import * as handler from 'model/handler.js';
 import * as alert from 'view/alert.js';
