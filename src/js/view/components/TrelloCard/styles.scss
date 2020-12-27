@@ -107,6 +107,10 @@
   color: #fff;
 }
 
+:global(tr.infraTrAcessada) span.label {
+  color: #fff !important;
+}
+
 .label-default {
   background-color: #b6bbbf;
 }
@@ -146,6 +150,11 @@
   margin: 0px 5px;
   color: #838c91;
   font-size: 12px;
+}
+
+:global(tr.infraTrAcessada) .location,
+:global(tr.infraTrAcessada) .location span {
+  color: #838c91 !important;
 }
 
 .descr-wrapper {
@@ -213,6 +222,10 @@
   font-size: 11px;
   border-radius: 3px;
   font-weight: 600;
+}
+
+:global(tr.infraTrAcessada) span.due-message {
+  color: #fff !important;
 }
 
 .due-normal {
