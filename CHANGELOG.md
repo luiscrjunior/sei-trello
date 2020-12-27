@@ -2,6 +2,10 @@
 
 Todas mudanças do projeto estão documentadas neste arquivo.
 
+## [1.6.1] - 27/12/2020
+
+- Pequenas melhorias e correções de bugs.
+
 ## [1.6] - 26/12/2020
 
 - Possibilidade de selecionar, criar e editar etiquetas de dentro do SEI.
