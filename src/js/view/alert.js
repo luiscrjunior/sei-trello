@@ -23,3 +23,7 @@ export const confirm = (text) => {
 export const error = (text) => {
   alert('error', text);
 };
+
+export const success = (text) => {
+  alert('success', text);
+};

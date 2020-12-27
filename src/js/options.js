@@ -1,3 +1,5 @@
+import * as alert from 'view/alert.js';
+
 let ui = {};
 
 const defaultTokenUrl =
@@ -39,14 +41,15 @@ const updateTokenUrl = () => {
   }
 };
 
-const save = () => {
+const save = (e) => {
   chrome.storage.sync.set({
     appKey: ui.appKey.value,
     appToken: ui.appToken.value,
     defaultBoard: ui.defaultBoard.value,
     defaultList: ui.defaultList.value,
   });
-  alert('As configurações foram salvas com sucesso.');
+  alert.success('As configurações foram salvas com sucesso.');
+  e.preventDefault();
 };
 
 const restore = () => {
