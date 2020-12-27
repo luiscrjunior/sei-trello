@@ -16,7 +16,7 @@ export const Panel = styled.div`
   overflow: hidden;
   min-width: 300px;
   min-height: 50px;
-  z-index: 1000;
+  z-index: 1001;
 
   span,
   p,
