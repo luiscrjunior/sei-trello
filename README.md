@@ -2,9 +2,9 @@
 
 Extensão disponível para Chrome e Firefox que possibilita a integração entre o Sistema Eletrônico de Informações (SEI) e o Trello.
 
-Leia a [documentação](https://luiscrjunior.github.io/sei-trello/) para saber mais detalhes.
+:blue_book: Leia a [documentação](https://luiscrjunior.github.io/sei-trello/) para saber mais detalhes.
 
-Acesse o [CHANGELOG](CHANGELOG.md) para conhecer as atualizações de cada versão.
+:pencil: Acesse o [CHANGELOG](CHANGELOG.md) para conhecer as atualizações de cada versão.
 
 ## Quer apenas usar a extensão?
 
@@ -69,6 +69,8 @@ Você pode executar somente os testes unitários/integração com `npx jest --se
 ### Playground
 
 O projeto conta com um ambiente preparado para esculpir os componentes React, com `HotModuleReplacementPlugin` e `ReactRefreshWebpackPlugin`, ou seja, os componentes atualizam automaticamente assim que o código é alterado. O ambiente é muito útil para construção dos componentes antes de usá-los como extensão e testar no SEI.
+
+Execute `npm run playground` e abra seu navegador em `http://localhost:8080/`.
 
 ![Playground](/docs/playground.png)
 
