@@ -195,6 +195,9 @@ const Api = () => {
   const updateLabel = (labelID, labelData) => {
     if (labelData.color === 'null') labelData.color = null;
     labels = labels.map((label) => (label.id === labelID ? { ...label, ...labelData } : label));
+    for (let card of cards) {
+      card.labels = card.labels.map((label) => (label.id === labelID ? { ...label, ...labelData } : label));
+    }
   };
 
   const handleRequests = (method, path, params = {}, data = {}) => {
