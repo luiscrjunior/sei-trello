@@ -62,7 +62,7 @@ const LabelPanelContainer = ({ boardID, cardID, cardLabels, onClose }) => {
       setLoading(false);
     } catch (error) {
       setLoading(false);
-      alert.error('Não foi possível criar a etiqueta.');
+      alert.error('Não foi possível editar a etiqueta.');
       onClose();
     }
   };
