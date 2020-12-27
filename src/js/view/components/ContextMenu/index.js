@@ -29,6 +29,12 @@ class ContextMenu extends React.Component {
     if (!elementInsideWrapper) this.onClose();
   }
 
+  componentDidUpdate() {
+    if (this.menu) {
+      this.menu.scrollIntoView({ block: 'nearest', inline: 'start', behavior: 'smooth' });
+    }
+  }
+
   componentDidMount() {
     document.querySelector('body').addEventListener('click', this.onBGClick);
   }
