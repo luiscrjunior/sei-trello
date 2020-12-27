@@ -306,7 +306,7 @@ class TrelloCard extends React.Component {
 
         {this.renderLabels()}
 
-        <div className={styles.location}>
+        <div className={styles.location} data-testid="card-location">
           em{' '}
           <CardLocationSelector
             type="board"

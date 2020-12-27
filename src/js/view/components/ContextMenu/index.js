@@ -69,6 +69,7 @@ class ContextMenu extends React.Component {
           this.menu = el;
         }}
         className={classNames(styles.list, this.props.className)}
+        data-testid="context-menu"
       >
         {this.props.isLoading ? this.renderLoading() : this.renderItems()}
       </ul>
