@@ -164,7 +164,11 @@ class TrelloCard extends React.Component {
         </span>
       );
     });
-    return <div className={styles.labels}>{uiLabels}</div>;
+    return (
+      <div className={styles.labels} data-testid="card-labels">
+        {uiLabels}
+      </div>
+    );
   }
 
   renderDue() {
@@ -306,7 +310,7 @@ class TrelloCard extends React.Component {
 
         {this.renderLabels()}
 
-        <div className={styles.location}>
+        <div className={styles.location} data-testid="card-location">
           em{' '}
           <CardLocationSelector
             type="board"

@@ -14,6 +14,7 @@ module.exports = {
       },
       testMatch: ['**/__tests__/**/*.test.js'],
       testPathIgnorePatterns: ['/node_modules/', 'src/__tests__/e2e'],
+      setupFilesAfterEnv: ['<rootDir>/src/__tests__/setup.js'],
     },
     {
       displayName: 'E2E Tests',
@@ -21,7 +22,10 @@ module.exports = {
       preset: 'jest-puppeteer',
       testMatch: ['**/__tests__/e2e/tests/**/*.test.js'],
       globalSetup: '<rootDir>/src/__tests__/e2e/global-setup.js',
-      setupFilesAfterEnv: ['expect-puppeteer'],
+      setupFilesAfterEnv: ['expect-puppeteer', '<rootDir>/src/__tests__/e2e/setup.js'],
+      moduleNameMapper: {
+        'view/(.*)': '<rootDir>/src/js/view/$1',
+      },
     },
   ],
 };

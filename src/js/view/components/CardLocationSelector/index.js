@@ -93,13 +93,14 @@ class CardLocationSelector extends React.Component {
           <CaretIcon $show={this.props.showSelector} onClick={this.onCaretClick.bind(this)} />
         </span>
 
-        <ContextMenu
-          className={classNames({ hide: !this.state.menuOpen })}
-          onClose={this.onCloseMenu.bind(this)}
-          onClick={this.onItemClick.bind(this)}
-          items={this.state.items}
-          isLoading={this.state.isLoading}
-        ></ContextMenu>
+        {this.state.menuOpen && (
+          <ContextMenu
+            onClose={this.onCloseMenu.bind(this)}
+            onClick={this.onItemClick.bind(this)}
+            items={this.state.items}
+            isLoading={this.state.isLoading}
+          />
+        )}
       </div>
     );
   }

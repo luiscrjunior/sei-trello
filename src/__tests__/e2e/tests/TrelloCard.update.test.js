@@ -1,13 +1,10 @@
 import {
   MockedTrelloApi,
-  setupBeforeAll,
   clickTrelloRefreshButton,
   matchTrelloCard,
   matchTrelloCardTitle,
   matchTrelloCardDescription,
 } from './utils.js';
-
-setupBeforeAll();
 
 beforeEach(async () => {
   MockedTrelloApi.clearCards();
@@ -80,26 +77,28 @@ test('update board and list', async () => {
 
   const card = await matchTrelloCard('00000.000001/2020-01');
 
-  const boardPicker = await expect(card).toMatchElement('div', { text: 'em Quadro 1 / Lista 1' });
+  const boardPicker = await expect(card).toMatchElement('div[data-testid="card-location"]', {
+    text: 'em Quadro 1 / Lista 1',
+  });
 
   await card.hover();
   await page.waitForTimeout(500);
 
   const picker1 = (await boardPicker.$$('[data-icon="caret-down"]'))[0];
   const picker2 = (await boardPicker.$$('[data-icon="caret-down"]'))[1];
-  const menu1 = (await boardPicker.$$('ul'))[0];
-  const menu2 = (await boardPicker.$$('ul'))[1];
 
   await picker1.click();
   await page.waitForTimeout(500);
+  let menu = await expect(boardPicker).toMatchElement('ul[data-testid="context-menu"]');
 
-  const newBoardItem = (await menu1.$$('li > a'))[1];
+  const newBoardItem = (await menu.$$('li > a'))[1];
   await newBoardItem.click();
 
   await picker2.click();
   await page.waitForTimeout(500);
+  menu = await expect(boardPicker).toMatchElement('ul[data-testid="context-menu"]');
 
-  const newListItem = (await menu2.$$('li > a'))[1];
+  const newListItem = (await menu.$$('li > a'))[1];
   await newListItem.click();
 
   await page.hover('div.trello-refresh-button'); /* afasta o mouse pra longe */

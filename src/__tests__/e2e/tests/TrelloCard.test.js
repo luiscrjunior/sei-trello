@@ -1,6 +1,5 @@
 import {
   MockedTrelloApi,
-  setupBeforeAll,
   clickTrelloRefreshButton,
   clickCardButton,
   matchTrelloCard,
@@ -9,8 +8,6 @@ import {
   matchPanel,
   getCSSProperty,
 } from './utils.js';
-
-setupBeforeAll();
 
 beforeEach(async () => {
   MockedTrelloApi.clearCards();
@@ -54,7 +51,14 @@ test('render card', async () => {
   /* checar se os botões foram renderizados */
   expect(
     await buttonsWrapper.$$eval('a[data-tooltip]', (nodes) => nodes.map((node) => node.getAttribute('data-tooltip')))
-  ).toEqual(['Checklist', 'Especificar data de entrega', 'Remover Cartão', 'Atualizar Cartão', 'Abrir no Trello']);
+  ).toEqual([
+    'Etiquetas',
+    'Checklist',
+    'Especificar data de entrega',
+    'Remover Cartão',
+    'Atualizar Cartão',
+    'Abrir no Trello',
+  ]);
 
   /* checar se os botões estão invisíveis */
   expect(await buttonsWrapper.evaluate((node) => window.getComputedStyle(node).getPropertyValue('opacity'))).toBe('0');
@@ -113,6 +117,7 @@ test('open and close panels', async () => {
   const panels = [
     { title: 'Data de entrega', button: 'Especificar data de entrega' },
     { title: 'Checklist', button: 'Checklist' },
+    { title: 'Etiquetas', button: 'Etiquetas' },
   ];
 
   for await (let panel of panels) {
@@ -173,18 +178,17 @@ test('board and list panels', async () => {
 
   const card = await matchTrelloCard('00000.000001/2020-01');
 
-  const boardPicker = await expect(card).toMatchElement('div', { text: 'em Quadro 1 / Lista 1' });
+  const boardPicker = await expect(card).toMatchElement('div[data-testid="card-location"]', {
+    text: 'em Quadro 1 / Lista 1',
+  });
 
   const picker1 = (await boardPicker.$$('[data-icon="caret-down"]'))[0];
   const picker2 = (await boardPicker.$$('[data-icon="caret-down"]'))[1];
-  const menu1 = (await boardPicker.$$('ul'))[0];
-  const menu2 = (await boardPicker.$$('ul'))[1];
 
   /* checar se os dois ícones / carets estão invisíveis bem como os menus */
   expect(await getCSSProperty(picker1, 'opacity')).toBe('0');
   expect(await getCSSProperty(picker2, 'opacity')).toBe('0');
-  expect(await getCSSProperty(menu1, 'display')).toBe('none');
-  expect(await getCSSProperty(menu2, 'display')).toBe('none');
+  await expect(boardPicker).not.toMatchElement('ul[data-testid="context-menu"]');
 
   /* mouse sobre o cartão */
   await card.hover();
@@ -196,15 +200,14 @@ test('board and list panels', async () => {
   /* clica no picker do quadro */
   await picker1.click();
   await page.waitForTimeout(500);
-  expect(await getCSSProperty(menu1, 'display')).toBe('block');
-  expect(await menu1.$$eval('li > a', (anchors) => anchors.map((anchor) => anchor.textContent))).toEqual([
+  let menu = await expect(boardPicker).toMatchElement('ul[data-testid="context-menu"]');
+  expect(await menu.$$eval('li > a', (anchors) => anchors.map((anchor) => anchor.textContent))).toEqual([
     'Quadro 1',
     'Quadro 2',
   ]);
   await page.hover('div.trello-refresh-button'); /* afasta o mouse pra longe */
   await page.waitForTimeout(500);
-  expect(await getCSSProperty(menu1, 'display')).toBe('none');
-  expect(await getCSSProperty(picker1, 'opacity')).toBe('0');
+  await expect(boardPicker).not.toMatchElement('ul[data-testid="context-menu"]');
 
   /* mouse sobre o cartão */
   await card.hover();
@@ -216,15 +219,14 @@ test('board and list panels', async () => {
   /* clica no picker da lista */
   await picker2.click();
   await page.waitForTimeout(500);
-  expect(await getCSSProperty(menu2, 'display')).toBe('block');
-  expect(await menu2.$$eval('li > a', (anchors) => anchors.map((anchor) => anchor.textContent))).toEqual([
+  menu = await expect(boardPicker).toMatchElement('ul[data-testid="context-menu"]');
+  expect(await menu.$$eval('li > a', (anchors) => anchors.map((anchor) => anchor.textContent))).toEqual([
     'Lista 1',
     'Lista 2',
   ]);
   await page.hover('div.trello-refresh-button'); /* afasta o mouse pra longe */
   await page.waitForTimeout(500);
-  expect(await getCSSProperty(menu2, 'display')).toBe('none');
-  expect(await getCSSProperty(picker2, 'opacity')).toBe('0');
+  await expect(boardPicker).not.toMatchElement('ul[data-testid="context-menu"]');
 });
 
 test('delete card', async () => {

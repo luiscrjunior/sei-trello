@@ -19,6 +19,12 @@ const FloatingPanel = ({ loading, title, onClose, onBack, className, showBackBut
   );
 
   useEffect(() => {
+    if (panel.current) {
+      panel.current.scrollIntoView({ block: 'nearest', inline: 'start', behavior: 'smooth' });
+    }
+  });
+
+  useEffect(() => {
     document.querySelector('body').addEventListener('mousedown', onBGClick);
     return () => {
       document.querySelector('body').removeEventListener('mousedown', onBGClick);

@@ -38,7 +38,7 @@ const LabelList = ({ boardLabels, cardLabels, onAddLabel, onRemoveLabel, onCreat
 
   return (
     <>
-      <List>
+      <List data-testid="board-labels">
         {boardLabels.map((boardLabel) => (
           <LabelItem
             key={boardLabel.id}
