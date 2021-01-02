@@ -1,40 +1,11 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>SEI+Trello</title>
-
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;500;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous">
-  <link rel="stylesheet" href="styles.css">
-</head>
-
+    <include src="partials/head.html"></include>
   </head>
 
   <body>
-    <header>
-  <div class="header-content">
-    <div class="logo">
-      <a href="index.html">SEI+Trello</a> <span class="version"><a href="novidades.html">v1.6.1</a></span>
-    </div>
-    <div id="menu-trigger" class="menu-trigger">
-      <i class="fas fa-bars fa-menu-icon"></i>
-    </div>
-    <ul id="menu" class="menu">
-      <li class="menu-item"><a href="index.html" class="menu-anchor">O que é</a></li>
-      <li class="menu-item"><a href="novidades.html" class="menu-anchor">Novidades</a></li>
-      <li class="menu-item"><a href="instalacao.html" class="menu-anchor">Instalação</a></li>
-      <li class="menu-item">
-        <a class="github-button" href="https://github.com/luiscrjunior/sei-trello" data-show-count="true" aria-label="Star luiscrjunior/sei-trello on GitHub">Github</a>
-      </li>
-    </ul>
-  </div>
-</header>
-
+    <include src="partials/header.html"></include>
 
     <div class="hero">
       <div class="hero-content">
@@ -42,8 +13,18 @@
         <p class="logo">SEI+Trello</p>
         <p class="subtitle">Extensão que integra o Sistema Eletrônico de Informações (SEI) e o Trello.</p>
         <div class="download-buttons">
-          <a href="https://chrome.google.com/webstore/detail/sei%2Btrello/dnjlkohajpocckjiddppmfhkpfdbkecl?hl=pt-BR" target="_blank" class="download-button chrome"><i class="fab fa-chrome"></i> <span>Adicionar ao Chrome</span></a>
-          <a href="https://addons.mozilla.org/pt-BR/firefox/addon/sei-trello/" target="_blank" class="download-button firefox"><i class="fab fa-firefox-browser"></i> <span>Adicionar ao Firefox</span></a>
+          <a
+            href="https://chrome.google.com/webstore/detail/sei%2Btrello/dnjlkohajpocckjiddppmfhkpfdbkecl?hl=pt-BR"
+            target="_blank"
+            class="download-button chrome"
+            ><i class="fab fa-chrome"></i> <span>Adicionar ao Chrome</span></a
+          >
+          <a
+            href="https://addons.mozilla.org/pt-BR/firefox/addon/sei-trello/"
+            target="_blank"
+            class="download-button firefox"
+            ><i class="fab fa-firefox-browser"></i> <span>Adicionar ao Firefox</span></a
+          >
         </div>
       </div>
     </div>
@@ -66,7 +47,7 @@
     </section>
 
     <section>
-      <hr>
+      <hr />
       <div class="section-content reverse">
         <div class="section-col-content">
           <h2 class="section-title">Cartões do Trello no SEI</h2>
@@ -77,18 +58,18 @@
         </div>
         <div class="section-col-remain">
           <div class="trello-img-feature-wrapper">
-            <img src="images/trello1.png" class="trello-img-feature trello-img-feature-cards">
+            <img src="images/trello1.png" class="trello-img-feature trello-img-feature-cards" />
           </div>
         </div>
       </div>
     </section>
 
     <section>
-      <hr>
+      <hr />
       <div class="section-content">
         <div class="section-col-remain">
           <div class="trello-img-feature-wrapper">
-            <img src="images/trello2.png" class="trello-img-feature trello-img-feature-create-cards">
+            <img src="images/trello2.png" class="trello-img-feature trello-img-feature-create-cards" />
           </div>
         </div>
         <div class="section-col-content">
@@ -96,7 +77,10 @@
           <p class="section-description">Você pode vincular um cartão do Trello a um processo de duas formas:</p>
           <p class="section-description">
             <i class="fas fa-arrow-circle-right"></i> Uma delas é dentro do próprio SEI ao clicar no botão
-            <span class="highlight">Criar cartão relacionado a este processo</span> (<img src="images/add-trello-card-button.png" class="trello-icon trello-icon-add-card">), botão esse que a extensão adiciona automaticamente ao lado de cada processo.
+            <span class="highlight">Criar cartão relacionado a este processo</span> (<img
+              src="images/add-trello-card-button.png"
+              class="trello-icon trello-icon-add-card"
+            />), botão esse que a extensão adiciona automaticamente ao lado de cada processo.
           </p>
 
           <p class="section-nested-description">
@@ -117,7 +101,7 @@
     </section>
 
     <section>
-      <hr>
+      <hr />
       <div class="section-content reverse">
         <div class="section-col-content">
           <h2 class="section-title">Nome e descrição do cartão</h2>
@@ -128,18 +112,18 @@
         </div>
         <div class="section-col-remain">
           <div class="trello-img-feature-wrapper">
-            <img src="images/trello3.png" class="trello-img-feature trello-img-feature-name-desc">
+            <img src="images/trello3.png" class="trello-img-feature trello-img-feature-name-desc" />
           </div>
         </div>
       </div>
     </section>
 
     <section>
-      <hr>
+      <hr />
       <div class="section-content">
         <div class="section-col-remain">
           <div class="trello-img-feature-wrapper">
-            <img src="images/trello4.png" class="trello-img-feature trello-img-feature-due">
+            <img src="images/trello4.png" class="trello-img-feature trello-img-feature-due" />
           </div>
         </div>
         <div class="section-col-content">
@@ -162,7 +146,7 @@
     </section>
 
     <section>
-      <hr>
+      <hr />
       <div class="section-content reverse">
         <div class="section-col-content">
           <h2 class="section-title">Etiquetas</h2>
@@ -173,18 +157,18 @@
         </div>
         <div class="section-col-remain">
           <div class="trello-img-feature-wrapper">
-            <img src="images/trello5.png" class="trello-img-feature trello-img-feature-label">
+            <img src="images/trello5.png" class="trello-img-feature trello-img-feature-label" />
           </div>
         </div>
       </div>
     </section>
 
     <section>
-      <hr>
+      <hr />
       <div class="section-content">
         <div class="section-col-remain">
           <div class="trello-img-feature-wrapper">
-            <img src="images/trello6.png" class="trello-img-feature trello-img-feature-checklist">
+            <img src="images/trello6.png" class="trello-img-feature trello-img-feature-checklist" />
           </div>
         </div>
         <div class="section-col-content">
@@ -201,7 +185,7 @@
     </section>
 
     <section>
-      <hr>
+      <hr />
       <div class="section-content reverse">
         <div class="section-col-content">
           <h2 class="section-title">Localização</h2>
@@ -212,24 +196,27 @@
         </div>
         <div class="section-col-remain">
           <div class="trello-img-feature-wrapper">
-            <img src="images/trello7.png" class="trello-img-feature trello-img-feature-location">
+            <img src="images/trello7.png" class="trello-img-feature trello-img-feature-location" />
           </div>
         </div>
       </div>
     </section>
 
     <section>
-      <hr>
+      <hr />
       <div class="section-content">
         <div class="section-col-remain">
           <div class="trello-img-feature-wrapper">
-            <img src="images/trello8.png" class="trello-img-feature trello-img-feature-filter">
+            <img src="images/trello8.png" class="trello-img-feature trello-img-feature-filter" />
           </div>
         </div>
         <div class="section-col-content">
           <h2 class="section-title">Filtrar</h2>
           <p class="section-description">
-            A extensão adiciona um botão que permite filtrar os processos (<img src="images/filter-button.png" class="trello-icon trello-icon-filter-button">) por localização, etiquetas e por data de entrega. Por exemplo, você pode filtrar os processos que
+            A extensão adiciona um botão que permite filtrar os processos (<img
+              src="images/filter-button.png"
+              class="trello-icon trello-icon-filter-button"
+            />) por localização, etiquetas e por data de entrega. Por exemplo, você pode filtrar os processos que
             possuem determinada etiqueta, que estão com a data de entrega em aberto, que estejam em determinada
             localização (quadro/lista), que não possuam cartões vinculados...
           </p>
@@ -246,7 +233,9 @@
           </p>
         </div>
         <div class="section-col-remain wanna-use">
-          <a href="instalacao.html" class="cta-btn"><i class="fas fa-book"></i> <span>Acesse nosso guia de instalação</span></a>
+          <a href="instalacao.html" class="cta-btn"
+            ><i class="fas fa-book"></i> <span>Acesse nosso guia de instalação</span></a
+          >
         </div>
       </div>
     </section>
@@ -267,7 +256,13 @@
           <h2 class="section-title feedback"><i class="fas fa-star"></i> Gostou do projeto?</h2>
           <p class="section-description feedback">
             Ajude a divulgar a extensão e, se quiser, deixe sua estrela lá no
-            <a class="github-button" href="https://github.com/luiscrjunior/sei-trello" data-show-count="true" aria-label="Star luiscrjunior/sei-trello on GitHub">Github</a>
+            <a
+              class="github-button"
+              href="https://github.com/luiscrjunior/sei-trello"
+              data-show-count="true"
+              aria-label="Star luiscrjunior/sei-trello on GitHub"
+              >Github</a
+            >
             e avalie a extensão nas lojas.
           </p>
         </div>
@@ -283,16 +278,6 @@
       </div>
     </section>
 
-    <footer>
-  <ul class="footer-menu">
-    <li><a href="https://github.com/luiscrjunior/sei-trello">Código fonte</a></li>
-    <li>|</li>
-    <li><a href="mailto:luis.reischak@gmail.com">Contato</a></li>
-  </ul>
-</footer>
-
-<script async="" defer="" src="https://buttons.github.io/buttons.js"></script>
-<script src="scripts.js"></script>
-
+    <include src="partials/footer.html"></include>
   </body>
 </html>

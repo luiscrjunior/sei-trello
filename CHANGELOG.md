@@ -1,7 +1,3 @@
-# Changelog
-
-Todas mudanças do projeto estão documentadas neste arquivo.
-
 ## [1.6.1] - 27/12/2020
 
 - Pequenas melhorias e correções de bugs.
@@ -96,4 +92,6 @@ Todas mudanças do projeto estão documentadas neste arquivo.
 - Possibilidade de editar o cartão. Por enquanto, apenas o nome do cartão e a descrição.
 - Outras melhorias no código.
 
-## [1.0.0] - 18/02/2018 - Lançamento primeira versão
+## [1.0.0] - 18/02/2018
+
+- Lançamento primeira versão

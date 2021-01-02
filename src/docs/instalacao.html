@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <include src="partials/head.html"></include>
+  </head>
+
+  <body>
+    <include src="partials/header.html"></include>
+
+    <div class="hero">
+      <div class="hero-content">
+        <i class="fab fa-trello fa-hero-bg"></i>
+        <p class="logo">Instalação</p>
+        <p class="subtitle">Como instalar e configurar a extensão</p>
+      </div>
+    </div>
+
+    <section>
+      <div class="section-content">
+        <div class="section-col-content full">
+          <h2 class="details-description"><span class="badge-number">1</span> Tenha uma conta no Trello</h2>
+          <p class="section-description">
+            Antes de tudo, você precisa ter uma conta no Trello. Caso não tenha ainda, crie uma em
+            <a href="https://trello.com/signup">https://trello.com/signup</a>. É gratuito.
+          </p>
+          <p class="section-description">
+            Caso você queira saber como funciona melhor a ferramenta, em especial a relação entre quadro, lista e
+            cartões, dê uma olhada no
+            <a href="https://trello.com/guide">Guia de Introdução ao Trello</a>.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-content">
+        <div class="section-col-content full">
+          <h2 class="details-description"><span class="badge-number">2</span> Baixe a extensão</h2>
+          <p class="section-description">
+            Adicione a extensão pela loja oficial do seu navegador. Temos suporte ao Google Chrome e ao Firefox:
+          </p>
+          <div class="download-buttons left">
+            <a
+              href="https://chrome.google.com/webstore/detail/sei%2Btrello/dnjlkohajpocckjiddppmfhkpfdbkecl?hl=pt-BR"
+              target="_blank"
+              class="download-button chrome"
+              ><i class="fab fa-chrome"></i> <span>Adicionar ao Chrome</span></a
+            >
+            <a
+              href="https://addons.mozilla.org/pt-BR/firefox/addon/sei-trello/"
+              target="_blank"
+              class="download-button firefox"
+              ><i class="fab fa-firefox-browser"></i> <span>Adicionar ao Firefox</span></a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-content">
+        <div class="section-col-content full">
+          <h2 class="details-description"><span class="badge-number">3</span> Configure a extensão</h2>
+
+          <p class="section-description">
+            A extensão precisa se comunicar com sua conta do Trello. Para isso, você precisa inserir nas configurações
+            da extensão a <strong>chave</strong> (APP-KEY) e o <strong>token</strong> (APP-TOKEN) de acesso.
+          </p>
+
+          <img src="images/guide-1.png" class="img-guide img-guide-1" />
+
+          <p class="section-description">
+            <i class="fas fa-arrow-circle-right"></i> A <strong>chave</strong> pode ser obtida em
+            <a href="http://trello.com/app-key">http://trello.com/app-key</a> (você deve estar logado no Trello quando
+            acessar). A chave é aquele conjunto de caracteres descrito no campo cinza:
+          </p>
+
+          <img src="images/guide-2.png" class="img-guide img-guide-2" />
+
+          <p class="section-description">
+            <i class="fas fa-arrow-circle-right"></i> Já o <strong>token</strong> pode ser obtido acessando a seguinte
+            página:
+            <strong
+              >https://trello.com/1/authorize?expiration=never&scope=read,write,account&response_type=token&name=SEITrello&key=<span
+                class="text-red"
+                >APP-KEY</span
+              ></strong
+            >
+          </p>
+
+          <p class="section-nested-description">
+            <i class="far fa-lightbulb"></i> No endereço acima, substitua <span class="text-red">APP-KEY</span> pela
+            chave que você obteve antes.
+          </p>
+
+          <p class="section-description">
+            <i class="fas fa-arrow-circle-right"></i> Insira a <strong>chave</strong> e o <strong>token</strong> que
+            você obteve na página de opções.
+          </p>
+
+          <p class="section-description">
+            <i class="fas fa-arrow-circle-right"></i> Preencha também o <strong>Quadro Padrão</strong> e a
+            <strong>Lista padrão</strong>, que é o local onde a extensão irá criar os novos cartões a partir do SEI.
+          </p>
+
+          <p class="section-nested-description">
+            <i class="far fa-lightbulb"></i> A extensão não cria automaticamente nem o quadro nem a lista padrão.
+            Certifique-se de que eles existem na sua conta!
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-content">
+        <div class="section-col-content full">
+          <h2 class="details-description"><span class="badge-number">4</span> Pronto!</h2>
+          <p class="section-description">
+            Depois de salvar as opções, recarregue seu SEI (F5) e a extensão já deverá estar funcionando.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <include src="partials/footer.html"></include>
+  </body>
+</html>

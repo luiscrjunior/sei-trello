@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <include src="partials/head.html"></include>
+  </head>
+
+  <body>
+    <include src="partials/header.html"></include>
+
+    <div class="hero">
+      <div class="hero-content">
+        <i class="fab fa-trello fa-hero-bg"></i>
+        <p class="logo">Novidades</p>
+        <p class="subtitle">O que mudou em cada versão</p>
+      </div>
+    </div>
+
+    <section>
+      <div class="section-content version">
+
+        <each loop="change in changes">
+
+        <div class="version-row">
+            <div class="version-col-left">
+              <p class="version-badge">{{ change.version }}</p>
+              <p class="version-date">{{ change.date }}</p>
+            </div>
+            <div class="version-col-right">
+              <ul class="version-changes">
+                <each loop="item in change.items">
+                  <li class="version-change-item"><i class="fas fa-caret-right"></i> {{ item }}</li>
+                </each>
+              </ul>
+            </div>            
+          </div>
+
+        </each>
+
+          <div class="version-row"></div>
+        </div>
+      </div>
+    </section>    
+
+
+    <include src="partials/footer.html"></include>
+  </body>
+</html>

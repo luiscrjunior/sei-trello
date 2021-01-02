@@ -14,7 +14,8 @@
     "test": "npx jest",
     "test:e2e": "npx jest --selectProjects 'E2E Tests'",
     "build": "./build.js",
-    "playground": "npx webpack-dev-server --config webpack.config.playground.js"
+    "playground": "npx webpack-dev-server --config webpack.config.playground.js",
+    "docs:build": "npx posthtml -c src/docs/posthtml.config.js"
   },
   "author": "",
   "license": "ISC",
@@ -55,6 +56,10 @@
     "node-sass": "^4.14.1",
     "postcss": "^8.2.1",
     "postcss-loader": "^4.1.0",
+    "posthtml": "^0.15.1",
+    "posthtml-cli": "^0.9.1",
+    "posthtml-expressions": "^1.7.1",
+    "posthtml-include": "^1.6.0",
     "prettier": "^2.1.2",
     "puppeteer": "^5.5.0",
     "raw-loader": "^0.5.1",
