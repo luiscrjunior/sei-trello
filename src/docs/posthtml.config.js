@@ -4,7 +4,7 @@ const readline = require('readline');
 
 /* Lê a versão da extensão */
 const manifestFile = path.join(__dirname, '..', 'manifest.json');
-const manifestContent = fs.readFileSync(manifestFile);
+const manifestContent = fs.readFileSync(manifestFile).toString();
 const manifestData = JSON.parse(manifestContent);
 const version = manifestData.version;
 

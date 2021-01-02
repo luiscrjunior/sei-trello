@@ -53,14 +53,19 @@ header {
 }
 
 .header-content > ul.menu {
+  height: 48px;
   padding: 0px;
   margin: 0px;
   list-style: none;
 }
 
 .header-content > ul.menu > li.menu-item {
-  display: inline;
+  display: inline-block;
+  padding: 0px;
+  margin: 0px;
   margin-left: 25px;
+  height: 48px;
+  vertical-align: top;
 }
 
 .header-content > ul.menu > li.menu-item:first-child {
@@ -68,9 +73,20 @@ header {
 }
 
 .header-content > ul.menu > li.menu-item > a.menu-anchor {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 48px;
   font-weight: 300;
   font-size: 14px;
   transition: color 0.2s ease;
+  vertical-align: top;
+  border-top: 4px solid #20232a;
+  border-bottom: 4px solid #20232a;
+}
+
+.header-content > ul.menu > li.menu-item > a.menu-anchor.selected {
+  border-bottom: 4px solid #07bdff;
 }
 
 .header-content > ul.menu > li.menu-item > a.menu-anchor:hover {
@@ -78,8 +94,12 @@ header {
 }
 
 .header-content > ul.menu > li.menu-item > span {
-  display: inline-block;
-  vertical-align: middle;
+  height: 48px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  vertical-align: top;
 }
 
 .header-content span.version {
@@ -92,6 +112,11 @@ header {
   border: 1px solid #07bdff;
   padding: 3px 10px;
   border-radius: 3px;
+  transition: background-color 0.3s ease;
+}
+
+.header-content span.version:hover {
+  background-color: #000;
 }
 
 .header-content > .menu-trigger > .fa-menu-icon {
@@ -116,12 +141,14 @@ header {
     background-color: #20232a;
     z-index: 5;
     padding-bottom: 30px;
+    height: auto;
   }
 
   .header-content > ul.menu > li.menu-item {
     display: block;
     margin-left: 0;
     text-align: center;
+    height: auto;
   }
 
   .header-content > ul.menu > li.menu-item:last-child {
@@ -132,10 +159,24 @@ header {
     display: block;
     padding: 15px 40px;
     font-size: 16px;
+    height: auto;
+    border-top: none;
+    border-bottom: none;
+    border-left: none;
   }
 
   .header-content > ul.menu > li.menu-item > a.menu-anchor:hover {
     background-color: #32363e;
+  }
+
+  .header-content > ul.menu > li.menu-item > a.menu-anchor.selected {
+    border-left: 4px solid #07bdff;
+    border-bottom: none;
+  }
+
+  .header-content > ul.menu > li.menu-item > span {
+    text-align: center;
+    height: auto;
   }
 
   .header-content > .menu-trigger {

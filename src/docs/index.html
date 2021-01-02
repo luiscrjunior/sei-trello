@@ -5,7 +5,13 @@
   </head>
 
   <body>
-    <include src="partials/header.html"></include>
+    <include
+      src="partials/header.html"
+      locals='{
+        "menu": "index",
+        "version": "{{ version }}"
+      }'
+    ></include>
 
     <div class="hero">
       <div class="hero-content">

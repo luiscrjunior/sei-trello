@@ -5,7 +5,13 @@
   </head>
 
   <body>
-    <include src="partials/header.html"></include>
+    <include
+      src="partials/header.html"
+      locals='{
+        "menu": "instalacao",
+        "version": "{{ version }}"
+      }'
+    ></include>
 
     <div class="hero">
       <div class="hero-content">
@@ -120,6 +126,10 @@
           </p>
         </div>
       </div>
+    </section>
+
+    <section>
+      <div class="section-content"></div>
     </section>
 
     <include src="partials/footer.html"></include>

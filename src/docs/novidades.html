@@ -5,7 +5,14 @@
   </head>
 
   <body>
-    <include src="partials/header.html"></include>
+    <include
+      src="partials/header.html"
+      locals='{
+        "menu": "novidades",
+        "version": "{{ version }}"
+      }'
+    >
+    </include>
 
     <div class="hero">
       <div class="hero-content">
@@ -17,10 +24,8 @@
 
     <section>
       <div class="section-content version">
-
         <each loop="change in changes">
-
-        <div class="version-row">
+          <div class="version-row">
             <div class="version-col-left">
               <p class="version-badge">{{ change.version }}</p>
               <p class="version-date">{{ change.date }}</p>
@@ -31,16 +36,13 @@
                   <li class="version-change-item"><i class="fas fa-caret-right"></i> {{ item }}</li>
                 </each>
               </ul>
-            </div>            
+            </div>
           </div>
-
         </each>
 
-          <div class="version-row"></div>
-        </div>
+        <div class="version-row"></div>
       </div>
-    </section>    
-
+    </section>
 
     <include src="partials/footer.html"></include>
   </body>
