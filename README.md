@@ -18,7 +18,6 @@ Depois de instalar a extensão, configure-a na página de opções (credenciais 
 
 A extensão está sendo mantida neste repositório e quem quiser colaborar, fique à vontade em submeter seu _pull request_.
 
-
 ### Tecnologias utilizadas
 
 O código é escrito em `javascript` (todo ele em [`es6`](http://www.ecma-international.org/ecma-262/6.0/)), com transpilação para es5 via [`babel`](https://babeljs.io/). O gerenciador de pacotes é o [`npm`](https://www.npmjs.com/), o bundler é o [`webpack`](https://webpack.js.org/) e a renderização usa [`react`](https://reactjs.org/). Então, o desenvolvedor deve ter conhecimentos mínimos nessas ferramentas, além do `git`, claro.
@@ -63,7 +62,7 @@ _Obs.: não testei esse setup no Windows, apenas no linux. Os comandos provavelm
 
 O projeto conta com testes unitários, de integração e end-to-end (com puppeteer). A cobertura não é total, mas abrangem as principais funcionalidades.
 
-Gere o bundle para testes antes com `npm run webpack:test` (somente necessário para os testes e2e). Depois, para rodar todos os testes, execute `npm run test`. 
+Gere o bundle para testes antes com `npm run webpack:test` (somente necessário para os testes e2e). Depois, para rodar todos os testes, execute `npm run test`.
 
 Você pode executar somente os testes unitários/integração com `npx jest --selectProjects 'Unit and Integration Tests'` e somente os testes e2e com `npx jest --selectProjects 'E2E Tests'`.
 
@@ -73,8 +72,7 @@ O projeto conta com um ambiente preparado para esculpir os componentes React, co
 
 Execute `npm run playground` e abra seu navegador em `http://localhost:8080/`.
 
-![Playground](/docs/playground.png)
-
+![Playground](/docs/images/playground.png)
 
 ### Regras para codificar
 
