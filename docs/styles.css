@@ -159,6 +159,7 @@ header {
   padding-bottom: 65px;
   padding-left: 25px;
   padding-right: 25px;
+  min-height: 320px;
   max-width: 1260px;
   margin-left: auto;
   margin-right: auto;
