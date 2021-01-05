@@ -31,7 +31,7 @@
     "@fortawesome/react-fontawesome": "^0.1.13",
     "autoprefixer": "^10.1.0",
     "autosize": "^4.0.0",
-    "axios": "^0.18.1",
+    "axios": "^0.21.1",
     "axios-mock-adapter": "^1.19.0",
     "babel-loader": "^8.2.1",
     "babel-plugin-react-remove-properties": "^0.3.0",
