@@ -1,3 +1,7 @@
+## [1.6.2] - 23/01/2021
+
+- Pequenas melhorias e correções de bugs.
+
 ## [1.6.1] - 27/12/2020
 
 - Pequenas melhorias e correções de bugs.
