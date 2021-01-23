@@ -12,7 +12,9 @@ const extractRelevantDataFromRow = (row) => {
     if (noteAnchorTooltipInfo) {
       const noteAnchorInfoArray = noteAnchorTooltipInfo.split("'");
       if (noteAnchorInfoArray.length === 5)
-        data['default-description'] = noteAnchorInfoArray[1].replace(/\\r\\n/g, '\n');
+        data['default-description'] = noteAnchorInfoArray[1]
+          .replace(/(\\r\\n|\\r|\\n)/g, '\n')
+          .replace(/\\&quot;/g, '"');
     }
   }
 
