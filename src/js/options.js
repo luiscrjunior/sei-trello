@@ -1,5 +1,7 @@
 import * as alert from 'view/alert.js';
 
+import 'css/options.scss';
+
 let ui = {};
 
 const defaultTokenUrl =

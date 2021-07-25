@@ -23,8 +23,7 @@
   },
 
   "background": {
-    "scripts": ["js/background.js"],
-    "persistent": false
+    "scripts": ["js/background.js"]
   },
 
   "options_ui": {
@@ -57,5 +56,5 @@
 
   "permissions": ["*://api.trello.com/*", "storage"],
   "web_accessible_resources": ["vendor/webfonts/*"],
-  "content_security_policy": "default-src 'self'; object-src 'self'"
+  "content_security_policy": "default-src 'self' https://*.bootstrapcdn.com; object-src 'self';"
 }

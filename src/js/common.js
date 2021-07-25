@@ -1,5 +1,7 @@
 /* show page action icon */
 
+import 'css/common.scss';
+
 chrome.runtime.sendMessage(null, {
   from: 'content',
   subject: 'showPageAction',

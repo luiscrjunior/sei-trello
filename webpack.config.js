@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 /* este diretório é onde será gerada automaticamente toda estrutura da extensão */
@@ -12,22 +12,23 @@ module.exports = {
 
   entry: {
     /* entry points da app */
-    'js/process_list.js': './src/js/entries/process_list',
-    'js/process_content.js': './src/js/entries/process_content',
+    process_list: './src/js/entries/process_list',
+    process_content: './src/js/entries/process_content',
 
     /* outros scripts */
-    'js/common.js': './src/js/common.js',
-    'js/background.js': './src/js/background.js',
-    'js/options.js': './src/js/options.js',
-
-    /* página de estilos */
-    'css/common.css': './src/css/common.scss',
-    'css/process_list.css': './src/css/process_list.scss',
-    'css/process_content.css': './src/css/process_content.scss',
+    common: './src/js/common.js',
+    background: './src/js/background.js',
+    options: './src/js/options.js',
   },
   output: {
     path: outputPath,
-    filename: '[name]',
+    filename: ({ chunk }) => {
+      if (['options'].includes(chunk.name)) {
+        return 'html/[name].js';
+      } else {
+        return 'js/[name].js';
+      }
+    },
   },
   resolve: {
     alias: {
@@ -38,6 +39,7 @@ module.exports = {
       actions: path.resolve(__dirname, 'src/js/actions'),
       utils: path.resolve(__dirname, 'src/js/utils'),
       tests: path.resolve(__dirname, 'src/__tests__'),
+      css: path.resolve(__dirname, 'src/css'),
     },
   },
   module: {
@@ -46,17 +48,25 @@ module.exports = {
       {
         test: /\.scss$/,
         include: [path.resolve(__dirname, 'src/css')],
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: ['css-loader', 'postcss-loader', 'sass-loader'],
-        }),
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader'],
       },
 
       /* estilos dos componentes não serão exportados para arquivo */
       {
         test: /\.scss$/,
         include: [path.resolve(__dirname, 'src/js')],
-        use: ['style-loader', 'css-loader?modules&importLoaders=1', 'postcss-loader', 'sass-loader'],
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1,
+              modules: true,
+            },
+          },
+          'postcss-loader',
+          'sass-loader',
+        ],
       },
 
       /* estilos dos componentes importados do node_modules */
@@ -87,14 +97,25 @@ module.exports = {
       },
     ],
   },
+  devtool: 'cheap-module-source-map',
   plugins: [
-    new CleanWebpackPlugin(outputPath),
-    new CopyWebpackPlugin([
-      { from: 'src/manifest.json', to: outputPath + '/' },
-      { from: 'src/icons', to: outputPath + '/icons' },
-      { from: 'src/html', to: outputPath + '/html' },
-    ]),
-    new ExtractTextPlugin('[name]'),
+    new MiniCssExtractPlugin({
+      filename: ({ chunk }) => {
+        if (['options'].includes(chunk.name)) {
+          return 'html/[name].css';
+        } else {
+          return 'css/[name].css';
+        }
+      },
+    }),
+    new CleanWebpackPlugin(),
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: 'src/manifest.json', to: outputPath + '/' },
+        { from: 'src/icons', to: outputPath + '/icons' },
+        { from: 'src/html', to: outputPath + '/html' },
+      ],
+    }),
     new webpack.DefinePlugin({
       DEVELOPMENT: JSON.stringify(process.env.NODE_ENV === 'development'),
       PRODUCTION: JSON.stringify(process.env.NODE_ENV === 'production'),

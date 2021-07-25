@@ -4,6 +4,8 @@ import 'regenerator-runtime/runtime';
 import * as dom from './dom.js';
 import * as controller from 'controller/trello.js';
 
+import 'css/process_content.scss';
+
 dom.prepare();
 
 const firstTrelloBox = document.querySelector('[data-trello-process-box]');

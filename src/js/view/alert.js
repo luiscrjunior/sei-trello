@@ -1,4 +1,4 @@
-import Swal from 'sweetalert2';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 const alert = (type, text) => {
   const manifestInfo = chrome.runtime.getManifest();
