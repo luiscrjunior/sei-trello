@@ -8,18 +8,32 @@ import * as alert from 'view/alert.js';
 
 const DEFAULT_SYNC_ERROR_MSG = `Erro ao sincronizar com o Trello. Verifique se as credenciais informadas nas <a href="#" class="btn-open-extension-option">opções</a> estão corretas. Caso positivo, tente novamente mais tarde, pois os servidores podem estar fora do ar. Se o problema persistir, entre em contato com o administrador da extensão.`;
 
-const doRefreshCards = (processNumber) => {
-  return new Promise((resolve, reject) => {
-    api
-      .searchCards(processNumber)
-      .then((response) => {
-        store.setCards(handler.getCards(response.data.cards));
-        resolve();
-      })
-      .catch((error) => {
-        reject(error);
-      });
-  });
+const doRefreshCards = async (processNumber) => {
+  const { defaultBoard } = await getDefaultBoardAndList();
+
+  /* Primeiro, busca todos os cartões do quadro padrão. */
+  const { data: boardLists } = await api.searchBoardCards(defaultBoard);
+  const foundCards = handler.getCardsFromBoard(boardLists, defaultBoard);
+
+  /* Depois, busca todos os cartões de todos os quadros pelo método search (que tem delay/cache) */
+  const {
+    data: { cards: searchedCards },
+  } = await api.searchCards(processNumber);
+
+  /**
+   * Adiciona os cartões localizados pelo método search aos cartões previamente encontrados no cartão
+   * (somente os que já não existirem)
+   */
+
+  for (const searchedCard of searchedCards) {
+    const foundCard = foundCards.find((boardCard) => boardCard.id === searchedCard.id);
+    if (!foundCard) foundCards.push(searchedCard);
+  }
+
+  /* Converte o padrão retornado pela API do trello no formato da store */
+  const storeCards = handler.getCards(foundCards, processNumber);
+
+  store.setCards(storeCards);
 };
 
 export const doRefreshCardsWithID = (cardID) => {

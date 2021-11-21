@@ -20,6 +20,18 @@ export const searchCards = (processNumber) => {
   return axios.get(url, { params: params });
 };
 
+export const searchBoardCards = (trelloBoard) => {
+  const url = `https://api.trello.com/1/boards/${trelloBoard.id}/lists`;
+
+  let params = Object.assign({}, auth.getCredentials(), {
+    cards: 'open',
+    filter: 'open',
+    card_fields: 'name,desc,labels,id,due,dueComplete,shortUrl,idChecklists',
+  });
+
+  return axios.get(url, { params: params });
+};
+
 export const getCardData = (cardID) => {
   const url = 'https://api.trello.com/1/cards/' + cardID;
 

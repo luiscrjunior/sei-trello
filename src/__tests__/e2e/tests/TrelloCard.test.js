@@ -278,10 +278,12 @@ test('update card button', async () => {
 
 test('duplicated process warning', async () => {
   MockedTrelloApi.addCard({
+    id: '1',
     name: 'Título do cartão',
     desc: 'SEI 00000.000001/2020-01',
   });
   MockedTrelloApi.addCard({
+    id: '2',
     name: 'Outro título do cartão',
     desc: 'SEI 00000.000001/2020-01',
   });

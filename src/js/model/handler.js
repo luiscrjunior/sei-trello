@@ -4,7 +4,7 @@ const removeSubstrFromStr = (startIndex, endIndex, text) => {
   return firstPart + secondPart;
 };
 
-export const getCards = (cardList) => {
+export const getCards = (cardList, filteredProcessNumber = null) => {
   const extractSEIInfoRegex = /^SEI\s+([0-9./-]+)$/gm;
   let cards = [];
   cardList.forEach((cardFromTrello) => {
@@ -14,6 +14,9 @@ export const getCards = (cardList) => {
     while ((match = new RegExp(extractSEIInfoRegex).exec(description))) {
       processList.push(match[1]);
       description = removeSubstrFromStr(match.index, match.index + match[0].length, description);
+    }
+    if (filteredProcessNumber) {
+      processList = processList.filter((processNumber) => filteredProcessNumber === processNumber);
     }
     processList.forEach((processNumber) => {
       cards.push({
@@ -44,5 +47,21 @@ export const getCards = (cardList) => {
       });
     });
   });
+  return cards;
+};
+
+export const getCardsFromBoard = (lists, board) => {
+  const cards = [];
+  for (const list of lists) {
+    for (const cardFromList of list.cards) {
+      const listData = { ...list };
+      delete listData['cards'];
+      cards.push({
+        ...cardFromList,
+        list: listData,
+        board: { ...board },
+      });
+    }
+  }
   return cards;
 };

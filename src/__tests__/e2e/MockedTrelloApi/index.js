@@ -11,6 +11,7 @@ const Api = () => {
   let boards = [...initialBoards];
   let lists = [...initialLists];
   let labels = [...initialLabels];
+
   let delay = 0;
 
   const setup = () => {
@@ -206,6 +207,10 @@ const Api = () => {
     /* searchCards */
     if (method === 'get' && path.match(/^search$/) && params.modelTypes === 'cards') {
       return { cards: cards };
+
+      /* searchBoardCards */
+    } else if (method === 'get' && path.match(/^boards\/[^/]+\/lists$/)) {
+      return [];
 
       /* searchAllBoards and searchBoardsByName */
     } else if (method === 'get' && path.match(/^search$/) && params.modelTypes === 'boards') {
