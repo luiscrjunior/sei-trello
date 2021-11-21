@@ -1,3 +1,7 @@
+## [1.6.4] - 21/11/2021
+
+- Melhorada a sincronização com a API do Trello, corrigindo, assim, o problema de não aparecerem os cartões logo que são criados.
+
 ## [1.6.3] - 25/07/2021
 
 - Pequenas melhorias e correções de bugs.
