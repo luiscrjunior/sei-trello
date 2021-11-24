@@ -5,8 +5,9 @@ import * as api from 'api';
 import * as store from 'model/store.js';
 import * as handler from 'model/handler.js';
 import * as alert from 'view/alert.js';
+import { getDefaultBoardAndListFromStorage } from './utils.js';
 
-const DEFAULT_SYNC_ERROR_MSG = `Erro ao sincronizar com o Trello. Verifique se as credenciais informadas nas <a href="#" class="btn-open-extension-option">opções</a> estão corretas. Caso positivo, tente novamente mais tarde, pois os servidores podem estar fora do ar. Se o problema persistir, entre em contato com o administrador da extensão.`;
+const DEFAULT_SYNC_ERROR_MSG = `Erro ao sincronizar com o Trello. Verifique se as credenciais informadas nas <a href="#" class="btn-open-extension-option">opções</a> estão corretas e se o quadro e a lista padrão foram informados. Caso positivo, tente novamente mais tarde, pois os servidores podem estar fora do ar. Se o problema persistir, entre em contato com o suporte.`;
 
 const doRefreshCards = async (processNumber) => {
   const { defaultBoard } = await getDefaultBoardAndList();
@@ -76,50 +77,45 @@ const doCreateCard = (options) => {
   });
 };
 
-const getDefaultBoardAndList = () => {
-  return new Promise((resolve, reject) => {
-    chrome.storage.sync.get(
-      {
-        defaultBoard: '',
-        defaultList: '',
-      },
-      (items) => {
-        if (!items.defaultBoard || !items.defaultList) reject(new Error());
-        api
-          .searchBoardsByName(items.defaultBoard)
-          .then((response) => {
-            if ('data' in response && 'boards' in response.data && response.data.boards.length > 0) {
-              const defaultBoard = response.data.boards.find((board) => board.name === items.defaultBoard);
-              if (defaultBoard) {
-                api
-                  .getListsFromBoard(defaultBoard.id)
-                  .then((response) => {
-                    const defaultList = response.data.lists.find((list) => list.name === items.defaultList);
-                    if (defaultList) {
-                      resolve({
-                        defaultBoard: defaultBoard,
-                        defaultList: defaultList,
-                      });
-                    } else {
-                      reject(new Error('lista padrão não encontrada'));
-                    }
-                  })
-                  .catch((error) => {
-                    reject(error);
-                  });
-              } else {
-                reject(new Error('quadro padrão não encontrado'));
-              }
-            } else {
-              reject(new Error('quadro padrão não encontrado'));
-            }
-          })
-          .catch((error) => {
-            reject(error);
-          });
+const getDefaultBoardAndList = async () => {
+  const { defaultBoardName, defaultListName } = await getDefaultBoardAndListFromStorage();
+  const {
+    data: { boards },
+  } = await api.searchBoardsByName(defaultBoardName);
+  const defaultBoard = boards.find((board) => board.name === defaultBoardName);
+  if (defaultBoard) {
+    const {
+      data: { lists },
+    } = await api.getListsFromBoard(defaultBoard.id);
+    const defaultList = lists.find((list) => list.name === defaultListName);
+    if (defaultList) {
+      return {
+        defaultBoard: defaultBoard,
+        defaultList: defaultList,
+      };
+    } else {
+      try {
+        const { data: createdList } = await api.createList(defaultBoard.id, defaultListName);
+        return {
+          defaultBoard: defaultBoard,
+          defaultList: createdList,
+        };
+      } catch (e) {
+        throw new Error('lista padrão não encontrada e não foi possível criá-la');
       }
-    );
-  });
+    }
+  } else {
+    try {
+      const { data: createdBoard } = await api.createBoard(defaultBoardName);
+      const { data: createdList } = await api.createList(createdBoard.id, defaultListName);
+      return {
+        defaultBoard: createdBoard,
+        defaultList: createdList,
+      };
+    } catch (e) {
+      throw new Error('quadro padrão não encontrado e não foi possível criá-lo');
+    }
+  }
 };
 
 export const refreshCardData = (cardID) => {
@@ -208,7 +204,7 @@ export const addCardFor = (processNumber, newCardData) => {
       store.setIsAddingFor(null);
       console.log(error);
       alert.error(
-        'Ocorreu um erro ao adicionar o cartão. Verifique se você preencheu corretamente os dados do quadro e da lista padrão nas <a href="#" class="btn-open-extension-option">opções</a>.<br /><br /><u>Importante:</u> certifique-se de que o quadro e a lista especificados existem na sua conta, pois a extensão não os cria automaticamente.'
+        'Ocorreu um erro ao adicionar o cartão. Verifique se você preencheu corretamente os dados do quadro e da lista padrão nas <a href="#" class="btn-open-extension-option">opções</a>.'
       );
     });
 };

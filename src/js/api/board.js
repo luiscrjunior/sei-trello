@@ -37,3 +37,24 @@ export const getListsFromBoard = (boardID) => {
     }),
   });
 };
+
+export const createBoard = (boardName) => {
+  const url = 'https://api.trello.com/1/boards';
+  let params = Object.assign({}, auth.getCredentials(), {
+    name: boardName,
+    defaultLists: false,
+  });
+
+  return axios.post(url, params);
+};
+
+export const createList = (boardID, listName) => {
+  const url = 'https://api.trello.com/1/lists';
+  let params = Object.assign({}, auth.getCredentials(), {
+    idBoard: boardID,
+    name: listName,
+    pos: 'bottom',
+  });
+
+  return axios.post(url, params);
+};
