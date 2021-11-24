@@ -1,3 +1,7 @@
+## [1.6.5] - 23/11/2021
+
+- Cria automaticamente o quadro e a lista padrão quando não encontrados.
+
 ## [1.6.4] - 21/11/2021
 
 - Melhorada a sincronização com a API do Trello, corrigindo, assim, o problema de não aparecerem os cartões logo que são criados.
