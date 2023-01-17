@@ -2,7 +2,6 @@ module.exports = {
   projects: [
     {
       displayName: 'Unit and Integration Tests',
-      name: 'unit_and_integration',
       testEnvironment: 'jsdom',
       moduleNameMapper: {
         '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
@@ -19,7 +18,6 @@ module.exports = {
     },
     {
       displayName: 'E2E Tests',
-      name: 'e2e',
       preset: 'jest-puppeteer',
       testMatch: ['**/__tests__/e2e/tests/**/*.test.js'],
       globalSetup: '<rootDir>/src/__tests__/e2e/global-setup.js',
