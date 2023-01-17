@@ -8,7 +8,12 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const outputPath = path.resolve(__dirname, 'dist/expanded');
 
 module.exports = {
-  mode: 'development',
+  mode:
+    process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'production'
+      ? process.env.NODE_ENV
+      : process.env.NODE_ENV === 'test'
+      ? 'none'
+      : 'development',
 
   entry: {
     /* entry points da app */
@@ -117,9 +122,8 @@ module.exports = {
       ],
     }),
     new webpack.DefinePlugin({
-      DEVELOPMENT: JSON.stringify(process.env.NODE_ENV === 'development'),
-      PRODUCTION: JSON.stringify(process.env.NODE_ENV === 'production'),
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+      'process.env.MOCKED_API': JSON.stringify('false'),
     }),
   ],
 };

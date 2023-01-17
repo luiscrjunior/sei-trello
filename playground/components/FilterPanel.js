@@ -10,18 +10,18 @@ const Content = styled.div`
 
 const filter = {
   process: 'WITH_TRELLO_CARD',
-  labels: ['NO_LABEL', 'LABEL_YELLOW'],
+  labels: ['NO_LABEL'],
   due: 'WITH_INCOMPLETE_DUE',
 };
 
 const labels = [
   {
     color: 'red',
-    label: 'urgente',
+    name: 'urgente',
   },
   {
     color: 'yellow',
-    label: 'importante',
+    name: 'importante',
   },
 ];
 

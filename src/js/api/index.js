@@ -5,7 +5,7 @@ import auth from './auth.js';
  * as requisições não alcançarão os servidores do Trello,
  * mas sim serão gerenciadas pelo MockedTrelloApi.
  */
-if (process.env.NODE_ENV === 'test') {
+if (process.env.NODE_ENV === 'test' || process.env.MOCKED_API === 'true') {
   const MockedApi = require('tests/e2e/MockedTrelloApi').default;
   window.MockedTrelloApi = MockedApi;
   MockedApi.setup();

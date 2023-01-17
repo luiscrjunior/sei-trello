@@ -5,6 +5,10 @@ import { App, Header, Content, Button } from './styles';
 
 if (module.hot) module.hot.accept();
 
+import 'css/common.scss';
+
+import 'tests/e2e/html/mock.js';
+
 const Playground = () => {
   const [componentName, setComponentName] = useState(null);
 

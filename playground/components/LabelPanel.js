@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import LabelPanel from 'view/components/LabelPanel/LabelPanel';
 import { TrelloCardBG } from '../styles';
 
@@ -19,8 +19,13 @@ const initialBoardLabels = [
 const initialCardLabels = [{ id: 'label1', name: 'urgente', color: 'red' }];
 
 const LabelPanelPlayground = () => {
-  const [cardLabels, setCardLabels] = useState(initialCardLabels);
-  const [boardLabels, setBoardLabels] = useState(initialBoardLabels);
+  const [cardLabels, setCardLabels] = useState([]);
+  const [boardLabels, setBoardLabels] = useState([]);
+
+  useEffect(() => {
+    setCardLabels(initialCardLabels);
+    setBoardLabels(initialBoardLabels);
+  }, []);
 
   return (
     <TrelloCardBG>

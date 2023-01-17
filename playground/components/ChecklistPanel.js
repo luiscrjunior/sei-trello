@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ChecklistPanel from 'view/components/ChecklistPanel/ChecklistPanel';
 import { TrelloCardBG } from '../styles';
 
@@ -12,7 +12,14 @@ const tasks = [
 ];
 
 const ChecklistPanelPlayground = () => {
-  const [data, setData] = useState({ isLoading: false, tasks: tasks });
+  const [data, setData] = useState({ isLoading: false, tasks: [] });
+
+  useEffect(() => {
+    setData((currentData) => ({
+      ...currentData,
+      tasks,
+    }));
+  }, []);
 
   const removeTask = (taskId) => {
     console.log(`remove task ${taskId}.`);

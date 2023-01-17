@@ -1,5 +1,5 @@
 const { merge } = require('webpack-merge');
-const ExtensionReloader = require('webpack-extension-reloader');
+const ExtensionReloader = require('webpack-ext-reloader');
 const common = require('./webpack.config.js');
 
 module.exports = merge(common, {
