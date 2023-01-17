@@ -1,6 +1,5 @@
 const path = require('path');
 const fs = require('fs');
-const readline = require('readline');
 
 /* Lê a versão da extensão */
 const manifestFile = path.join(__dirname, '..', 'manifest.json');
