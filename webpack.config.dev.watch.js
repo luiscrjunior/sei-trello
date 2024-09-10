@@ -9,7 +9,7 @@ module.exports = merge(common, {
       reloadPage: false,
       entries: {
         contentScript: ['js/process_list.js', 'js/process_content.js'],
-        background: 'js/background.js',
+        service_worker: 'js/service_worker.js',
       },
     }),
   ],

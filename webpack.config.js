@@ -22,7 +22,7 @@ module.exports = {
 
     /* outros scripts */
     common: './src/js/common.js',
-    background: './src/js/background.js',
+    service_worker: './src/js/service_worker.js',
     options: './src/js/options.js',
   },
   output: {
